@@ -16,8 +16,8 @@ public class ProductTable
 	private static final String DATABASE_CREATE ="create table " + TABLE_PRODUCT
 			+"(" 
 			+ COLUMN_ID + " integer primary key autoincrement, "
-			+ COLUMN_NAME + " text not null"
-			+ COLUMN_CATEGORY + " text not null, "
+			+ COLUMN_NAME + " text,"
+			+ COLUMN_CATEGORY + " text"
 			+ ");"
 			;
 

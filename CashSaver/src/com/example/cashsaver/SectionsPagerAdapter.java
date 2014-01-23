@@ -3,17 +3,10 @@ package com.example.cashsaver;
 import java.util.Locale;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.cashsaver.DummySectionFragment;
-
-/**
- * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
- * one of the sections/tabs/pages.
- */
 public class SectionsPagerAdapter extends FragmentPagerAdapter
 {
 	Context m_context;
@@ -24,17 +17,21 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter
 		m_context = context;
 	}
 
-	// getItem is called to instantiate the fragment for the given page.
-	// Return a DummySectionFragment with the page number as its lone argument.
 	@Override
 	public Fragment getItem(int position)
 	{
-		Fragment fragment = new DummySectionFragment();
+		Fragment fragment = null;
 		
-		Bundle args = new Bundle();
-		args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
-		fragment.setArguments(args);
-		
+		switch (position)
+		{
+		case 0:
+			fragment = new SectionFragmentProducts();
+			break;
+		case 1:
+		default:
+			fragment = new SectionFragmentShoppingLists();
+			break;
+		}
 		return fragment;
 	}
 
