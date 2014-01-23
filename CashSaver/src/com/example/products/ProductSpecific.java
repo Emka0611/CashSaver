@@ -2,6 +2,7 @@ package com.example.products;
 
 public class ProductSpecific
 {
+	private long m_id;
 	private String m_generalName;
 	private String m_detailedName;
 
@@ -12,8 +13,9 @@ public class ProductSpecific
 	
 	private int m_barcode;
 	
-	public ProductSpecific(String generalName, String detailedName, Price price, String category, int barcode)
+	public ProductSpecific(long id, String generalName, String detailedName, Price price, String category, int barcode)
 	{
+		this.m_id = id;
 		this.m_generalName = generalName;
 		this.m_detailedName = detailedName;
 		this.m_category = category;
@@ -21,6 +23,13 @@ public class ProductSpecific
 		this.m_barcode = barcode;
 		this.m_priceHistory = new PriceHistory(new PriceEntry(price));
 	}
+
+	
+	public long getId()
+	{
+		return m_id;
+	}
+
 
 	public String getGeneralName()
 	{
