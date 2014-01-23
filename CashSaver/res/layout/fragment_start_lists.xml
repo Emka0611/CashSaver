@@ -8,10 +8,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".StartActivity$DummySectionFragment" >
 
-    <TextView
-        android:id="@+id/section_label"
+    <Button
+        android:id="@+id/button"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/title_shopping_lists"/>
 
 </RelativeLayout>
 
