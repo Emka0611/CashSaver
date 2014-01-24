@@ -18,7 +18,6 @@ public class SectionFragmentProducts extends Fragment
 		Button btn = (Button)rootView.findViewById(R.id.button);
 		btn.setOnClickListener(new View.OnClickListener()
 		{
-			
 			@Override
 			public void onClick(View arg0)
 			{

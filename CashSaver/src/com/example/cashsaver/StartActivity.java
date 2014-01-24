@@ -19,7 +19,7 @@ public class StartActivity extends FragmentActivity
 		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), this);
 
 		mViewPager = (ViewPager) findViewById(R.id.pager);
-		mViewPager.setAdapter(mSectionsPagerAdapter);		
+		mViewPager.setAdapter(mSectionsPagerAdapter);
 	}
 
 	@Override

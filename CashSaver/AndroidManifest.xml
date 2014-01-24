@@ -23,7 +23,9 @@
             </intent-filter>
         </activity>
         
-        <activity android:name="com.example.cashsaver.ProductsActivity"/>
+        <activity android:name="com.example.cashsaver.ProductsActivity"
+            android:label="@string/title_products"
+            android:theme="@style/AppTheme"/>
         <activity android:name="com.example.cashsaver.ShoppingListsActivity"/>
         
     </application>

@@ -10,9 +10,9 @@ public class ProductSpecific
 
 	private Price m_bestPrice;
 	private PriceHistory m_priceHistory;
-	
+
 	private int m_barcode;
-	
+
 	public ProductSpecific(long id, String generalName, String detailedName, Price price, String category, int barcode)
 	{
 		this.m_id = id;
@@ -24,12 +24,10 @@ public class ProductSpecific
 		this.m_priceHistory = new PriceHistory(new PriceEntry(price));
 	}
 
-	
 	public long getId()
 	{
 		return m_id;
 	}
-
 
 	public String getGeneralName()
 	{
@@ -60,5 +58,11 @@ public class ProductSpecific
 	{
 		return m_barcode;
 	}
-		
+
+	@Override
+	public String toString()
+	{
+		return m_generalName;
+	}
+
 }

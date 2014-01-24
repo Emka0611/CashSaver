@@ -3,14 +3,14 @@ package com.example.database;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.products.Price;
-import com.example.products.ProductSpecific;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.example.products.Price;
+import com.example.products.ProductSpecific;
 
 public class ProductsDataSource
 {
@@ -58,21 +58,21 @@ public class ProductsDataSource
 
 	public List<ProductSpecific> getAllProducts()
 	{
-		List<ProductSpecific> comments = new ArrayList<ProductSpecific>();
+		List<ProductSpecific> products = new ArrayList<ProductSpecific>();
 
 		Cursor cursor = database.query(ProductTable.TABLE_PRODUCT, allColumns, null, null, null, null, null);
 
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast())
 		{
-			ProductSpecific comment = cursorToProductSpecific(cursor);
-			comments.add(comment);
+			ProductSpecific produt = cursorToProductSpecific(cursor);
+			products.add(produt);
 			cursor.moveToNext();
 		}
 		
 		// make sure to close the cursor
 		cursor.close();
-		return comments;
+		return products;
 	}
 
 	private ProductSpecific cursorToProductSpecific(Cursor cursor)
