@@ -6,6 +6,7 @@ import java.util.Random;
 import com.example.database.ProductsDataSource;
 import com.example.products.ProductSpecific;
 
+import android.app.ActionBar;
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.ActionMode;
@@ -68,6 +69,9 @@ public class ProductsActivity extends ListActivity
 		datasource = new ProductsDataSource(this);
 		datasource.open();
 
+		ActionBar actionBar = getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		
 		List<ProductSpecific> list = datasource.getAllProducts();
 
 		getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
@@ -140,7 +144,7 @@ public class ProductsActivity extends ListActivity
 	public boolean onCreateOptionsMenu(Menu menu) {
 	    // Inflate the menu items for use in the action bar
 	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.start, menu);
+	    inflater.inflate(R.menu.menu_start, menu);
 	    return super.onCreateOptionsMenu(menu);
 	}
 	

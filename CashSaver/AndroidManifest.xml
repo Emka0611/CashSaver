@@ -25,7 +25,8 @@
         
         <activity android:name="com.example.cashsaver.ProductsActivity"
             android:label="@string/title_products"
-            android:theme="@style/AppTheme"/>
+            android:parentActivityName="com.example.cashsaver.StartActivity" />
+        
         <activity android:name="com.example.cashsaver.ShoppingListsActivity"/>
         
     </application>
