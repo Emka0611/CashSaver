@@ -8,11 +8,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".StartActivity$ProductsSectionFragment" >
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
+  
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/title_products"/>
+        android:text="@string/title_products"
+        android:layout_marginTop="?android:attr/actionBarSize"/>
 
 </RelativeLayout>

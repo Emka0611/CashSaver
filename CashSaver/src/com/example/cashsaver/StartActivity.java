@@ -1,45 +1,47 @@
 package com.example.cashsaver;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.view.Menu;
-import android.view.View;
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.view.*;
+import android.widget.*;
 
 public class StartActivity extends Activity
 {
-	SectionsPagerAdapter mSectionsPagerAdapter;
-	ViewPager mViewPager;
+	private MyDrawer mLeftDrawer = null;
+	Fragment mCurrFragment = null;
+	FragmentManager mFragmentManager = null;
+	FragmentType mType;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_start);
+
+		mLeftDrawer = new MyDrawer(this);
+		mLeftDrawer.setOnItemClickListener(new DrawerItemClickListener());
+		mFragmentManager = getFragmentManager();
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu)
+	private void selectItem(int position)
 	{
-		getMenuInflater().inflate(R.menu.menu_start, menu);
-		return true;
-	}
+		mCurrFragment = new SectionFragmentProducts();
+		mFragmentManager.beginTransaction().replace(R.id.content_frame, mCurrFragment).commit();
 
-	public void onClick(View view)
+		mLeftDrawer.setItemChecked(position);
+		mLeftDrawer.setTitle(position);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	private class DrawerItemClickListener implements ListView.OnItemClickListener
 	{
-		Intent i;
-		switch (view.getId())
+		@Override
+		public void onItemClick(AdapterView parent, View view, int position, long id)
 		{
-		case R.id.button_products:
-			i = new Intent(this, ProductsActivity.class);
-			startActivity(i);
-			break;
-		case R.id.button_shopping_lists:
-			i = new Intent(this, ShoppingListsActivity.class);
-			startActivity(i);
-			break;
+			selectItem(position);
 		}
-
 	}
+
 }

@@ -7,5 +7,12 @@
     <string name="title_shopping_lists">Listy zakupów</string>
     <string name="action_add">Dodaj</string>
     <string name="action_delete">Usun pierwszy</string>
+    <string name="drawer_open">BUM</string>  
+	<string name="drawer_close">BUM</string>
+    
+    <string-array name="drawerListArray">
+        <item>Produkty</item>
+        <item>Listy zakupów</item>
+    </string-array>
 
 </resources>
