@@ -3,9 +3,8 @@ package com.example.cashsaver;
 import android.app.Activity;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.view.*;
+import android.widget.*;
 
 public class MyDrawer
 {
@@ -40,7 +39,7 @@ public class MyDrawer
 				super.onDrawerOpened(drawerView);
 				activity.getActionBar().setTitle("Menu");
 				activity.invalidateOptionsMenu();
-				//menu powinno sie zdisablowac TODO
+				//activity.getActionBar().ge
 			}
 		};
 
@@ -65,5 +64,15 @@ public class MyDrawer
 	public void setOnItemClickListener(ListView.OnItemClickListener listener)
 	{
 		mDrawerList.setOnItemClickListener(listener);		
+	}
+	
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		return mDrawerToggle.onOptionsItemSelected(item);
+	}
+
+	public boolean isDrawerOpen()
+	{
+		return mDrawerLayout.isDrawerOpen(mDrawerList);
 	}
 }

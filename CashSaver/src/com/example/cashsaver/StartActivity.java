@@ -12,7 +12,6 @@ public class StartActivity extends Activity
 	private MyDrawer mLeftDrawer = null;
 	Fragment mCurrFragment = null;
 	FragmentManager mFragmentManager = null;
-	FragmentType mType;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -33,7 +32,7 @@ public class StartActivity extends Activity
 		mLeftDrawer.setItemChecked(position);
 		mLeftDrawer.setTitle(position);
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	private class DrawerItemClickListener implements ListView.OnItemClickListener
 	{
@@ -42,6 +41,21 @@ public class StartActivity extends Activity
 		{
 			selectItem(position);
 		}
+	}
+
+	public boolean isDrawerOpen()
+	{
+		return mLeftDrawer.isDrawerOpen();
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		if (mLeftDrawer.onOptionsItemSelected(item))
+		{
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 }

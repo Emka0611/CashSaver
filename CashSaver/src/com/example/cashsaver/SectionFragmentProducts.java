@@ -5,7 +5,6 @@ import java.util.*;
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Fragment;
-import android.util.Log;
 import android.view.*;
 import android.widget.*;
 
@@ -22,14 +21,16 @@ public class SectionFragmentProducts extends Fragment
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		rootView = inflater.inflate(R.layout.fragment_start_products, container, false);
 		setHasOptionsMenu(true);
+		
+		rootView = inflater.inflate(R.layout.fragment_start_products, container, false);
 
 		datasource = new ProductsDataSource(getActivity());
 		datasource.open();
 
 		actionBar = getActivity().getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setHomeButtonEnabled(true);
 
 		List<ProductSpecific> list = datasource.getAllProducts();
 		ArrayAdapter<ProductSpecific> adapter = new ArrayAdapter<ProductSpecific>(getActivity(), android.R.layout.simple_list_item_multiple_choice, list);
@@ -41,12 +42,13 @@ public class SectionFragmentProducts extends Fragment
 		return rootView;
 	}
 	
+ 
 	@Override
 	public void onPrepareOptionsMenu(Menu menu)
 	{
-		Log.d("DEBUG", "LOG");
 		getActivity().getMenuInflater().inflate(R.menu.menu_products, menu);
-		menu.findItem(R.id.menu_overflow).setVisible(true);
+		boolean drawerOpen = ((StartActivity) getActivity()).isDrawerOpen();
+		menu.findItem(R.id.menu_overflow).setVisible(!drawerOpen);
 		super.onPrepareOptionsMenu(menu);
 	}
 	
@@ -102,5 +104,4 @@ public class SectionFragmentProducts extends Fragment
 	{
 		return listView;
 	}
-
 }
