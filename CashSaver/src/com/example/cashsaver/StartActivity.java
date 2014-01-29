@@ -26,7 +26,7 @@ public class StartActivity extends Activity
 
 	private void selectItem(int position)
 	{
-		mCurrFragment = new SectionFragmentProducts();
+		mCurrFragment = new ProductsSectionFragment();
 		mFragmentManager.beginTransaction().replace(R.id.content_frame, mCurrFragment).commit();
 
 		mLeftDrawer.setItemChecked(position);

@@ -11,7 +11,7 @@ import android.widget.*;
 import com.example.database.*;
 import com.example.products.*;
 
-public class SectionFragmentProducts extends Fragment
+public class ProductsSectionFragment extends Fragment
 {
 	private ProductsDataSource datasource;
 	private ListView listView;

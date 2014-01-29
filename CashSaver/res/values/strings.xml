@@ -9,10 +9,25 @@
     <string name="action_delete">Usun pierwszy</string>
     <string name="drawer_open">BUM</string>  
 	<string name="drawer_close">BUM</string>
-    
+	<string name="title_product_add">Dodaj produkt </string>
+	<string name="title_product_edit">Edytuj produkt</string>
+	<string name="general_product_name_hint">Nazwa produktu</string>
+	<string name="product_name_hint">Nazwa szczegółowa</string>
+	<string name="product_price_hint">Cena</string>
+	<string name="scan">Skanuj</string>
+	<string name="cancel">Anuluj</string>
+	<string name="save">Zapisz</string>
+
     <string-array name="drawerListArray">
         <item>Produkty</item>
         <item>Listy zakupów</item>
     </string-array>
-
+    
+    <string-array name="categories_array">
+        <item>Spożywcze</item>
+        <item>Higieniczne</item>
+        <item>Napoje</item>
+        <item>Alkohole</item>
+    </string-array>
 </resources>
+
