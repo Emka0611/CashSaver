@@ -19,7 +19,7 @@ public class EditProductActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_product);
 		
-		Spinner spinner = (Spinner) findViewById(R.id.spinner1);
+		Spinner spinner = (Spinner) findViewById(R.id.cat_spinner);
 		// Create an ArrayAdapter using the string array and a default spinner layout
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
 		        R.array.categories_array, android.R.layout.simple_spinner_item);
@@ -28,7 +28,7 @@ public class EditProductActivity extends Activity
 		// Apply the adapter to the spinner
 		spinner.setAdapter(adapter);
 		
-		Spinner spinner2= (Spinner) findViewById(R.id.spinner2);
+		Spinner spinner2= (Spinner) findViewById(R.id.unit_spinner);
 		// Create an ArrayAdapter using the string array and a default spinner layout
 		ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this,
 		        R.array.units_array, android.R.layout.simple_spinner_item);
