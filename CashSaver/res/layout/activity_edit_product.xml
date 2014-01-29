@@ -78,4 +78,65 @@
         android:layout_marginRight="40dp"
         android:text="@string/save" />
 
+    <EditText
+        android:id="@+id/editText3"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/spinner1"
+        android:layout_marginTop="18dp"
+        android:ems="4"
+        android:hint="@string/price"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/EditText01"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinner1"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="18dp"
+        android:layout_toRightOf="@+id/editText3"
+        android:ems="4"
+        android:hint="@string/quantity"
+        android:inputType="number" />
+
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/EditText01"
+        android:layout_below="@+id/spinner1"
+        android:layout_marginTop="18dp"
+        android:layout_toRightOf="@+id/EditText01"
+        android:ems="10" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/spinner2"
+        android:layout_marginTop="18dp"
+        android:text="@string/calculate" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/button5"
+        android:layout_alignParentLeft="true"
+        android:text="@string/unit_price"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="18dp"
+        android:text="0.0 zł"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
 </RelativeLayout>
