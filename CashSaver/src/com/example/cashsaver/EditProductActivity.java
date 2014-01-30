@@ -1,16 +1,16 @@
-
-//TODO: porzadek tutaj, zablokowac poziomy widok
-//TODO: walidacja
-//TODO: wyswietlanie kategorii i unitów z bazy
+//TODO: wyswietlanie unitów z bazy
 //TODO: Wpisywanie produktów do bazy
 //TODO: Wyswietlanie produktów z bazy
-
-//TODO: search layout
-//TODO: zgubi³ titla po on resume
-//TODO: osobny layout dla poziomego widoku
-
+//TODO: CashSaver tytu³ znika
+//TODO: Menu w edycji ??
+//TODO: walidacja
 
 package com.example.cashsaver;
+
+import java.util.List;
+
+import com.example.database.*;
+import com.example.products.*;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -19,6 +19,9 @@ import android.widget.*;
 
 public class EditProductActivity extends Activity
 {
+	CategoriesDataSource categoriesDataSurce = null;
+	Spinner mCatSpinner = null;
+	Spinner mUnitsSpinner = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -26,23 +29,24 @@ public class EditProductActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_product);
 		
-		Spinner spinner = (Spinner) findViewById(R.id.cat_spinner);
-		// Create an ArrayAdapter using the string array and a default spinner layout
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-		        R.array.categories_array, android.R.layout.simple_spinner_item);
-		// Specify the layout to use when the list of choices appears
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		// Apply the adapter to the spinner
-		spinner.setAdapter(adapter);
+		initDataSource();
 		
-		Spinner spinner2= (Spinner) findViewById(R.id.unit_spinner);
-		// Create an ArrayAdapter using the string array and a default spinner layout
-		ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this,
-		        R.array.units_array, android.R.layout.simple_spinner_item);
-		// Specify the layout to use when the list of choices appears
+		List<Category> list = categoriesDataSurce.getAllCategories();
+		ArrayAdapter<Category> adapter = new ArrayAdapter<Category>(this, android.R.layout.simple_spinner_item, list);
+		mCatSpinner = (Spinner) findViewById(R.id.cat_spinner);
+		mCatSpinner.setAdapter(adapter);
+
+		ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.units_array, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		// Apply the adapter to the spinner
-		spinner2.setAdapter(adapter2);
+		mUnitsSpinner = (Spinner) findViewById(R.id.unit_spinner);
+		mUnitsSpinner.setAdapter(adapter2);
+
+	}
+
+	private void initDataSource()
+	{
+		categoriesDataSurce = new CategoriesDataSource(this);
+		categoriesDataSurce.open();
 		
 	}
 
@@ -58,5 +62,23 @@ public class EditProductActivity extends Activity
 	{
 		return super.onOptionsItemSelected(item);
 	}
+	
+	@Override
+	public void onResume()
+	{
+		categoriesDataSurce.open();
+		super.onResume();
+	}
+
+	@Override
+	public void onPause()
+	{
+		categoriesDataSurce.close();
+		super.onPause();
+	}
 
 }
+
+//TODO: search layout
+//TODO: zgubi³ titla po on resume
+//TODO: osobny layout dla poziomego widoku

@@ -11,9 +11,9 @@ import android.widget.*;
 import com.example.database.*;
 import com.example.products.*;
 
-public class ProductsSectionFragment extends Fragment
+public class CategoriesSectionFragment extends Fragment
 {
-	private ProductsDataSource datasource;
+	private CategoriesDataSource datasource;
 	private ListView listView;
 	private View rootView;
 	private ActionBar actionBar;
@@ -22,17 +22,17 @@ public class ProductsSectionFragment extends Fragment
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		setHasOptionsMenu(true);
-		
+
 		rootView = inflater.inflate(R.layout.fragment_start_products, container, false);
 
-		datasource = new ProductsDataSource(getActivity());
+		datasource = new CategoriesDataSource(getActivity());
 		datasource.open();
 
 		actionBar = getActivity().getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
-		List<ProductSpecific> list = datasource.getAllProducts();
-		ArrayAdapter<ProductSpecific> adapter = new ArrayAdapter<ProductSpecific>(getActivity(), android.R.layout.simple_list_item_multiple_choice, list);
+		List<Category> list = datasource.getAllCategories();
+		ArrayAdapter<Category> adapter = new ArrayAdapter<Category>(getActivity(), android.R.layout.simple_list_item_multiple_choice, list);
 
 		listView = (ListView) rootView.findViewById(R.id.list);
 		listView.setAdapter(adapter);
@@ -40,8 +40,7 @@ public class ProductsSectionFragment extends Fragment
 
 		return rootView;
 	}
-	
- 
+
 	@Override
 	public void onPrepareOptionsMenu(Menu menu)
 	{
@@ -50,31 +49,30 @@ public class ProductsSectionFragment extends Fragment
 		menu.findItem(R.id.menu_overflow).setVisible(!drawerOpen);
 		super.onPrepareOptionsMenu(menu);
 	}
-	
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
 		@SuppressWarnings("unchecked")
-		ArrayAdapter<ProductSpecific> adapter = (ArrayAdapter<ProductSpecific>) listView.getAdapter();
-		ProductSpecific product = null;
+		ArrayAdapter<Category> adapter = (ArrayAdapter<Category>) listView.getAdapter();
+		Category category = null;
 
 		switch (item.getItemId())
 		{
 		case R.id.item1:
 			System.out.println("Switch item1");
-			String[] products = new String[] { "Chleb", "Mleko", "Cukier" };
+			String[] categories = new String[] { "Spozywcze", "Higieniczne", "S³odycze" };
 			int nextInt = new Random().nextInt(3);
-			product = getDatasource().createProductSpecific(products[nextInt]);
-			adapter.add(product);
+			category = getDatasource().createCategory(categories[nextInt]);
+			adapter.add(category);
 			adapter.notifyDataSetChanged();
 			break;
 		case R.id.item2:
 			if (adapter.getCount() > 0)
 			{
-				product = (ProductSpecific) listView.getAdapter().getItem(0);
-				getDatasource().deleteProductSpecific(product);
-				adapter.remove(product);
+				category = (Category) listView.getAdapter().getItem(0);
+				getDatasource().deleteCategory(category);
+				adapter.remove(category);
 				adapter.notifyDataSetChanged();
 			}
 			break;
@@ -95,12 +93,12 @@ public class ProductsSectionFragment extends Fragment
 		datasource.close();
 		super.onPause();
 	}
-	
-	public ProductsDataSource getDatasource()
+
+	public CategoriesDataSource getDatasource()
 	{
 		return datasource;
 	}
-	
+
 	public ListView getListView()
 	{
 		return listView;

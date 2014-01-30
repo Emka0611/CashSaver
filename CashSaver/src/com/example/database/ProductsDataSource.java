@@ -16,12 +16,12 @@ public class ProductsDataSource
 {
 	// Database fields
 	private SQLiteDatabase database;
-	private ProductDatabaseHelper dbHelper;
-	private String[] allColumns = { ProductTable.COLUMN_ID, ProductTable.COLUMN_NAME, ProductTable.COLUMN_CATEGORY };
+	private DatabaseHelper dbHelper;
+	private String[] allColumns = { ProductTable.COLUMN_ID, ProductTable.COLUMN_NAME, ProductTable.COLUMN_CATEGORY_ID };
 
 	public ProductsDataSource(Context context)
 	{
-		dbHelper = new ProductDatabaseHelper(context);
+		dbHelper = new DatabaseHelper(context);
 	}
 
 	public void open() throws SQLException
@@ -70,7 +70,6 @@ public class ProductsDataSource
 			cursor.moveToNext();
 		}
 		
-		// make sure to close the cursor
 		cursor.close();
 		return products;
 	}

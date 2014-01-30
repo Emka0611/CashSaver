@@ -1,9 +1,8 @@
 package com.example.cashsaver;
 
 import android.os.Bundle;
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
+import android.app.*;
+import android.content.*;
 import android.view.*;
 import android.widget.*;
 
@@ -26,11 +25,28 @@ public class StartActivity extends Activity
 
 	private void selectItem(int position)
 	{
-		mCurrFragment = new ProductsSectionFragment();
-		mFragmentManager.beginTransaction().replace(R.id.content_frame, mCurrFragment).commit();
+		if (0 == position)
+		{
+			mCurrFragment = new ProductsSectionFragment();
+			mFragmentManager.beginTransaction().replace(R.id.content_frame, mCurrFragment).commit();
 
-		mLeftDrawer.setItemChecked(position);
-		mLeftDrawer.setTitle(position);
+			mLeftDrawer.setItemChecked(position);
+			mLeftDrawer.setTitle(position);
+		}
+		else if(1 == position)
+		{
+			mCurrFragment = new CategoriesSectionFragment();
+			mFragmentManager.beginTransaction().replace(R.id.content_frame, mCurrFragment).commit();
+
+			mLeftDrawer.setItemChecked(position);
+			mLeftDrawer.setTitle(position);
+		}
+		else if (2 == position)
+		{
+			Intent i = new Intent(this, EditProductActivity.class);
+			startActivity(i);			
+		}
+		
 	}
 
 	@SuppressWarnings("rawtypes")

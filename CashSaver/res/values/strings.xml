@@ -22,17 +22,12 @@
     <string name="unit_price">Cena jednostkowa</string>
     <string name="unit">Jednostka</string>
     <string name="calculate">Oblicz</string>
+    <string name="categories">Kategorie</string>
 
     <string-array name="drawerListArray">
         <item>Produkty</item>
-        <item>Listy zakupów</item>
-    </string-array>
-    
-    <string-array name="categories_array">
-        <item>Spożywcze</item>
-        <item>Higieniczne</item>
-        <item>Napoje</item>
-        <item>Alkohole</item>
+        <item>Kategorie</item>
+        <item>Dodaj produkt</item>
     </string-array>
     
     <string-array name="units_array">
