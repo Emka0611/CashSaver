@@ -1,7 +1,14 @@
+
+//TODO: porzadek tutaj, zablokowac poziomy widok
+//TODO: walidacja
+//TODO: wyswietlanie kategorii i unitów z bazy
+//TODO: Wpisywanie produktów do bazy
+//TODO: Wyswietlanie produktów z bazy
+
+//TODO: search layout
 //TODO: zgubi³ titla po on resume
 //TODO: osobny layout dla poziomego widoku
-//TODO: porzadek tutaj
-//TODO: search layout
+
 
 package com.example.cashsaver;
 
