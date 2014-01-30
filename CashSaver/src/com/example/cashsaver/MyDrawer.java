@@ -39,7 +39,6 @@ public class MyDrawer
 				super.onDrawerOpened(drawerView);
 				activity.getActionBar().setTitle("Menu");
 				activity.invalidateOptionsMenu();
-				//activity.getActionBar().ge
 			}
 		};
 

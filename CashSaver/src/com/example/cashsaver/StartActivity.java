@@ -25,28 +25,35 @@ public class StartActivity extends Activity
 
 	private void selectItem(int position)
 	{
-		if (0 == position)
-		{
-			mCurrFragment = new ProductsSectionFragment();
-			mFragmentManager.beginTransaction().replace(R.id.content_frame, mCurrFragment).commit();
-
-			mLeftDrawer.setItemChecked(position);
-			mLeftDrawer.setTitle(position);
-		}
-		else if(1 == position)
-		{
-			mCurrFragment = new CategoriesSectionFragment();
-			mFragmentManager.beginTransaction().replace(R.id.content_frame, mCurrFragment).commit();
-
-			mLeftDrawer.setItemChecked(position);
-			mLeftDrawer.setTitle(position);
-		}
-		else if (2 == position)
+		if (3 == position)
 		{
 			Intent i = new Intent(this, EditProductActivity.class);
-			startActivity(i);			
+			startActivity(i);
+			mLeftDrawer.closeDrawer();
 		}
-		
+		else
+		{
+			switch (position)
+			{
+			case 0:
+				mCurrFragment = new ProductsSectionFragment();
+				break;
+			case 1:
+				mCurrFragment = new CategoriesSectionFragment();
+				break;
+			case 2:
+				mCurrFragment = new UnitsSectionFragment();
+				break;
+			}
+			
+			mFragmentManager.beginTransaction().replace(R.id.content_frame, mCurrFragment).commit();
+
+			mLeftDrawer.setItemChecked(position);
+			mLeftDrawer.setTitle(position);
+			mLeftDrawer.closeDrawer();
+	
+		}
+
 	}
 
 	@SuppressWarnings("rawtypes")

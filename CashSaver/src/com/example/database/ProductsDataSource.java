@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.products.Price;
 import com.example.products.ProductSpecific;
+import com.example.tables.ProductTable;
 
 public class ProductsDataSource
 {

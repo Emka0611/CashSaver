@@ -19,7 +19,8 @@ import android.widget.*;
 
 public class EditProductActivity extends Activity
 {
-	CategoriesDataSource categoriesDataSurce = null;
+	CategoriesDataSource categoriesDataSource = null;
+	UnitsDataSource unitsDataSource = null;
 	Spinner mCatSpinner = null;
 	Spinner mUnitsSpinner = null;
 
@@ -31,22 +32,27 @@ public class EditProductActivity extends Activity
 		
 		initDataSource();
 		
-		List<Category> list = categoriesDataSurce.getAllCategories();
-		ArrayAdapter<Category> adapter = new ArrayAdapter<Category>(this, android.R.layout.simple_spinner_item, list);
+		List<Category> categoriesList = categoriesDataSource.getAllCategories();
+		ArrayAdapter<Category> categoriesAdapter = new ArrayAdapter<Category>(this, android.R.layout.simple_spinner_item, categoriesList);
+		categoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		mCatSpinner = (Spinner) findViewById(R.id.cat_spinner);
-		mCatSpinner.setAdapter(adapter);
+		mCatSpinner.setAdapter(categoriesAdapter);
 
-		ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.units_array, android.R.layout.simple_spinner_item);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		List<Unit> unitsList = unitsDataSource.getAllUnits();
+		ArrayAdapter<Unit> unitsAdapter = new ArrayAdapter<Unit>(this, android.R.layout.simple_spinner_item, unitsList);
+		unitsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		mUnitsSpinner = (Spinner) findViewById(R.id.unit_spinner);
-		mUnitsSpinner.setAdapter(adapter2);
+		mUnitsSpinner.setAdapter(unitsAdapter);
 
 	}
 
 	private void initDataSource()
 	{
-		categoriesDataSurce = new CategoriesDataSource(this);
-		categoriesDataSurce.open();
+		unitsDataSource = new UnitsDataSource(this);
+		unitsDataSource.open();
+		
+		categoriesDataSource = new CategoriesDataSource(this);
+		categoriesDataSource.open();
 		
 	}
 
@@ -66,14 +72,16 @@ public class EditProductActivity extends Activity
 	@Override
 	public void onResume()
 	{
-		categoriesDataSurce.open();
+		categoriesDataSource.open();
+		unitsDataSource.open();
 		super.onResume();
 	}
 
 	@Override
 	public void onPause()
 	{
-		categoriesDataSurce.close();
+		categoriesDataSource.close();
+		unitsDataSource.close();
 		super.onPause();
 	}
 

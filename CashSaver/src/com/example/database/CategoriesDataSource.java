@@ -3,6 +3,7 @@ package com.example.database;
 import java.util.*;
 
 import com.example.products.Category;
+import com.example.tables.CategoryTable;
 
 import android.content.ContentValues;
 import android.content.Context;

@@ -27,13 +27,8 @@
     <string-array name="drawerListArray">
         <item>Produkty</item>
         <item>Kategorie</item>
+        <item>Jednostki</item>
         <item>Dodaj produkt</item>
     </string-array>
     
-    <string-array name="units_array">
-        <item>kg</item>
-        <item>szt</item>
-        <item>litr</item>
-    </string-array>
-
 </resources>
