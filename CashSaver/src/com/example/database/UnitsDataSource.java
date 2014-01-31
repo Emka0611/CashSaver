@@ -14,7 +14,7 @@ public class UnitsDataSource
 	// Database fields
 	private SQLiteDatabase database;
 	private DatabaseHelper dbHelper;
-	private String[] allColumns = { UnitTable.COLUMN_ID, UnitTable.COLUMN_NAME};
+	private String[] allColumns = { UnitTable.COLUMN_ID, UnitTable.COLUMN_NAME };
 
 	public UnitsDataSource(Context context)
 	{
@@ -35,15 +35,28 @@ public class UnitsDataSource
 	{
 		ContentValues values = new ContentValues();
 		values.put(UnitTable.COLUMN_NAME, name);
-		
+
 		long insertId = database.insert(UnitTable.TABLE_UNIT, null, values);
 		Cursor cursor = database.query(UnitTable.TABLE_UNIT, allColumns, UnitTable.COLUMN_ID + " = " + insertId, null, null, null, null);
 		cursor.moveToFirst();
-		
-		Unit newUnit = cursorToUnit(cursor);
+
+		Unit newUnit = convertCursorToUnit(cursor);
 		cursor.close();
-		
+
 		return newUnit;
+	}
+
+	public Unit getUnit(long unitId)
+	{
+		String selectQuery = "SELECT  * FROM " + UnitTable.TABLE_UNIT + " WHERE " + UnitTable.COLUMN_ID + " = " + unitId;
+		Cursor cursor = database.rawQuery(selectQuery, null);
+
+		if (cursor != null)
+		{
+			cursor.moveToFirst();
+		}
+
+		return convertCursorToUnit(cursor);
 	}
 
 	public void deleteUnit(Unit unit)
@@ -62,20 +75,22 @@ public class UnitsDataSource
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast())
 		{
-			Unit unit = cursorToUnit(cursor);
+			Unit unit = convertCursorToUnit(cursor);
 			categories.add(unit);
 			cursor.moveToNext();
 		}
-		
+
 		cursor.close();
 		return categories;
 	}
 
-	private Unit cursorToUnit(Cursor cursor)
+	private Unit convertCursorToUnit(Cursor cursor)
 	{
-		Unit unit = new Unit(cursor.getLong(0), cursor.getString(1));
+		long unitId = cursor.getLong(0);
+		String unitName = cursor.getString(1);
+
+		Unit unit = new Unit(unitId, unitName);
 		return unit;
 	}
 
 }
-

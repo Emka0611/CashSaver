@@ -3,25 +3,33 @@ package com.example.products;
 public class ProductSpecific
 {
 	private long m_id;
+	
 	private String m_generalName;
 	private String m_detailedName;
-
-	private String m_category;
-
-	private Price m_bestPrice;
+	private Category m_category;
 	private PriceHistory m_priceHistory;
 
 	private int m_barcode;
 
-	public ProductSpecific(long id, String generalName, String detailedName, Price price, String category, int barcode)
+/*	public ProductSpecific(long id, String generalName, String detailedName, PriceHistory priceHistory, Category category, int barcode)
 	{
 		this.m_id = id;
 		this.m_generalName = generalName;
 		this.m_detailedName = detailedName;
 		this.m_category = category;
-		this.m_bestPrice = price;
+		this.m_priceHistory = priceHistory;
+		
 		this.m_barcode = barcode;
-		this.m_priceHistory = new PriceHistory(new PriceEntry(price));
+	}*/
+	
+	public ProductSpecific(long id, String generalName, String detailedName, Category category, int barcode)
+	{
+		this.m_id = id;
+		this.m_generalName = generalName;
+		this.m_detailedName = detailedName;
+		this.m_category = category;
+		
+		this.m_barcode = barcode;
 	}
 
 	public long getId()
@@ -39,14 +47,9 @@ public class ProductSpecific
 		return m_detailedName;
 	}
 
-	public String getCategory()
+	public Category getCategory()
 	{
 		return m_category;
-	}
-
-	public Price getBestPrice()
-	{
-		return m_bestPrice;
 	}
 
 	public PriceHistory getPriceHistory()

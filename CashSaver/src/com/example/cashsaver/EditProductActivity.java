@@ -1,4 +1,3 @@
-//TODO: wyswietlanie unitów z bazy
 //TODO: Wpisywanie produktów do bazy
 //TODO: Wyswietlanie produktów z bazy
 //TODO: CashSaver tytu³ znika

@@ -3,15 +3,12 @@ package com.example.database;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.*;
+import android.database.*;
+import android.database.sqlite.*;
 
-import com.example.products.Price;
-import com.example.products.ProductSpecific;
-import com.example.tables.ProductTable;
+import com.example.products.*;
+import com.example.tables.*;
 
 public class ProductsDataSource
 {
@@ -44,7 +41,7 @@ public class ProductsDataSource
 		Cursor cursor = database.query(ProductTable.TABLE_PRODUCT, allColumns, ProductTable.COLUMN_ID + " = " + insertId, null, null, null, null);
 		cursor.moveToFirst();
 		
-		ProductSpecific newProductSpecific = cursorToProductSpecific(cursor);
+		ProductSpecific newProductSpecific = convertCursorToProductSpecific(cursor);
 		cursor.close();
 		
 		return newProductSpecific;
@@ -66,7 +63,7 @@ public class ProductsDataSource
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast())
 		{
-			ProductSpecific produt = cursorToProductSpecific(cursor);
+			ProductSpecific produt = convertCursorToProductSpecific(cursor);
 			products.add(produt);
 			cursor.moveToNext();
 		}
@@ -75,10 +72,20 @@ public class ProductsDataSource
 		return products;
 	}
 
-	private ProductSpecific cursorToProductSpecific(Cursor cursor)
+	private ProductSpecific convertCursorToProductSpecific(Cursor cursor)
 	{
-		ProductSpecific product = new ProductSpecific(cursor.getLong(0), cursor.getString(1), "", new Price(0, "kg"), "cat", 0);
+		long productId = cursor.getLong(0);
+		String productName = cursor.getString(1);
+		String productDetailedName = cursor.getString(2);
+		long categoryId = cursor.getLong(3);
+		int barcode = 0;
+		//long priceHistoryId = cursor.getLong(4);
+		
+		Category category = dbHelper.categoriesDataSource.getCategory(categoryId);
+		
+		ProductSpecific product = new ProductSpecific(productId, productName, productDetailedName, category, barcode);
 		return product;
+		
 	}
 
 }

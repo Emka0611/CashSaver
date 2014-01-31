@@ -15,7 +15,7 @@ public class CategoriesDataSource
 	// Database fields
 	private SQLiteDatabase database;
 	private DatabaseHelper dbHelper;
-	private String[] allColumns = { CategoryTable.COLUMN_ID, CategoryTable.COLUMN_NAME};
+	private String[] allColumns = { CategoryTable.COLUMN_ID, CategoryTable.COLUMN_NAME };
 
 	public CategoriesDataSource(Context context)
 	{
@@ -36,15 +36,28 @@ public class CategoriesDataSource
 	{
 		ContentValues values = new ContentValues();
 		values.put(CategoryTable.COLUMN_NAME, name);
-		
+
 		long insertId = database.insert(CategoryTable.TABLE_CATEGORY, null, values);
 		Cursor cursor = database.query(CategoryTable.TABLE_CATEGORY, allColumns, CategoryTable.COLUMN_ID + " = " + insertId, null, null, null, null);
 		cursor.moveToFirst();
-		
-		Category newCategory = cursorToCategory(cursor);
+
+		Category newCategory = convertCursorToCategory(cursor);
 		cursor.close();
-		
+
 		return newCategory;
+	}
+	
+	public Category getCategory(long categoryId)
+	{
+		String selectQuery = "SELECT  * FROM " + CategoryTable.TABLE_CATEGORY + " WHERE " + CategoryTable.COLUMN_ID + " = " + categoryId;
+		Cursor cursor = database.rawQuery(selectQuery, null);
+
+		if (cursor != null)
+		{
+			cursor.moveToFirst();
+		}
+
+		return convertCursorToCategory(cursor);
 	}
 
 	public void deleteCategory(Category category)
@@ -63,20 +76,22 @@ public class CategoriesDataSource
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast())
 		{
-			Category category = cursorToCategory(cursor);
+			Category category = convertCursorToCategory(cursor);
 			categories.add(category);
 			cursor.moveToNext();
 		}
-		
+
 		cursor.close();
 		return categories;
 	}
 
-	private Category cursorToCategory(Cursor cursor)
+	private Category convertCursorToCategory(Cursor cursor)
 	{
-		Category category = new Category(cursor.getLong(0), cursor.getString(1));
+		long categoryId = cursor.getLong(0);
+		String categoryName = cursor.getString(1);
+
+		Category category = new Category(categoryId, categoryName);
 		return category;
 	}
 
 }
-

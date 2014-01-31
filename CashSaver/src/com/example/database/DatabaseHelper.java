@@ -10,7 +10,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper
 {
-
+	CategoriesDataSource categoriesDataSource;
+	ProductsDataSource productsDataSource;
+	UnitsDataSource unitsDataSource;
+	
 	private static final String DATABASE_NAME = "productdatabase.db";
 	private static final int DATABASE_VERSION = 1;
 
@@ -34,5 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 		CategoryTable.onUpgrade(database, oldVersion, newVersion);
 		UnitTable.onUpgrade(database, oldVersion, newVersion);
 	}
+	
+	
 
 }
