@@ -14,7 +14,6 @@ import android.database.sqlite.*;
 
 public class PricesDataSource
 {
-	// Database fields
 	private SQLiteDatabase database;
 	private DatabaseHelper dbHelper;
 
@@ -35,20 +34,21 @@ public class PricesDataSource
 	
 	public void addExamples()
 	{
-		Float[] prices = new Float[] { (float) 1.2 , (float) 1.4, (float) 3.5 };
+		double[] prices = new double[] { 1.2 , 1.4, 3.5 };
 		open();
-		//for the first product -> 3 price entries
-		createPrice(1, prices[0], 1);
-		createPrice(1, prices[1], 2);
-		createPrice(1, prices[2], 3);
+		//product price quantity unit
+		createPrice(1, prices[0], 0.5, 1);
+		createPrice(1, prices[1], 3, 2);
+		createPrice(1, prices[2], 2, 3);
 		close();
 	}
 
-	public Price createPrice(long product_id, float price_value, long unitId)
+	public Price createPrice(long product_id, double price_value, double quantity, long unitId)
 	{
 		ContentValues values = new ContentValues();
 		values.put(PriceTable.COLUMN_PRODUCT_ID, product_id);
 		values.put(PriceTable.COLUMN_PRICE_VALUE, price_value);
+		values.put(PriceTable.COLUMN_QUANTITY, quantity);
 		values.put(PriceTable.COLUMN_UNIT_ID, unitId);
 		values.put(PriceTable.COLUMN_DATE, DatabaseHelper.getDateTime());
 
@@ -109,15 +109,16 @@ public class PricesDataSource
 	{
 		long priceId = cursor.getLong(0);
 		long productId = cursor.getLong(1);
-		float priceValue = cursor.getFloat(2);
-		long unitId = cursor.getLong(3);
-		String created_at = cursor.getString(4);
+		double priceValue = cursor.getDouble(2);
+		double quantity = cursor.getDouble(3);
+		long unitId = cursor.getLong(4);
+		String created_at = cursor.getString(5);
 		
 		DatabaseDataSources.unitsDataSource.open();
 		Unit unit = DatabaseDataSources.unitsDataSource.getUnit(unitId);
 		DatabaseDataSources.unitsDataSource.close();
 
-		Price price = new Price(priceId, productId, priceValue, unit, created_at);
+		Price price = new Price(priceId, productId, priceValue, quantity, unit, created_at);
 		return price;
 	}
 

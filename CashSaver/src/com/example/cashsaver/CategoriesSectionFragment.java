@@ -23,7 +23,7 @@ public class CategoriesSectionFragment extends Fragment
 	{
 		setHasOptionsMenu(true);
 
-		rootView = inflater.inflate(R.layout.fragment_start_products, container, false);
+		rootView = inflater.inflate(R.layout.fragment_list, container, false);
 
 		datasource = DatabaseDataSources.categoriesDataSource;
 		datasource.open();
@@ -45,8 +45,10 @@ public class CategoriesSectionFragment extends Fragment
 	public void onPrepareOptionsMenu(Menu menu)
 	{
 		getActivity().getMenuInflater().inflate(R.menu.menu_products, menu);
-		boolean drawerOpen = ((StartActivity) getActivity()).isDrawerOpen();
+		boolean drawerOpen = ((MainActivity) getActivity()).isDrawerOpen();
 		menu.findItem(R.id.menu_overflow).setVisible(!drawerOpen);
+		menu.findItem(R.id.item1).setVisible(false);
+		menu.findItem(R.id.item2).setVisible(false);
 		super.onPrepareOptionsMenu(menu);
 	}
 
@@ -55,25 +57,18 @@ public class CategoriesSectionFragment extends Fragment
 	{
 		@SuppressWarnings("unchecked")
 		ArrayAdapter<Category> adapter = (ArrayAdapter<Category>) listView.getAdapter();
-		Category category = null;
 
 		switch (item.getItemId())
 		{
 		case R.id.item1:
-			String[] categories = new String[] { "Spozywcze", "Higieniczne", "S³odycze" };
-			int nextInt = new Random().nextInt(3);
-			category = datasource.createCategory(categories[nextInt]);
-			adapter.add(category);
-			adapter.notifyDataSetChanged();
 			break;
 		case R.id.item2:
-			if (adapter.getCount() > 0)
-			{
-				category = (Category) listView.getAdapter().getItem(0);
-				datasource.deleteCategory(category);
-				adapter.remove(category);
-				adapter.notifyDataSetChanged();
-			}
+			break;
+		case R.id.item3:
+			DatabaseDataSources.addExamples();
+			datasource.open();
+			adapter.clear();
+			adapter.addAll(datasource.getAllCategories());
 			break;
 		}
 		return super.onOptionsItemSelected(item);

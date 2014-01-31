@@ -7,6 +7,7 @@
     <string name="title_shopping_lists">Listy zakupów</string>
     <string name="action_add">Dodaj</string>
     <string name="action_delete">Usun pierwszy</string>
+    <string name="action_add_examples">Dodaj przykłady</string>
     <string name="drawer_open">BUM</string>
     <string name="drawer_close">BUM</string>
     <string name="title_product_add">Dodaj produkt </string>

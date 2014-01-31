@@ -24,7 +24,7 @@ public class ProductsSectionFragment extends Fragment
 	{
 		setHasOptionsMenu(true);
 		
-		rootView = inflater.inflate(R.layout.fragment_start_products, container, false);
+		rootView = inflater.inflate(R.layout.fragment_list, container, false);
 
 		datasource = DatabaseDataSources.productsDataSource;
 		datasource.open();
@@ -47,8 +47,10 @@ public class ProductsSectionFragment extends Fragment
 	public void onPrepareOptionsMenu(Menu menu)
 	{
 		getActivity().getMenuInflater().inflate(R.menu.menu_products, menu);
-		boolean drawerOpen = ((StartActivity) getActivity()).isDrawerOpen();
+		boolean drawerOpen = ((MainActivity) getActivity()).isDrawerOpen();
 		menu.findItem(R.id.menu_overflow).setVisible(!drawerOpen);
+		menu.findItem(R.id.item1).setVisible(false);
+		menu.findItem(R.id.item2).setVisible(false);
 		super.onPrepareOptionsMenu(menu);
 	}
 	
@@ -58,26 +60,18 @@ public class ProductsSectionFragment extends Fragment
 	{
 		@SuppressWarnings("unchecked")
 		ArrayAdapter<ProductSpecific> adapter = (ArrayAdapter<ProductSpecific>) listView.getAdapter();
-		ProductSpecific product = null;
 
 		switch (item.getItemId())
 		{
 		case R.id.item1:
-			System.out.println("Switch item1");
-			String[] products = new String[] { "Chleb", "Mleko", "Cukier" };
-			int nextInt = new Random().nextInt(3);
-			product = datasource.createProductSpecific(products[nextInt], "detail", nextInt+1);
-			adapter.add(product);
-			adapter.notifyDataSetChanged();
 			break;
 		case R.id.item2:
-			if (adapter.getCount() > 0)
-			{
-				product = (ProductSpecific) listView.getAdapter().getItem(0);
-				datasource.deleteProductSpecific(product);
-				adapter.remove(product);
-				adapter.notifyDataSetChanged();
-			}
+			break;
+		case R.id.item3:
+			DatabaseDataSources.addExamples();
+			datasource.open();
+			adapter.clear();
+			adapter.addAll(datasource.getAllProducts());
 			break;
 		}
 		return super.onOptionsItemSelected(item);

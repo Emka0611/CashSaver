@@ -4,7 +4,6 @@ import java.util.*;
 
 import android.os.Bundle;
 import android.app.*;
-import android.util.Log;
 import android.view.*;
 import android.widget.*;
 
@@ -24,7 +23,7 @@ public class UnitsSectionFragment extends Fragment
 	{
 		setHasOptionsMenu(true);
 
-		rootView = inflater.inflate(R.layout.fragment_start_products, container, false);
+		rootView = inflater.inflate(R.layout.fragment_list, container, false);
 
 		datasource = DatabaseDataSources.unitsDataSource;
 		datasource.open();
@@ -46,8 +45,10 @@ public class UnitsSectionFragment extends Fragment
 	public void onPrepareOptionsMenu(Menu menu)
 	{
 		getActivity().getMenuInflater().inflate(R.menu.menu_products, menu);
-		boolean drawerOpen = ((StartActivity) getActivity()).isDrawerOpen();
+		boolean drawerOpen = ((MainActivity) getActivity()).isDrawerOpen();
 		menu.findItem(R.id.menu_overflow).setVisible(!drawerOpen);
+		menu.findItem(R.id.item1).setVisible(false);
+		menu.findItem(R.id.item2).setVisible(false);
 		super.onPrepareOptionsMenu(menu);
 	}
 
@@ -56,27 +57,18 @@ public class UnitsSectionFragment extends Fragment
 	{
 		@SuppressWarnings("unchecked")
 		ArrayAdapter<Unit> adapter = (ArrayAdapter<Unit>) listView.getAdapter();
-		Unit unit = null;
 
 		switch (item.getItemId())
 		{
 		case R.id.item1:
-			System.out.println("Switch item1");
-			String[] units = new String[] { "kg", "szt", "litr" };
-			int nextInt = new Random().nextInt(3);
-			unit = datasource.createUnit(units[nextInt]);
-			Log.d("AAA", "" + unit.getId());
-			adapter.add(unit);
-			adapter.notifyDataSetChanged();
 			break;
 		case R.id.item2:
-			if (adapter.getCount() > 0)
-			{
-				unit = (Unit) listView.getAdapter().getItem(0);
-				datasource.deleteUnit(unit);
-				adapter.remove(unit);
-				adapter.notifyDataSetChanged();
-			}
+			break;
+		case R.id.item3:
+			DatabaseDataSources.addExamples();
+			datasource.open();
+			adapter.clear();
+			adapter.addAll(datasource.getAllUnits());
 			break;
 		}
 		return super.onOptionsItemSelected(item);

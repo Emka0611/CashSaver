@@ -13,9 +13,11 @@ public class MyDrawer
 	private String[] mDrawerTitles;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private String mTitle;
+	private Activity mActivity;
 
 	public MyDrawer(final Activity activity)
 	{
+		mActivity = activity;
 		mDrawerLayout = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) activity.findViewById(R.id.left_drawer);
 		
@@ -48,6 +50,8 @@ public class MyDrawer
 	public void setTitle(int position)
 	{
 		this.mTitle = mDrawerTitles[position];
+		mActivity.getActionBar().setTitle(mTitle);
+		
 	}
 	
 	public void closeDrawer()

@@ -13,6 +13,9 @@
             <item
                 android:id="@+id/item2"
                 android:title="@string/action_delete"/>
+            <item
+                android:id="@+id/item3"
+                android:title="@string/action_add_examples"/>
         </menu>
     </item>
 

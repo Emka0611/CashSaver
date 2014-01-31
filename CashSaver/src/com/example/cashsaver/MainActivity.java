@@ -1,12 +1,14 @@
 package com.example.cashsaver;
 
+import com.example.database.DatabaseHelper;
+
 import android.os.Bundle;
 import android.app.*;
 import android.content.*;
 import android.view.*;
 import android.widget.*;
 
-public class StartActivity extends Activity
+public class MainActivity extends Activity
 {
 	private MyDrawer mLeftDrawer = null;
 	Fragment mCurrFragment = null;
@@ -16,11 +18,12 @@ public class StartActivity extends Activity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_start);
+		setContentView(R.layout.activity_main);
 		
 		mLeftDrawer = new MyDrawer(this);
 		mLeftDrawer.setOnItemClickListener(new DrawerItemClickListener());
 		mFragmentManager = getFragmentManager();
+		selectItem(2);
 	}
 
 	private void selectItem(int position)
@@ -83,6 +86,13 @@ public class StartActivity extends Activity
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	@Override
+	public void onDestroy()
+	{
+		DatabaseHelper.dropDatabase();
+		super.onDestroy();
 	}
 
 }

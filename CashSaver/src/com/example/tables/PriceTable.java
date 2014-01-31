@@ -10,6 +10,7 @@ public class PriceTable
 	public static final String COLUMN_ID = "_id";
 	public static final String COLUMN_PRODUCT_ID = "product_id";
 	public static final String COLUMN_PRICE_VALUE = "price_value";
+	public static final String COLUMN_QUANTITY = "quantity";
 	public static final String COLUMN_UNIT_ID = "unit_id";
 	public static final String COLUMN_DATE = "created_at";
 	
@@ -17,6 +18,7 @@ public class PriceTable
 			COLUMN_ID,
 			COLUMN_PRODUCT_ID,
 			COLUMN_PRICE_VALUE,
+			COLUMN_QUANTITY,
 			COLUMN_UNIT_ID,
 			COLUMN_DATE
 			};
@@ -26,7 +28,8 @@ public class PriceTable
 			+"(" 
 			+ COLUMN_ID + " integer primary key autoincrement, "
 			+ COLUMN_PRODUCT_ID + " iteger,"
-			+ COLUMN_PRICE_VALUE + " float, "
+			+ COLUMN_PRICE_VALUE + " double,"
+			+ COLUMN_QUANTITY + " double,"
 			+ COLUMN_UNIT_ID + " integer,"
 			+ COLUMN_DATE + " datetime"
 			+ ");"
@@ -35,7 +38,6 @@ public class PriceTable
 	public static void onCreate(SQLiteDatabase database)
 	{
 		database.execSQL(DATABASE_CREATE);
-		Log.d("AAA", DATABASE_CREATE);
 	}
 
 	public static void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion)

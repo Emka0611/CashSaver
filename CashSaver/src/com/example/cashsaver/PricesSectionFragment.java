@@ -23,7 +23,7 @@ public class PricesSectionFragment extends Fragment
 	{
 		setHasOptionsMenu(true);
 
-		rootView = inflater.inflate(R.layout.fragment_start_products, container, false);
+		rootView = inflater.inflate(R.layout.fragment_list, container, false);
 
 		datasource = DatabaseDataSources.pricesDataSource;
 		datasource.open();
@@ -32,12 +32,11 @@ public class PricesSectionFragment extends Fragment
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
 		List<Price> list = datasource.getAllPrices();
-		ArrayAdapter<Price> adapter = new ArrayAdapter<Price>(getActivity(), android.R.layout.simple_list_item_multiple_choice, list);
+		ArrayAdapter<Price> adapter = new ArrayAdapter<Price>(getActivity(), android.R.layout.simple_list_item_1, list);
 
 		listView = (ListView) rootView.findViewById(R.id.list);
 		listView.setAdapter(adapter);
-		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-
+		
 		return rootView;
 	}
 
@@ -45,8 +44,10 @@ public class PricesSectionFragment extends Fragment
 	public void onPrepareOptionsMenu(Menu menu)
 	{
 		getActivity().getMenuInflater().inflate(R.menu.menu_products, menu);
-		boolean drawerOpen = ((StartActivity) getActivity()).isDrawerOpen();
+		boolean drawerOpen = ((MainActivity) getActivity()).isDrawerOpen();
 		menu.findItem(R.id.menu_overflow).setVisible(!drawerOpen);
+		menu.findItem(R.id.item1).setVisible(false);
+		menu.findItem(R.id.item2).setVisible(false);
 		super.onPrepareOptionsMenu(menu);
 	}
 
@@ -55,25 +56,18 @@ public class PricesSectionFragment extends Fragment
 	{
 		@SuppressWarnings("unchecked")
 		ArrayAdapter<Price> adapter = (ArrayAdapter<Price>) listView.getAdapter();
-		Price price = null;
 
 		switch (item.getItemId())
 		{
 		case R.id.item1:
-			Float[] prices = new Float[] { (float) 1.2 , (float) 1.4, (float) 3.5 };
-			int nextInt = new Random().nextInt(3);
-			price = datasource.createPrice(1, prices[nextInt], nextInt+1);
-			adapter.add(price);
-			adapter.notifyDataSetChanged();
 			break;
 		case R.id.item2:
-			if (adapter.getCount() > 0)
-			{
-				price = (Price) listView.getAdapter().getItem(0);
-				datasource.deletePrice(price);
-				adapter.remove(price);
-				adapter.notifyDataSetChanged();
-			}
+			break;
+		case R.id.item3:
+			DatabaseDataSources.addExamples();
+			datasource.open();
+			adapter.clear();
+			adapter.addAll(datasource.getAllPrices());
 			break;
 		}
 		return super.onOptionsItemSelected(item);
