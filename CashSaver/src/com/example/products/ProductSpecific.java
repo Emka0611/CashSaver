@@ -17,7 +17,7 @@ public class ProductSpecific
 		this.m_generalName = generalName;
 		this.m_detailedName = detailedName;
 		this.m_category = category;
-		
+		this.m_priceHistory = new PriceHistory(m_id);
 		this.m_barcode = barcode;
 	}
 
@@ -55,8 +55,10 @@ public class ProductSpecific
 	public String toString()
 	{
 		StringBuilder builder = new StringBuilder();
-		builder.append(m_generalName + " ");
-		builder.append(m_category.getName());
+		builder.append(m_category.getName() + " ");
+		builder.append(m_generalName);
+		builder.append(" History entries: ");
+		builder.append(m_priceHistory.getPriceEntriesVector().size());
 		return builder.toString();
 	}
 

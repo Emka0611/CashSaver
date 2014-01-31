@@ -42,11 +42,12 @@ public class StartActivity extends Activity
 				mCurrFragment = new UnitsSectionFragment();
 				break;
 			case 2:
-				mCurrFragment = new PricesSectionFragment();
-				break;
-			case 3:
 				mCurrFragment = new ProductsSectionFragment();
 				break;
+			case 3:
+				mCurrFragment = new PricesSectionFragment();
+				break;
+
 			}
 			
 			mFragmentManager.beginTransaction().replace(R.id.content_frame, mCurrFragment).commit();

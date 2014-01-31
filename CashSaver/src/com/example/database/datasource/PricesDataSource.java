@@ -21,13 +21,6 @@ public class PricesDataSource
 	public PricesDataSource(Context context)
 	{
 		dbHelper = new DatabaseHelper(context);
-		
-		Float[] prices = new Float[] { (float) 1.2 , (float) 1.4, (float) 3.5 };
-		open();
-		createPrice(prices[0], 1);
-		createPrice(prices[1], 2);
-		createPrice(prices[2], 3);
-		close();
 	}
 
 	public void open() throws SQLException
@@ -39,10 +32,22 @@ public class PricesDataSource
 	{
 		dbHelper.close();
 	}
+	
+	public void addExamples()
+	{
+		Float[] prices = new Float[] { (float) 1.2 , (float) 1.4, (float) 3.5 };
+		open();
+		//for the first product -> 3 price entries
+		createPrice(1, prices[0], 1);
+		createPrice(1, prices[1], 2);
+		createPrice(1, prices[2], 3);
+		close();
+	}
 
-	public Price createPrice(float price_value, long unitId)
+	public Price createPrice(long product_id, float price_value, long unitId)
 	{
 		ContentValues values = new ContentValues();
+		values.put(PriceTable.COLUMN_PRODUCT_ID, product_id);
 		values.put(PriceTable.COLUMN_PRICE_VALUE, price_value);
 		values.put(PriceTable.COLUMN_UNIT_ID, unitId);
 		values.put(PriceTable.COLUMN_DATE, DatabaseHelper.getDateTime());
@@ -66,7 +71,7 @@ public class PricesDataSource
 
 	public List<Price> getAllPrices()
 	{
-		List<Price> categories = new ArrayList<Price>();
+		List<Price> prices = new ArrayList<Price>();
 
 		Cursor cursor = database.query(PriceTable.TABLE_PRICE, PriceTable.ALL_COLUMNS, null, null, null, null, null);
 
@@ -74,26 +79,45 @@ public class PricesDataSource
 		while (!cursor.isAfterLast())
 		{
 			Price price = convertCursorToPrice(cursor);
-			categories.add(price);
+			prices.add(price);
 			cursor.moveToNext();
 		}
 
 		cursor.close();
-		return categories;
+		return prices;
+	}
+	
+	public List<Price> getAllPrices(long productId)
+	{
+		List<Price> prices= new ArrayList<Price>();
+
+		Cursor cursor = database.query(PriceTable.TABLE_PRICE, PriceTable.ALL_COLUMNS, PriceTable.COLUMN_PRODUCT_ID + " = " + productId, null, null, null, null);
+
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast())
+		{
+			Price price = convertCursorToPrice(cursor);
+			prices.add(price);
+			cursor.moveToNext();
+		}
+
+		cursor.close();
+		return prices;
 	}
 
 	private Price convertCursorToPrice(Cursor cursor)
 	{
 		long priceId = cursor.getLong(0);
-		float priceValue = cursor.getFloat(1);
-		long unitId = cursor.getLong(2);
-		String created_at = cursor.getString(3);
+		long productId = cursor.getLong(1);
+		float priceValue = cursor.getFloat(2);
+		long unitId = cursor.getLong(3);
+		String created_at = cursor.getString(4);
 		
 		DatabaseDataSources.unitsDataSource.open();
 		Unit unit = DatabaseDataSources.unitsDataSource.getUnit(unitId);
 		DatabaseDataSources.unitsDataSource.close();
 
-		Price price = new Price(priceId, priceValue, unit, created_at);
+		Price price = new Price(priceId, productId, priceValue, unit, created_at);
 		return price;
 	}
 

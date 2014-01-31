@@ -23,12 +23,6 @@ public class UnitsDataSource
 	public UnitsDataSource(Context context)
 	{
 		dbHelper = new DatabaseHelper(context);
-		String[] units = new String[] { "kg", "szt", "litr" };
-		open();
-		createUnit(units[0]);
-		createUnit(units[1]);
-		createUnit(units[2]);
-		close();
 	}
 
 	public void open() throws SQLException
@@ -39,6 +33,16 @@ public class UnitsDataSource
 	public void close()
 	{
 		dbHelper.close();
+	}
+	
+	public void addExamples()
+	{
+		String[] units = new String[] { "kg", "szt", "litr" };
+		open();
+		createUnit(units[0]);
+		createUnit(units[1]);
+		createUnit(units[2]);
+		close();
 	}
 
 	public Unit createUnit(String name)

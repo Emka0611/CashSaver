@@ -8,12 +8,14 @@ public class PriceTable
 	public static final String TABLE_PRICE = "price";
 
 	public static final String COLUMN_ID = "_id";
+	public static final String COLUMN_PRODUCT_ID = "product_id";
 	public static final String COLUMN_PRICE_VALUE = "price_value";
 	public static final String COLUMN_UNIT_ID = "unit_id";
 	public static final String COLUMN_DATE = "created_at";
 	
 	public static String[] ALL_COLUMNS = {
 			COLUMN_ID,
+			COLUMN_PRODUCT_ID,
 			COLUMN_PRICE_VALUE,
 			COLUMN_UNIT_ID,
 			COLUMN_DATE
@@ -23,6 +25,7 @@ public class PriceTable
 	private static final String DATABASE_CREATE ="create table " + TABLE_PRICE
 			+"(" 
 			+ COLUMN_ID + " integer primary key autoincrement, "
+			+ COLUMN_PRODUCT_ID + " iteger,"
 			+ COLUMN_PRICE_VALUE + " float, "
 			+ COLUMN_UNIT_ID + " integer,"
 			+ COLUMN_DATE + " datetime"

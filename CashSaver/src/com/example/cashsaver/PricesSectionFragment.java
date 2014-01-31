@@ -60,10 +60,9 @@ public class PricesSectionFragment extends Fragment
 		switch (item.getItemId())
 		{
 		case R.id.item1:
-			System.out.println("Switch item1");
 			Float[] prices = new Float[] { (float) 1.2 , (float) 1.4, (float) 3.5 };
 			int nextInt = new Random().nextInt(3);
-			price = datasource.createPrice(prices[nextInt], nextInt+1);
+			price = datasource.createPrice(1, prices[nextInt], nextInt+1);
 			adapter.add(price);
 			adapter.notifyDataSetChanged();
 			break;

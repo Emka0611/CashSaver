@@ -1,14 +1,12 @@
 package com.example.database.datasource;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import android.content.*;
 import android.database.*;
 import android.database.sqlite.*;
 
-import com.example.database.DatabaseDataSources;
-import com.example.database.DatabaseHelper;
+import com.example.database.*;
 import com.example.products.*;
 import com.example.tables.*;
 
@@ -37,6 +35,16 @@ public class ProductsDataSource
 	public void close()
 	{
 		dbHelper.close();
+	}
+	
+	public void addExamples()
+	{
+		open();
+		String[] products = new String[] { "Chleb", "Mleko", "Cukier" };
+		createProductSpecific(products[0], "detail", 1);
+		createProductSpecific(products[1], "detail", 2);
+		createProductSpecific(products[2], "detail", 3);
+		close();
 	}
 
 	public ProductSpecific createProductSpecific(String name, String detailedName, long categoryId)

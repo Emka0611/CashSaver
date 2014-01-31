@@ -14,8 +14,13 @@ public class DatabaseDataSources
 	{
 		categoriesDataSource = new CategoriesDataSource(context);
 		unitsDataSource = new UnitsDataSource(context);
-		pricesDataSource = new PricesDataSource(context);
 		productsDataSource = new ProductsDataSource(context);
+		pricesDataSource = new PricesDataSource(context);
+		
+		categoriesDataSource.addExamples();
+		unitsDataSource.addExamples();
+		productsDataSource.addExamples();
+		pricesDataSource.addExamples();
 	}
 
 }

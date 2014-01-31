@@ -3,13 +3,15 @@ package com.example.products;
 public class Price
 {
 	private long m_id;
+	private long m_product_id;
 	private float m_price;
 	private Unit m_unit;
 	private String m_date;
 	
-	public Price(long id, float price, Unit unit, String date)
+	public Price(long id, long product_id, float price, Unit unit, String date)
 	{
 		this.m_id = id;
+		this.m_product_id = product_id;
 		this.m_price = price;
 		this.m_unit = unit;
 		this.m_date = date;
@@ -18,6 +20,11 @@ public class Price
 	public long getId()
 	{
 		return m_id;
+	}
+	
+	public long getProductId()
+	{
+		return m_product_id;
 	}
 	
 	public float getPrice()

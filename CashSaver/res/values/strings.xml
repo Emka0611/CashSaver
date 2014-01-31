@@ -28,8 +28,8 @@
     <string-array name="drawerListArray">
         <item>Kategorie</item>
         <item>Jednostki</item>
-        <item>Ceny</item>
         <item>Produkty</item>
+        <item>Ceny</item>
         <item>Dodaj produkt</item>
     </string-array>
     

@@ -1,26 +1,31 @@
 package com.example.products;
-import java.util.Vector;
+import java.util.*;
+
+import com.example.database.DatabaseDataSources;
 
 
 public class PriceHistory
 {
-	private Vector<Price> m_priceEntriesVector;
+	private List<Price> m_priceEntriesVector;
 
 	
-	public PriceHistory(Price priceEntry)
+	public PriceHistory(long product_id)
 	{
-		this.m_priceEntriesVector =  new Vector<Price>();
-		m_priceEntriesVector.add(priceEntry);
+		//m_priceEntriesVector = new ArrayList<Price>();
+
+		DatabaseDataSources.pricesDataSource.open();
+		m_priceEntriesVector = DatabaseDataSources.pricesDataSource.getAllPrices(product_id);
+		DatabaseDataSources.pricesDataSource.close();
 	}
 
-	public Vector<Price> getPriceEntriesVector()
+	public List<Price> getPriceEntriesVector()
 	{
 		return m_priceEntriesVector;
 	}
 	
 	public void addPrice(Price entry)
 	{
-		m_priceEntriesVector.add(entry);
+		//TODO
 	}
 	
 }

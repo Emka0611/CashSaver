@@ -1,8 +1,11 @@
-//TODO: Historia cen
+//TODO: ilosc
 //TODO: kolory
 //TODO: Wpisywanie produktów do bazy z input formów
 //TODO: Wyswietlanie produktów z bazy
-//TODO: CashSaver tytu³ znika
+//TODO: dodawanie unitów i kategorii z reki, usuwanie
+//TODO: General/specyfic
+//TODO: Usuwanie, edycja
+//TODO: CashSaver tytu³ znika, pierwszy widok
 //TODO: Menu w edycji ??
 //TODO: walidacja
 
