@@ -1,4 +1,3 @@
-//TODO: kolory
 //TODO: Wpisywanie produktów do bazy z input formów
 //TODO: Wyswietlanie produktów z bazy
 //TODO: dodawanie unitów i kategorii z reki, usuwanie
@@ -91,6 +90,9 @@ public class EditProductActivity extends Activity
 
 }
 
-//TODO: search layout
+//TODO: search action bar
+//TODO: actionbar color
+//TODO: ikonki
 //TODO: zgubi³ titla po on resume
 //TODO: osobny layout dla poziomego widoku
+//TODO: kolory

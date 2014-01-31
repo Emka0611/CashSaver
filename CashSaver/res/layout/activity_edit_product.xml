@@ -1,149 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_marginBottom="18dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
-    android:layout_marginTop="18dp" >
+    android:background="@color/white" >
 
-    <EditText
-        android:id="@+id/general_product_name_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:ems="10"
-        android:hint="@string/general_product_name_hint" >
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="18dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" >
 
-        <requestFocus />
-    </EditText>
+        <EditText
+            android:id="@+id/general_product_name_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="18dp"
+            android:ems="10"
+            android:hint="@string/general_product_name_hint" />
 
-    <EditText
-        android:id="@+id/detailed_product_name_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/general_product_name_id"
-        android:layout_marginTop="18dp"
-        android:ems="10"
-        android:hint="@string/product_name_hint"
-        android:inputType="textMultiLine" >
+        <EditText
+            android:id="@+id/detailed_product_name_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/general_product_name_id"
+            android:layout_marginTop="18dp"
+            android:ems="10"
+            android:hint="@string/product_name_hint"
+            android:inputType="textMultiLine" />
 
-        <requestFocus />
-    </EditText>
+        <Button
+            android:id="@+id/scan_button"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/detailed_product_name_id"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/my_button"
+            android:text="@string/scan"
+            android:textColor="@color/white" />
 
-    <Button
-        android:id="@+id/scan_button"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/detailed_product_name_id"
-        android:layout_alignParentRight="true"
-        android:text="@string/scan" />
+        <Spinner
+            android:id="@+id/cat_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignRight="@+id/detailed_product_name_id"
+            android:layout_below="@+id/detailed_product_name_id"
+            android:layout_marginTop="18dp"
+            android:ems="100" />
 
-    <Spinner
-        android:id="@+id/cat_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignRight="@+id/detailed_product_name_id"
-        android:layout_below="@+id/detailed_product_name_id"
-        android:layout_marginTop="18dp"
-        android:ems="100" />
+        <Button
+            android:id="@+id/cat_add_button"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/cat_spinner"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/my_button"
+            android:text="@string/action_add"
+            android:textColor="@color/white" />
 
-    <Button
-        android:id="@+id/cat_add_button"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/cat_spinner"
-        android:layout_alignParentRight="true"
-        android:text="@string/action_add" />
+        <EditText
+            android:id="@+id/quantity_input"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cat_spinner"
+            android:layout_marginTop="18dp"
+            android:ems="4"
+            android:hint="@string/quantity"
+            android:inputType="number" />
 
-    <EditText
-        android:id="@+id/quantity_input"
-        android:layout_width="90dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/cat_spinner"
-        android:layout_marginTop="18dp"
-        android:ems="4"
-        android:hint="@string/quantity"
-        android:inputType="number" />
+        <Spinner
+            android:id="@+id/unit_spinner"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/quantity_input"
+            android:layout_below="@+id/cat_spinner"
+            android:layout_marginTop="18dp"
+            android:layout_toRightOf="@+id/quantity_input"
+            android:ems="10" />
 
-    <Spinner
-        android:id="@+id/unit_spinner"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/quantity_input"
-        android:layout_below="@+id/cat_spinner"
-        android:layout_marginTop="18dp"
-        android:layout_toRightOf="@+id/quantity_input"
-        android:ems="10" />
+        <Button
+            android:id="@+id/unit_add_button"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/unit_spinner"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/my_button"
+            android:text="@string/action_add"
+            android:textColor="@color/white" />
 
-    <Button
-        android:id="@+id/unit_add_button"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/unit_spinner"
-        android:layout_alignParentRight="true"
-        android:text="@string/action_add" />
+        <EditText
+            android:id="@+id/price_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/quantity_input"
+            android:layout_marginTop="18dp"
+            android:ems="10"
+            android:hint="@string/price" />
 
-    <EditText
-        android:id="@+id/price_input"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/quantity_input"
-        android:layout_marginTop="18dp"
-        android:ems="10"
-        android:hint="@string/price" >
+        <Button
+            android:id="@+id/calculate"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/price_input"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/my_button"
+            android:text="@string/calculate"
+            android:textColor="@color/white" />
 
-        <requestFocus />
-    </EditText>
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/calculate"
+            android:layout_alignParentLeft="true"
+            android:text="@string/unit_price"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <Button
-        android:id="@+id/calculate"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/price_input"
-        android:layout_marginTop="18dp"
-        android:text="@string/calculate" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textView1"
+            android:layout_marginTop="18dp"
+            android:text="@string/price_value"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/calculate"
-        android:layout_alignParentLeft="true"
-        android:text="@string/unit_price"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/fiord2"
+            android:textColor="@color/white" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textView1"
-        android:layout_marginTop="18dp"
-        android:text="@string/price_value"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        <Button
+            android:id="@+id/cancel_button"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="40dp"
+            android:background="@drawable/my_button"
+            android:text="@string/cancel"
+            android:textColor="@color/white" />
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="40dp"
-        android:text="@string/cancel" />
+        <Button
+            android:id="@+id/save_button"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="40dp"
+            android:background="@drawable/my_button"
+            android:text="@string/save"
+            android:textColor="@color/white" />
+    </RelativeLayout>
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="40dp"
-        android:text="@string/save" />
-
-</RelativeLayout>
+</LinearLayout>

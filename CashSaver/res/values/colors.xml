@@ -5,18 +5,20 @@
     <color name="orange">#0e1f5b</color>
     <color name="piction_blue">#3b5998</color>
     <color name="deluge">#e7e7e7</color>
-    <color name="fiord">#737373</color>
-    <color name="fiord2">#232b37</color>
+    <color name="fiord">#87CEFA</color>
+    <color name="fiord2">#1E90FF</color>
     <color name="one">#33B5E5</color>
     <color name="two">#AA66CC</color>
     <color name="three">#99CC00</color>
     <color name="yellow">#FFBB33</color>
     <color name="five">#FF4444</color>
-    <color name="six">#0099CC</color>
+    <color name="six">#cacef6</color>
     <color name="seven">#9933CC</color>
     <color name="eight">#669900</color>
     <color name="nine">#FF8800</color>
     <color name="ten">#CC0000</color>
+    <color name="khaki">#fbfbfb</color>
+    <color name="white">#ffffff</color>
 
     
 
