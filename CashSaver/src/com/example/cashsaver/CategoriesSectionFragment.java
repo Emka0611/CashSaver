@@ -3,12 +3,12 @@ package com.example.cashsaver;
 import java.util.*;
 
 import android.os.Bundle;
-import android.app.ActionBar;
-import android.app.Fragment;
+import android.app.*;
 import android.view.*;
 import android.widget.*;
 
 import com.example.database.*;
+import com.example.database.datasource.*;
 import com.example.products.*;
 
 public class CategoriesSectionFragment extends Fragment
@@ -25,7 +25,7 @@ public class CategoriesSectionFragment extends Fragment
 
 		rootView = inflater.inflate(R.layout.fragment_start_products, container, false);
 
-		datasource = new CategoriesDataSource(getActivity());
+		datasource = DatabaseDataSources.categoriesDataSource;
 		datasource.open();
 
 		actionBar = getActivity().getActionBar();

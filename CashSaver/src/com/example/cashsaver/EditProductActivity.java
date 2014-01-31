@@ -9,6 +9,7 @@ package com.example.cashsaver;
 import java.util.List;
 
 import com.example.database.*;
+import com.example.database.datasource.*;
 import com.example.products.*;
 
 import android.app.Activity;
@@ -47,10 +48,10 @@ public class EditProductActivity extends Activity
 
 	private void initDataSource()
 	{
-		unitsDataSource = new UnitsDataSource(this);
+		unitsDataSource = DatabaseDataSources.unitsDataSource;
 		unitsDataSource.open();
 		
-		categoriesDataSource = new CategoriesDataSource(this);
+		categoriesDataSource = DatabaseDataSources.categoriesDataSource;
 		categoriesDataSource.open();
 		
 	}

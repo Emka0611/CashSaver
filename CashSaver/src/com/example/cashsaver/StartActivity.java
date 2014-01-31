@@ -17,7 +17,7 @@ public class StartActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_start);
-
+		
 		mLeftDrawer = new MyDrawer(this);
 		mLeftDrawer.setOnItemClickListener(new DrawerItemClickListener());
 		mFragmentManager = getFragmentManager();

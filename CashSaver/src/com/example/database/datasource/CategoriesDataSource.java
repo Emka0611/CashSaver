@@ -1,7 +1,8 @@
-package com.example.database;
+package com.example.database.datasource;
 
 import java.util.*;
 
+import com.example.database.DatabaseHelper;
 import com.example.products.Category;
 import com.example.tables.CategoryTable;
 
@@ -15,7 +16,10 @@ public class CategoriesDataSource
 	// Database fields
 	private SQLiteDatabase database;
 	private DatabaseHelper dbHelper;
-	private String[] allColumns = { CategoryTable.COLUMN_ID, CategoryTable.COLUMN_NAME };
+	private String[] allColumns = { 
+			CategoryTable.COLUMN_ID, 
+			CategoryTable.COLUMN_NAME
+			};
 
 	public CategoriesDataSource(Context context)
 	{

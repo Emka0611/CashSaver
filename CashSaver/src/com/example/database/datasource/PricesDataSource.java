@@ -1,7 +1,9 @@
-package com.example.database;
+package com.example.database.datasource;
 
 import java.util.*;
 
+import com.example.database.DatabaseDataSources;
+import com.example.database.DatabaseHelper;
 import com.example.products.*;
 import com.example.tables.*;
 
@@ -15,7 +17,11 @@ public class PricesDataSource
 	// Database fields
 	private SQLiteDatabase database;
 	private DatabaseHelper dbHelper;
-	private String[] allColumns = { PriceTable.COLUMN_ID, PriceTable.COLUMN_PRICE_VALUE };
+	private String[] allColumns = {
+			PriceTable.COLUMN_ID,
+			PriceTable.COLUMN_PRICE_VALUE,
+			PriceTable.COLUMN_UNIT_ID
+			};
 
 	public PricesDataSource(Context context)
 	{
@@ -79,7 +85,9 @@ public class PricesDataSource
 		float priceValue = cursor.getFloat(1);
 		long unitId = cursor.getLong(2);
 		
-		Unit unit = dbHelper.unitsDataSource.getUnit(unitId);
+		DatabaseDataSources.unitsDataSource.open();
+		Unit unit = DatabaseDataSources.unitsDataSource.getUnit(unitId);
+		DatabaseDataSources.unitsDataSource.close();
 
 		Price price = new Price(priceId, priceValue, unit);
 		return price;

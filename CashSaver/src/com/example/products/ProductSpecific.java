@@ -11,17 +11,6 @@ public class ProductSpecific
 
 	private int m_barcode;
 
-/*	public ProductSpecific(long id, String generalName, String detailedName, PriceHistory priceHistory, Category category, int barcode)
-	{
-		this.m_id = id;
-		this.m_generalName = generalName;
-		this.m_detailedName = detailedName;
-		this.m_category = category;
-		this.m_priceHistory = priceHistory;
-		
-		this.m_barcode = barcode;
-	}*/
-	
 	public ProductSpecific(long id, String generalName, String detailedName, Category category, int barcode)
 	{
 		this.m_id = id;

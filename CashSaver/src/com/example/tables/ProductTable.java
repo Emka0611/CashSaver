@@ -20,9 +20,9 @@ public class ProductTable
 			+"(" 
 			+ COLUMN_ID + " integer primary key autoincrement, "
 			+ COLUMN_NAME + " text,"
-			+ COLUMN_NAME_DETAILED + "text,"
+			+ COLUMN_NAME_DETAILED + " text,"
 			+ COLUMN_CATEGORY_ID + " integer,"
-			+ COLUMN_PRICE_HISTORY_ID + "integer"
+			+ COLUMN_PRICE_HISTORY_ID + " integer"
 			+ ");"
 			;
 

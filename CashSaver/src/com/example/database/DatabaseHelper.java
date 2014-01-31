@@ -1,18 +1,11 @@
 package com.example.database;
 
-import com.example.tables.CategoryTable;
-import com.example.tables.ProductTable;
-import com.example.tables.UnitTable;
-
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import com.example.tables.*;
+import android.database.sqlite.*;
 
 public class DatabaseHelper extends SQLiteOpenHelper
 {
-	CategoriesDataSource categoriesDataSource;
-	ProductsDataSource productsDataSource;
-	UnitsDataSource unitsDataSource;
 	
 	private static final String DATABASE_NAME = "productdatabase.db";
 	private static final int DATABASE_VERSION = 1;
@@ -28,6 +21,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 		ProductTable.onCreate(database);
 		CategoryTable.onCreate(database);
 		UnitTable.onCreate(database);
+		PriceTable.onCreate(database);
 	}
 
 	@Override
@@ -36,8 +30,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 		ProductTable.onUpgrade(database, oldVersion, newVersion);
 		CategoryTable.onUpgrade(database, oldVersion, newVersion);
 		UnitTable.onUpgrade(database, oldVersion, newVersion);
+		PriceTable.onUpgrade(database, oldVersion, newVersion);
 	}
 	
-	
-
 }

@@ -1,7 +1,8 @@
-package com.example.database;
+package com.example.database.datasource;
 
 import java.util.*;
 
+import com.example.database.DatabaseHelper;
 import com.example.products.*;
 import com.example.tables.*;
 
@@ -14,7 +15,10 @@ public class UnitsDataSource
 	// Database fields
 	private SQLiteDatabase database;
 	private DatabaseHelper dbHelper;
-	private String[] allColumns = { UnitTable.COLUMN_ID, UnitTable.COLUMN_NAME };
+	private String[] allColumns = { 
+			UnitTable.COLUMN_ID,
+			UnitTable.COLUMN_NAME
+			};
 
 	public UnitsDataSource(Context context)
 	{

@@ -9,6 +9,7 @@ import android.view.*;
 import android.widget.*;
 
 import com.example.database.*;
+import com.example.database.datasource.*;
 import com.example.products.*;
 
 public class ProductsSectionFragment extends Fragment
@@ -25,7 +26,7 @@ public class ProductsSectionFragment extends Fragment
 		
 		rootView = inflater.inflate(R.layout.fragment_start_products, container, false);
 
-		datasource = new ProductsDataSource(getActivity());
+		datasource = DatabaseDataSources.productsDataSource;
 		datasource.open();
 
 		actionBar = getActivity().getActionBar();
@@ -65,7 +66,7 @@ public class ProductsSectionFragment extends Fragment
 			System.out.println("Switch item1");
 			String[] products = new String[] { "Chleb", "Mleko", "Cukier" };
 			int nextInt = new Random().nextInt(3);
-			product = getDatasource().createProductSpecific(products[nextInt]);
+			product = getDatasource().createProductSpecific(products[nextInt], "detail", nextInt);
 			adapter.add(product);
 			adapter.notifyDataSetChanged();
 			break;
