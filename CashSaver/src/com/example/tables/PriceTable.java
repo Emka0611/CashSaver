@@ -15,14 +15,15 @@ public class PriceTable
 	private static final String DATABASE_CREATE ="create table " + TABLE_PRICE
 			+"(" 
 			+ COLUMN_ID + " integer primary key autoincrement, "
-			+ COLUMN_PRICE_VALUE + " float,"
-			+ COLUMN_UNIT_ID + "integer"
+			+ COLUMN_PRICE_VALUE + " float, "
+			+ COLUMN_UNIT_ID + " integer"
 			+ ");"
 			;
 
 	public static void onCreate(SQLiteDatabase database)
 	{
 		database.execSQL(DATABASE_CREATE);
+		Log.d("AAA", DATABASE_CREATE);
 	}
 
 	public static void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion)

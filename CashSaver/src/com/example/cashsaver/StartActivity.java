@@ -25,7 +25,7 @@ public class StartActivity extends Activity
 
 	private void selectItem(int position)
 	{
-		if (3 == position)
+		if (4 == position)
 		{
 			Intent i = new Intent(this, EditProductActivity.class);
 			startActivity(i);
@@ -36,13 +36,16 @@ public class StartActivity extends Activity
 			switch (position)
 			{
 			case 0:
-				mCurrFragment = new ProductsSectionFragment();
-				break;
-			case 1:
 				mCurrFragment = new CategoriesSectionFragment();
 				break;
-			case 2:
+			case 1:
 				mCurrFragment = new UnitsSectionFragment();
+				break;
+			case 2:
+				mCurrFragment = new PricesSectionFragment();
+				break;
+			case 3:
+				mCurrFragment = new ProductsSectionFragment();
 				break;
 			}
 			

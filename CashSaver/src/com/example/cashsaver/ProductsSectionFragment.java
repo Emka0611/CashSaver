@@ -66,7 +66,7 @@ public class ProductsSectionFragment extends Fragment
 			System.out.println("Switch item1");
 			String[] products = new String[] { "Chleb", "Mleko", "Cukier" };
 			int nextInt = new Random().nextInt(3);
-			product = getDatasource().createProductSpecific(products[nextInt], "detail", nextInt);
+			product = datasource.createProductSpecific(products[nextInt], "detail", nextInt+1);
 			adapter.add(product);
 			adapter.notifyDataSetChanged();
 			break;
@@ -74,7 +74,7 @@ public class ProductsSectionFragment extends Fragment
 			if (adapter.getCount() > 0)
 			{
 				product = (ProductSpecific) listView.getAdapter().getItem(0);
-				getDatasource().deleteProductSpecific(product);
+				datasource.deleteProductSpecific(product);
 				adapter.remove(product);
 				adapter.notifyDataSetChanged();
 			}
@@ -95,11 +95,6 @@ public class ProductsSectionFragment extends Fragment
 	{
 		datasource.close();
 		super.onPause();
-	}
-	
-	public ProductsDataSource getDatasource()
-	{
-		return datasource;
 	}
 	
 	public ListView getListView()

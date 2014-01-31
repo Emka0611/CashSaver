@@ -10,7 +10,10 @@ public class Price
 	{
 		this.m_id = id;
 		this.m_price = price;
+		if(null != unit)
 		this.m_unit = unit;
+		else
+			m_unit = new Unit(-1, "UNIT");
 	}
 	
 	public long getId()
@@ -26,6 +29,16 @@ public class Price
 	public Unit getUnit()
 	{
 		return m_unit;
+	}
+	
+	@Override
+	public String toString()
+	{
+		StringBuilder builder = new StringBuilder();
+		builder.append(m_price);
+		builder.append("z³/");
+		builder.append(m_unit.getName());
+		return builder.toString();
 	}
 	
 }

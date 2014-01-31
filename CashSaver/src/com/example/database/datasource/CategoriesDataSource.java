@@ -24,6 +24,12 @@ public class CategoriesDataSource
 	public CategoriesDataSource(Context context)
 	{
 		dbHelper = new DatabaseHelper(context);
+		String[] categories = new String[] { "Spozywcze", "Higieniczne", "S³odycze" };
+		open();
+		createCategory(categories[0]);
+		createCategory(categories[1]);
+		createCategory(categories[2]);
+		close();
 	}
 
 	public void open() throws SQLException

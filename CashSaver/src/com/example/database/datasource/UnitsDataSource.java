@@ -23,6 +23,12 @@ public class UnitsDataSource
 	public UnitsDataSource(Context context)
 	{
 		dbHelper = new DatabaseHelper(context);
+		String[] units = new String[] { "kg", "szt", "litr" };
+		open();
+		createUnit(units[0]);
+		createUnit(units[1]);
+		createUnit(units[2]);
+		close();
 	}
 
 	public void open() throws SQLException
@@ -55,12 +61,15 @@ public class UnitsDataSource
 		String selectQuery = "SELECT  * FROM " + UnitTable.TABLE_UNIT + " WHERE " + UnitTable.COLUMN_ID + " = " + unitId;
 		Cursor cursor = database.rawQuery(selectQuery, null);
 
-		if (cursor != null)
+		Unit unit = null;
+		
+		if (0 != cursor.getCount())
 		{
 			cursor.moveToFirst();
+			unit = convertCursorToUnit(cursor);
 		}
 
-		return convertCursorToUnit(cursor);
+		return unit;
 	}
 
 	public void deleteUnit(Unit unit)

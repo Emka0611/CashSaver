@@ -4,7 +4,6 @@ import java.util.*;
 
 import android.os.Bundle;
 import android.app.*;
-import android.util.Log;
 import android.view.*;
 import android.widget.*;
 
@@ -12,9 +11,9 @@ import com.example.database.*;
 import com.example.database.datasource.*;
 import com.example.products.*;
 
-public class UnitsSectionFragment extends Fragment
+public class PricesSectionFragment extends Fragment
 {
-	private UnitsDataSource datasource;
+	private PricesDataSource datasource;
 	private ListView listView;
 	private View rootView;
 	private ActionBar actionBar;
@@ -26,14 +25,14 @@ public class UnitsSectionFragment extends Fragment
 
 		rootView = inflater.inflate(R.layout.fragment_start_products, container, false);
 
-		datasource = DatabaseDataSources.unitsDataSource;
+		datasource = DatabaseDataSources.pricesDataSource;
 		datasource.open();
 
 		actionBar = getActivity().getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
-		List<Unit> list = datasource.getAllUnits();
-		ArrayAdapter<Unit> adapter = new ArrayAdapter<Unit>(getActivity(), android.R.layout.simple_list_item_multiple_choice, list);
+		List<Price> list = datasource.getAllPrices();
+		ArrayAdapter<Price> adapter = new ArrayAdapter<Price>(getActivity(), android.R.layout.simple_list_item_multiple_choice, list);
 
 		listView = (ListView) rootView.findViewById(R.id.list);
 		listView.setAdapter(adapter);
@@ -55,26 +54,25 @@ public class UnitsSectionFragment extends Fragment
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
 		@SuppressWarnings("unchecked")
-		ArrayAdapter<Unit> adapter = (ArrayAdapter<Unit>) listView.getAdapter();
-		Unit unit = null;
+		ArrayAdapter<Price> adapter = (ArrayAdapter<Price>) listView.getAdapter();
+		Price price = null;
 
 		switch (item.getItemId())
 		{
 		case R.id.item1:
 			System.out.println("Switch item1");
-			String[] units = new String[] { "kg", "szt", "litr" };
+			Float[] prices = new Float[] { (float) 1.2 , (float) 1.4, (float) 3.5 };
 			int nextInt = new Random().nextInt(3);
-			unit = datasource.createUnit(units[nextInt]);
-			Log.d("AAA", "" + unit.getId());
-			adapter.add(unit);
+			price = datasource.createPrice(prices[nextInt], nextInt+1);
+			adapter.add(price);
 			adapter.notifyDataSetChanged();
 			break;
 		case R.id.item2:
 			if (adapter.getCount() > 0)
 			{
-				unit = (Unit) listView.getAdapter().getItem(0);
-				datasource.deleteUnit(unit);
-				adapter.remove(unit);
+				price = (Price) listView.getAdapter().getItem(0);
+				datasource.deletePrice(price);
+				adapter.remove(price);
 				adapter.notifyDataSetChanged();
 			}
 			break;

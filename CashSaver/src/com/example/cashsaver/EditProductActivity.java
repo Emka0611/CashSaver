@@ -1,4 +1,5 @@
-//TODO: Wpisywanie produktów do bazy
+//TODO: kolory
+//TODO: Wpisywanie produktów do bazy z input formów
 //TODO: Wyswietlanie produktów z bazy
 //TODO: CashSaver tytu³ znika
 //TODO: Menu w edycji ??

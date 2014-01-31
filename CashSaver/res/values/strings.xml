@@ -23,11 +23,13 @@
     <string name="unit">Jednostka</string>
     <string name="calculate">Oblicz</string>
     <string name="categories">Kategorie</string>
+    <string name="price_value">0.00 zł</string>
 
     <string-array name="drawerListArray">
-        <item>Produkty</item>
         <item>Kategorie</item>
         <item>Jednostki</item>
+        <item>Ceny</item>
+        <item>Produkty</item>
         <item>Dodaj produkt</item>
     </string-array>
     

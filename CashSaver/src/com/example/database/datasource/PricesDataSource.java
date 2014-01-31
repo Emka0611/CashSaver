@@ -26,6 +26,13 @@ public class PricesDataSource
 	public PricesDataSource(Context context)
 	{
 		dbHelper = new DatabaseHelper(context);
+		
+		Float[] prices = new Float[] { (float) 1.2 , (float) 1.4, (float) 3.5 };
+		open();
+		createPrice(prices[0], 1);
+		createPrice(prices[1], 2);
+		createPrice(prices[2], 3);
+		close();
 	}
 
 	public void open() throws SQLException

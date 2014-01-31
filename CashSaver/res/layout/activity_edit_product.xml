@@ -125,7 +125,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/textView1"
         android:layout_marginTop="18dp"
-        android:text="0.0 zł"
+        android:text="@string/price_value"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Button

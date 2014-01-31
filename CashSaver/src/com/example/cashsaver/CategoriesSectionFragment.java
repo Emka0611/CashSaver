@@ -60,10 +60,9 @@ public class CategoriesSectionFragment extends Fragment
 		switch (item.getItemId())
 		{
 		case R.id.item1:
-			System.out.println("Switch item1");
 			String[] categories = new String[] { "Spozywcze", "Higieniczne", "S³odycze" };
 			int nextInt = new Random().nextInt(3);
-			category = getDatasource().createCategory(categories[nextInt]);
+			category = datasource.createCategory(categories[nextInt]);
 			adapter.add(category);
 			adapter.notifyDataSetChanged();
 			break;
@@ -71,7 +70,7 @@ public class CategoriesSectionFragment extends Fragment
 			if (adapter.getCount() > 0)
 			{
 				category = (Category) listView.getAdapter().getItem(0);
-				getDatasource().deleteCategory(category);
+				datasource.deleteCategory(category);
 				adapter.remove(category);
 				adapter.notifyDataSetChanged();
 			}
@@ -92,11 +91,6 @@ public class CategoriesSectionFragment extends Fragment
 	{
 		datasource.close();
 		super.onPause();
-	}
-
-	public CategoriesDataSource getDatasource()
-	{
-		return datasource;
 	}
 
 	public ListView getListView()

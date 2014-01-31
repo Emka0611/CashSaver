@@ -54,7 +54,10 @@ public class ProductSpecific
 	@Override
 	public String toString()
 	{
-		return m_generalName;
+		StringBuilder builder = new StringBuilder();
+		builder.append(m_generalName + " ");
+		builder.append(m_category.getName());
+		return builder.toString();
 	}
 
 }
