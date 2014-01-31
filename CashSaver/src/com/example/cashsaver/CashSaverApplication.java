@@ -1,16 +1,15 @@
 package com.example.cashsaver;
-import com.example.database.DatabaseDataSources;
 
+import com.example.database.DatabaseDataSources;
 import android.app.Application;
 
-public class CashSaver extends Application
+public class CashSaverApplication extends Application
 {
 	
 	@Override
 	public void onCreate()
 	{
-		DatabaseDataSources sources = new DatabaseDataSources(this);
-		System.out.print("EMKA");
+		new DatabaseDataSources(this);
 		super.onCreate();
 	}
 

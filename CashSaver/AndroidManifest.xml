@@ -9,7 +9,7 @@
         android:targetSdkVersion="20" />
 
     <application
-        android:name=".CashSaver"
+        android:name="com.example.cashsaver.CashSaverApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
