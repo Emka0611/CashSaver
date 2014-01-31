@@ -17,11 +17,6 @@ public class PricesDataSource
 	// Database fields
 	private SQLiteDatabase database;
 	private DatabaseHelper dbHelper;
-	private String[] allColumns = {
-			PriceTable.COLUMN_ID,
-			PriceTable.COLUMN_PRICE_VALUE,
-			PriceTable.COLUMN_UNIT_ID
-			};
 
 	public PricesDataSource(Context context)
 	{
@@ -50,9 +45,10 @@ public class PricesDataSource
 		ContentValues values = new ContentValues();
 		values.put(PriceTable.COLUMN_PRICE_VALUE, price_value);
 		values.put(PriceTable.COLUMN_UNIT_ID, unitId);
+		values.put(PriceTable.COLUMN_DATE, DatabaseHelper.getDateTime());
 
 		long insertId = database.insert(PriceTable.TABLE_PRICE, null, values);
-		Cursor cursor = database.query(PriceTable.TABLE_PRICE, allColumns, PriceTable.COLUMN_ID + " = " + insertId, null, null, null, null);
+		Cursor cursor = database.query(PriceTable.TABLE_PRICE, PriceTable.ALL_COLUMNS, PriceTable.COLUMN_ID + " = " + insertId, null, null, null, null);
 		cursor.moveToFirst();
 
 		Price newPrice = convertCursorToPrice(cursor);
@@ -72,7 +68,7 @@ public class PricesDataSource
 	{
 		List<Price> categories = new ArrayList<Price>();
 
-		Cursor cursor = database.query(PriceTable.TABLE_PRICE, allColumns, null, null, null, null, null);
+		Cursor cursor = database.query(PriceTable.TABLE_PRICE, PriceTable.ALL_COLUMNS, null, null, null, null, null);
 
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast())
@@ -91,12 +87,13 @@ public class PricesDataSource
 		long priceId = cursor.getLong(0);
 		float priceValue = cursor.getFloat(1);
 		long unitId = cursor.getLong(2);
+		String created_at = cursor.getString(3);
 		
 		DatabaseDataSources.unitsDataSource.open();
 		Unit unit = DatabaseDataSources.unitsDataSource.getUnit(unitId);
 		DatabaseDataSources.unitsDataSource.close();
 
-		Price price = new Price(priceId, priceValue, unit);
+		Price price = new Price(priceId, priceValue, unit, created_at);
 		return price;
 	}
 

@@ -1,8 +1,13 @@
 package com.example.database;
 
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 import android.content.Context;
-import com.example.tables.*;
 import android.database.sqlite.*;
+
+import com.example.tables.*;
+
 
 public class DatabaseHelper extends SQLiteOpenHelper
 {
@@ -32,5 +37,12 @@ public class DatabaseHelper extends SQLiteOpenHelper
 		UnitTable.onUpgrade(database, oldVersion, newVersion);
 		PriceTable.onUpgrade(database, oldVersion, newVersion);
 	}
+	
+    public static String getDateTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "yyyy-MM-dd", Locale.getDefault());
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
 	
 }

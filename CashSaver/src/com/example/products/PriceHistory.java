@@ -4,21 +4,21 @@ import java.util.Vector;
 
 public class PriceHistory
 {
-	private Vector<PriceEntry> m_priceEntriesVector;
+	private Vector<Price> m_priceEntriesVector;
 
 	
-	public PriceHistory(PriceEntry priceEntry)
+	public PriceHistory(Price priceEntry)
 	{
-		this.m_priceEntriesVector =  new Vector<PriceEntry>();
+		this.m_priceEntriesVector =  new Vector<Price>();
 		m_priceEntriesVector.add(priceEntry);
 	}
 
-	public Vector<PriceEntry> getPriceEntriesVector()
+	public Vector<Price> getPriceEntriesVector()
 	{
 		return m_priceEntriesVector;
 	}
 	
-	public void addPriceEntry(PriceEntry entry)
+	public void addPrice(Price entry)
 	{
 		m_priceEntriesVector.add(entry);
 	}

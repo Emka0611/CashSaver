@@ -1,3 +1,4 @@
+//TODO: Historia cen
 //TODO: kolory
 //TODO: Wpisywanie produktów do bazy z input formów
 //TODO: Wyswietlanie produktów z bazy

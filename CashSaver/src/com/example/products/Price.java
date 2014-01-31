@@ -5,15 +5,14 @@ public class Price
 	private long m_id;
 	private float m_price;
 	private Unit m_unit;
+	private String m_date;
 	
-	public Price(long id, float price, Unit unit)
+	public Price(long id, float price, Unit unit, String date)
 	{
 		this.m_id = id;
 		this.m_price = price;
-		if(null != unit)
 		this.m_unit = unit;
-		else
-			m_unit = new Unit(-1, "UNIT");
+		this.m_date = date;
 	}
 	
 	public long getId()
@@ -21,7 +20,7 @@ public class Price
 		return m_id;
 	}
 	
-	public float getprice()
+	public float getPrice()
 	{
 		return m_price;
 	}
@@ -35,6 +34,7 @@ public class Price
 	public String toString()
 	{
 		StringBuilder builder = new StringBuilder();
+		builder.append(m_date.toString() + " ");
 		builder.append(m_price);
 		builder.append("z³/");
 		builder.append(m_unit.getName());
