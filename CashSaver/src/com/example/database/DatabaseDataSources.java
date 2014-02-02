@@ -1,7 +1,10 @@
 package com.example.database;
 
+import java.util.List;
+
 import android.content.Context;
 import com.example.database.datasource.*;
+import com.example.products.Unit;
 
 public class DatabaseDataSources
 {
@@ -25,5 +28,26 @@ public class DatabaseDataSources
 		DatabaseDataSources.productsDataSource.addExamples();
 		DatabaseDataSources.pricesDataSource.addExamples();
 	}
+
+	public static void addUnit(String name)
+	{
+		DatabaseDataSources.unitsDataSource.createUnit(name);	
+	}
+
+	public static List<Unit> getAllUnits()
+	{
+		return DatabaseDataSources.unitsDataSource.getAllUnits();
+	}
+	
+	public static void openUnitsDataSource()
+	{
+		DatabaseDataSources.unitsDataSource.open();
+	}
+	
+	public static void closeUnitsDataSource()
+	{
+		DatabaseDataSources.unitsDataSource.close();
+	}
+	
 
 }

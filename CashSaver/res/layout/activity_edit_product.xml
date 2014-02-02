@@ -62,7 +62,7 @@
             android:layout_alignBottom="@+id/cat_spinner"
             android:layout_alignParentRight="true"
             android:background="@drawable/my_button"
-            android:text="@string/action_add"
+            android:text="@string/action_new"
             android:textColor="@color/white" />
 
         <EditText
@@ -93,7 +93,7 @@
             android:layout_alignBottom="@+id/unit_spinner"
             android:layout_alignParentRight="true"
             android:background="@drawable/my_button"
-            android:text="@string/action_add"
+            android:text="@string/action_new"
             android:textColor="@color/white" />
 
         <EditText

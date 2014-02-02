@@ -18,6 +18,11 @@
 
 //TODO: Skanowanie biblioteka
 
+//nie aktualizuje sie lista
+//nie dodawac unita który juz istnieje albo jest pusty
+//przniesc wszytkie metody do Databasedatasource jako statyczne, brak memberów, open i close
+//jak jest edit mode, wstecz powinoo powodowac zamikenieco edit moda
+
 package com.example.cashsaver;
 
 import java.util.List;
@@ -45,7 +50,7 @@ public class EditProductActivity extends Activity
 		setContentView(R.layout.activity_edit_product);
 
 		initDataSource();
-
+		
 		List<Category> categoriesList = categoriesDataSource.getAllCategories();
 		ArrayAdapter<Category> categoriesAdapter = new ArrayAdapter<Category>(this, android.R.layout.simple_spinner_item, categoriesList);
 		categoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -118,7 +123,7 @@ public class EditProductActivity extends Activity
 
 }
 
-// TODO: search action bar
+// TODO: search action bar, AutoCompleteTextView. 
 // TODO: actionbar color
 // TODO: ikonki
 // TODO: zgubi³ titla po on resume

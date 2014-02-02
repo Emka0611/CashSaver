@@ -16,7 +16,7 @@
         <menu>
             <item
                 android:id="@+id/item1"
-                android:title="@string/action_add"/>
+                android:title="@string/action_new"/>
             <item
                 android:id="@+id/item2"
                 android:title="@string/action_delete"/>

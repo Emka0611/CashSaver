@@ -2,18 +2,23 @@
 <resources>
 
     <string name="app_name">CashSaver</string>
-    <string name="action_settings">Settings</string>
+
     <string name="title_products">Produkty</string>
     <string name="title_shopping_lists">Listy zakupów</string>
-    <string name="action_add">Dodaj</string>
+    
+    <string name="action_new">Dodaj</string>
     <string name="action_delete">Usun pierwszy</string>
     <string name="action_add_examples">Dodaj przykłady</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_accept">DONE</string>
+
     <string name="drawer_open">BUM</string>
     <string name="drawer_close">BUM</string>
     <string name="title_product_add">Dodaj produkt </string>
     <string name="title_product_edit">Edytuj produkt</string>
     <string name="general_product_name_hint">Nazwa produktu</string>
     <string name="product_name_hint">Nazwa szczegółowa</string>
+    <string name="new_unit_hint">Add unit</string>
     <string name="product_price_hint">Cena</string>
     <string name="scan">Skanuj</string>
     <string name="cancel">Anuluj</string>

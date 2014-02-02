@@ -1,0 +1,12 @@
+<EditText xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/actionbar_edittext"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:ems="10"
+    android:gravity="center_vertical"
+    android:hint="@string/general_product_name_hint"
+    android:paddingRight="20dp"
+    android:textColor="@color/white">
+
+</EditText>
