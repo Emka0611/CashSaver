@@ -44,11 +44,12 @@ public class UnitsSectionFragment extends Fragment
 	@Override
 	public void onPrepareOptionsMenu(Menu menu)
 	{
-		getActivity().getMenuInflater().inflate(R.menu.menu_products, menu);
+		getActivity().getMenuInflater().inflate(R.menu.menu_list, menu);
 		boolean drawerOpen = ((MainActivity) getActivity()).isDrawerOpen();
 		menu.findItem(R.id.menu_overflow).setVisible(!drawerOpen);
 		menu.findItem(R.id.item1).setVisible(false);
 		menu.findItem(R.id.item2).setVisible(false);
+		
 		super.onPrepareOptionsMenu(menu);
 	}
 

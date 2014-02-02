@@ -5,6 +5,7 @@ import com.example.database.DatabaseHelper;
 import android.os.Bundle;
 import android.app.*;
 import android.content.*;
+import android.content.res.Configuration;
 import android.view.*;
 import android.widget.*;
 
@@ -24,6 +25,8 @@ public class MainActivity extends Activity
 		mLeftDrawer.setOnItemClickListener(new DrawerItemClickListener());
 		mFragmentManager = getFragmentManager();
 		selectItem(2);
+		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	private void selectItem(int position)
@@ -94,5 +97,18 @@ public class MainActivity extends Activity
 		DatabaseHelper.dropDatabase();
 		super.onDestroy();
 	}
+	
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mLeftDrawer.syncState();
+    }
+    
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mLeftDrawer.onConfigurationChanged(newConfig);
+    }
+
 
 }

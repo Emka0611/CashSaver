@@ -25,6 +25,7 @@
     <string name="calculate">Oblicz</string>
     <string name="categories">Kategorie</string>
     <string name="price_value">0.00 zł</string>
+    <string name="search_title">Szukaj</string>
 
     <string-array name="drawerListArray">
         <item>Kategorie</item>

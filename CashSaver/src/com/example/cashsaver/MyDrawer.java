@@ -1,6 +1,7 @@
 package com.example.cashsaver;
 
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.*;
@@ -24,7 +25,7 @@ public class MyDrawer
 		mDrawerTitles = activity.getResources().getStringArray(R.array.drawerListArray);
 		mDrawerList.setAdapter(new ArrayAdapter<String>(activity, R.layout.drawer_list_item, mDrawerTitles));
 
-		mDrawerToggle = new ActionBarDrawerToggle(activity, mDrawerLayout, R.drawable.ic_launcher, R.string.drawer_open, R.string.drawer_close)
+		mDrawerToggle = new ActionBarDrawerToggle(activity, mDrawerLayout, R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close)
 		{
 
 			/** Called when a drawer has settled in a completely closed state. */
@@ -51,7 +52,6 @@ public class MyDrawer
 	{
 		this.mTitle = mDrawerTitles[position];
 		mActivity.getActionBar().setTitle(mTitle);
-		
 	}
 	
 	public void closeDrawer()
@@ -78,4 +78,15 @@ public class MyDrawer
 	{
 		return mDrawerLayout.isDrawerOpen(mDrawerList);
 	}
+	
+	public void syncState()
+	{
+		mDrawerToggle.syncState();
+	}
+	
+	public void onConfigurationChanged(Configuration newConfig)
+	{
+		mDrawerToggle.onConfigurationChanged(newConfig);
+	}
+
 }

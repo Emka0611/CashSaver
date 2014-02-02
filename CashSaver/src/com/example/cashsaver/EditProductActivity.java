@@ -1,11 +1,23 @@
+//todo: ikonka w editproduct nie wraca
+//TODO: dodawanie unitów i kategorii z reki - action bar
+//TODO: usuwanie i edycja - po d³ugim nacisnieciu - action bar jak w listonicu
+
 //TODO: Wpisywanie produktów do bazy z input formów
-//TODO: Wyswietlanie produktów z bazy
-//TODO: dodawanie unitów i kategorii z reki, usuwanie
-//TODO: General/specyfic
+//TODO: Dodaj produkt menu
+
+//TODO: Wyswietlanie produktów z bazy + widok szczegó³owy
+//TODO: Search
+
+//TODO: General/specyfic - rozró¿nienie
+
 //TODO: Usuwanie, edycja
 //TODO: CashSaver tytu³ znika, pierwszy widok
-//TODO: Menu w edycji ??
+//TODO: menu na kazdym poziomie
+
+//TODO: czy na pewno? - messageboxy
 //TODO: walidacja
+
+//TODO: Skanowanie biblioteka
 
 package com.example.cashsaver;
 
@@ -32,9 +44,9 @@ public class EditProductActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_product);
-		
+
 		initDataSource();
-		
+
 		List<Category> categoriesList = categoriesDataSource.getAllCategories();
 		ArrayAdapter<Category> categoriesAdapter = new ArrayAdapter<Category>(this, android.R.layout.simple_spinner_item, categoriesList);
 		categoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -46,6 +58,8 @@ public class EditProductActivity extends Activity
 		unitsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		mUnitsSpinner = (Spinner) findViewById(R.id.unit_spinner);
 		mUnitsSpinner.setAdapter(unitsAdapter);
+		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 	}
 
@@ -53,10 +67,10 @@ public class EditProductActivity extends Activity
 	{
 		unitsDataSource = DatabaseDataSources.unitsDataSource;
 		unitsDataSource.open();
-		
+
 		categoriesDataSource = DatabaseDataSources.categoriesDataSource;
 		categoriesDataSource.open();
-		
+
 	}
 
 	@Override
@@ -71,7 +85,7 @@ public class EditProductActivity extends Activity
 	{
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	@Override
 	public void onResume()
 	{
@@ -88,11 +102,26 @@ public class EditProductActivity extends Activity
 		super.onPause();
 	}
 
+	public void onCalculateButtonClick(View view)
+	{
+
+	}
+	
+	public void onCancelButtonClick(View view)
+	{
+
+	}
+	
+	public void onSaveButtonClick(View view)
+	{
+
+	}
+
 }
 
-//TODO: search action bar
-//TODO: actionbar color
-//TODO: ikonki
-//TODO: zgubi³ titla po on resume
-//TODO: osobny layout dla poziomego widoku
-//TODO: kolory
+// TODO: search action bar
+// TODO: actionbar color
+// TODO: ikonki
+// TODO: zgubi³ titla po on resume
+// TODO: osobny layout dla poziomego widoku
+// TODO: kolory

@@ -19,7 +19,8 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="18dp"
             android:ems="10"
-            android:hint="@string/general_product_name_hint" />
+            android:hint="@string/general_product_name_hint"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/detailed_product_name_id"
@@ -72,7 +73,7 @@
             android:layout_marginTop="18dp"
             android:ems="4"
             android:hint="@string/quantity"
-            android:inputType="number" />
+            android:inputType="numberDecimal" />
 
         <Spinner
             android:id="@+id/unit_spinner"
@@ -103,7 +104,8 @@
             android:layout_below="@+id/quantity_input"
             android:layout_marginTop="18dp"
             android:ems="10"
-            android:hint="@string/price" />
+            android:hint="@string/price"
+            android:inputType="numberDecimal" />
 
         <Button
             android:id="@+id/calculate"
@@ -114,6 +116,7 @@
             android:layout_below="@+id/price_input"
             android:layout_marginTop="18dp"
             android:background="@drawable/my_button"
+            android:onClick="onCalculateButtonClick"
             android:text="@string/calculate"
             android:textColor="@color/white" />
 
@@ -153,6 +156,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="40dp"
             android:background="@drawable/my_button"
+            android:onClick="onCancelButtonClick"
             android:text="@string/cancel"
             android:textColor="@color/white" />
 
@@ -165,6 +169,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="40dp"
             android:background="@drawable/my_button"
+            android:onClick="onSaveButtonClick"
             android:text="@string/save"
             android:textColor="@color/white" />
     </RelativeLayout>
