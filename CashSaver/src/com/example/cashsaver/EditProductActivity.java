@@ -1,4 +1,3 @@
-//todo: ikonka w editproduct nie wraca
 //TODO: dodawanie unitów i kategorii z reki - action bar
 //TODO: usuwanie i edycja - po d³ugim nacisnieciu - action bar jak w listonicu
 
