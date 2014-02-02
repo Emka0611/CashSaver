@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.content.Context;
 import com.example.database.datasource.*;
+import com.example.products.Category;
 import com.example.products.Unit;
 
 public class DatabaseDataSources
@@ -29,9 +30,29 @@ public class DatabaseDataSources
 		DatabaseDataSources.pricesDataSource.addExamples();
 	}
 
-	public static void addUnit(String name)
+	public static Category addCategory(String name)
 	{
-		DatabaseDataSources.unitsDataSource.createUnit(name);	
+		return DatabaseDataSources.categoriesDataSource.createCategory(name);	
+	}
+
+	public static List<Category> getAllCategories()
+	{
+		return DatabaseDataSources.categoriesDataSource.getAllCategories();
+	}
+	
+	public static void openCategoriesDataSource()
+	{
+		DatabaseDataSources.categoriesDataSource.open();
+	}
+	
+	public static void closeCategoriesDataSource()
+	{
+		DatabaseDataSources.categoriesDataSource.close();
+	}
+	
+	public static Unit addUnit(String name)
+	{
+		return DatabaseDataSources.unitsDataSource.createUnit(name);	
 	}
 
 	public static List<Unit> getAllUnits()
@@ -48,6 +69,15 @@ public class DatabaseDataSources
 	{
 		DatabaseDataSources.unitsDataSource.close();
 	}
+
+	public static void deleteUnit(Unit unit)
+	{
+		DatabaseDataSources.unitsDataSource.deleteUnit(unit);
+	}
 	
+	public static void deleteCategory(Category category)
+	{
+		DatabaseDataSources.categoriesDataSource.deleteCategory(category);
+	}
 
 }

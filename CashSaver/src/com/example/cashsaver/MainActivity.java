@@ -12,25 +12,28 @@ import android.widget.*;
 public class MainActivity extends Activity
 {
 	private MyDrawer mLeftDrawer = null;
-	Fragment mCurrFragment = null;
-	FragmentManager mFragmentManager = null;
+	private Fragment mCurrFragment = null;
+	private FragmentManager mFragmentManager = null;
+	private int mCurrPosiotion;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+
 		mLeftDrawer = new MyDrawer(this);
 		mLeftDrawer.setOnItemClickListener(new DrawerItemClickListener());
 		mFragmentManager = getFragmentManager();
 		selectItem(2);
-		
+
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	private void selectItem(int position)
 	{
+		mCurrPosiotion = position;
+
 		if (4 == position)
 		{
 			Intent i = new Intent(this, EditProductActivity.class);
@@ -55,15 +58,14 @@ public class MainActivity extends Activity
 				break;
 
 			}
-			
+
 			mFragmentManager.beginTransaction().replace(R.id.content_frame, mCurrFragment).commit();
 
 			mLeftDrawer.setItemChecked(position);
 			mLeftDrawer.setTitle(position);
 			mLeftDrawer.closeDrawer();
-	
-		}
 
+		}
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -90,25 +92,44 @@ public class MainActivity extends Activity
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	@Override
 	public void onDestroy()
 	{
 		DatabaseHelper.dropDatabase();
 		super.onDestroy();
 	}
-	
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        mLeftDrawer.syncState();
-    }
-    
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mLeftDrawer.onConfigurationChanged(newConfig);
-    }
 
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState)
+	{
+		super.onPostCreate(savedInstanceState);
+		mLeftDrawer.syncState();
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig)
+	{
+		super.onConfigurationChanged(newConfig);
+		mLeftDrawer.onConfigurationChanged(newConfig);
+	}
+
+	@Override
+	public void onBackPressed()
+	{
+		if (1 == mCurrPosiotion && false != ((UnitsSectionFragment) mCurrFragment).isEditModeSelected())
+		{
+			((UnitsSectionFragment) mCurrFragment).resetView();
+		}
+		else if (0 == mCurrPosiotion && false != ((CategoriesSectionFragment) mCurrFragment).isEditModeSelected())
+		{
+			((CategoriesSectionFragment) mCurrFragment).resetView();
+		}
+		else
+		{
+			super.onBackPressed();
+		}
+
+	}
 
 }

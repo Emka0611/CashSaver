@@ -1,5 +1,8 @@
-//TODO: dodawanie unitów i kategorii z reki - action bar
-//TODO: usuwanie i edycja - po d³ugim nacisnieciu - action bar jak w listonicu
+//TODO: nie po longu tylko po klikniecu zaznacza sie i odznacza sie (delete mode i nie delete mode)
+//TODO: ikonka menu drawer ma znikac
+//TODO: pytanie czy usunac
+//TODO: jezeli usuwa z bazy kategorie co so do niej przypisane produkty - zmien na uncategorized - nie da sie tej kategorii usunac
+//TODO: nie da sie usunac unita jezeli jest jakas cena z tym unitem
 
 //TODO: Wpisywanie produktów do bazy z input formów
 //TODO: Dodaj produkt menu
@@ -18,10 +21,7 @@
 
 //TODO: Skanowanie biblioteka
 
-//nie aktualizuje sie lista
-//nie dodawac unita który juz istnieje albo jest pusty
 //przniesc wszytkie metody do Databasedatasource jako statyczne, brak memberów, open i close
-//jak jest edit mode, wstecz powinoo powodowac zamikenieco edit moda
 
 package com.example.cashsaver;
 

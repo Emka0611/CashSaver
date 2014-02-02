@@ -9,43 +9,59 @@ import android.view.*;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.*;
 import android.widget.*;
+import android.widget.AdapterView.OnItemLongClickListener;
 
 import com.example.database.*;
-import com.example.database.datasource.*;
 import com.example.products.*;
 
 public class UnitsSectionFragment extends Fragment
 {
-	private ListView listView;
-	private View rootView;
 	private EditText actionBarEditText;
 	private ActionBar actionBar;
 	private MenuItem menuItem;
 	private InputMethodManager imm;
 	private int displayOptions;
+	private ListView listView;
 	private List<Unit> unitsList;
-	ArrayAdapter<Unit> adapter;
+	private ArrayAdapter<Unit> adapter;
+	private boolean isEditModeSelected;
+	private boolean isDeleteModeSelected;
+	private Unit unitToDelete;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		setHasOptionsMenu(true);
 
-		rootView = inflater.inflate(R.layout.fragment_list, container, false);
+		View rootView = inflater.inflate(R.layout.fragment_list, container, false);
 
 		actionBar = getActivity().getActionBar();
 
 		DatabaseDataSources.openUnitsDataSource();
+
 		unitsList = DatabaseDataSources.getAllUnits();
-		adapter = new ArrayAdapter<Unit>(getActivity(), android.R.layout.simple_list_item_multiple_choice, unitsList);
+		adapter = new ArrayAdapter<Unit>(getActivity(), android.R.layout.simple_list_item_1, unitsList);
 
 		listView = (ListView) rootView.findViewById(R.id.list);
 		listView.setAdapter(adapter);
-		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+		listView.setOnItemLongClickListener(new OnItemLongClickListener()
+		{
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
+			{
+				unitToDelete = adapter.getItem(position);
+				setDeleteModeSelected(true);
+				view.setSelected(true);
+				return false;
+			}
+		});
 
 		actionBarEditText = (EditText) inflater.inflate(R.layout.actionbar_edittext, null);
 		imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-
+		
+		isEditModeSelected = false;
+		isDeleteModeSelected = false;
+		
 		displayOptions = actionBar.getDisplayOptions();
 
 		return rootView;
@@ -65,7 +81,7 @@ public class UnitsSectionFragment extends Fragment
 		{
 		case R.id.action_new:
 			menuItem = item;
-			editModeSelected(true);
+			setEditModeSelected(true);
 			break;
 		}
 		return super.onOptionsItemSelected(item);
@@ -85,8 +101,18 @@ public class UnitsSectionFragment extends Fragment
 		super.onPause();
 	}
 
-	private void editModeSelected(boolean selected)
+	public void resetView()
 	{
+		showKeybord(false);
+		actionBarEditText.setText("");
+		menuItem.setActionView(null);
+		actionBar.setDisplayOptions(displayOptions);
+	}
+
+	private void setEditModeSelected(boolean selected)
+	{
+		isEditModeSelected = selected;
+
 		if (false != selected)
 		{
 			initEditText();
@@ -94,11 +120,22 @@ public class UnitsSectionFragment extends Fragment
 		}
 		else
 		{
-			showKeybord(false);
-			actionBarEditText.setHint(R.string.new_unit_hint);
-			menuItem.setActionView(null);
-			actionBar.setDisplayOptions(displayOptions);
+			resetView();
 		}
+	}
+	
+	private void setDeleteModeSelected(boolean selected)
+	{
+		isDeleteModeSelected = selected;
+
+		if (false != selected)
+		{
+			enableDeleteButton();
+		}
+		else
+		{
+			resetView();
+		}	
 	}
 
 	private void enableSaveButton()
@@ -109,14 +146,64 @@ public class UnitsSectionFragment extends Fragment
 			@Override
 			public void onClick(View v)
 			{
-				DatabaseDataSources.addUnit(actionBarEditText.getText().toString());
-				unitsList = DatabaseDataSources.getAllUnits();
-				adapter.notifyDataSetChanged();
-				editModeSelected(false);
+				if (false != checkUnit(actionBarEditText.getText().toString()))
+				{
+					Unit newUnit = DatabaseDataSources.addUnit(actionBarEditText.getText().toString());
+					adapter.add(newUnit);
+					adapter.notifyDataSetChanged();
+				}
+				else
+				{
+
+				}
+
+				setEditModeSelected(false);
 			}
 
 		});
+	}
 
+	private void enableDeleteButton()
+	{
+		menuItem.setActionView(R.layout.actionbar_delete_button);
+		menuItem.getActionView().findViewById(R.id.actionbar_delete).setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				DatabaseDataSources.deleteUnit(unitToDelete);
+				adapter.remove(unitToDelete);
+				adapter.notifyDataSetChanged();
+				setDeleteModeSelected(false);
+			}
+		});
+	}
+
+	private boolean checkUnit(String unitName)
+	{
+		boolean fRes = false;
+
+		if (0 != unitName.length() && false == isUnitInDatabase(unitName))
+		{
+			fRes = true;
+		}
+
+		return fRes;
+	}
+
+	private boolean isUnitInDatabase(String unitName)
+	{
+		boolean fRes = false;
+
+		for (int i = 0; i < unitsList.size(); i++)
+		{
+			if (unitsList.get(i).getName().equals(unitName))
+			{
+				fRes = true;
+			}
+		}
+
+		return fRes;
 	}
 
 	private void initEditText()
@@ -137,6 +224,11 @@ public class UnitsSectionFragment extends Fragment
 		{
 			imm.hideSoftInputFromWindow(actionBarEditText.getWindowToken(), 0);
 		}
-
 	}
+
+	public boolean isEditModeSelected()
+	{
+		return isEditModeSelected || isDeleteModeSelected;
+	}
+	
 }
