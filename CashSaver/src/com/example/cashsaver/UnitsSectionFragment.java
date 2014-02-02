@@ -58,10 +58,10 @@ public class UnitsSectionFragment extends Fragment
 
 		actionBarEditText = (EditText) inflater.inflate(R.layout.actionbar_edittext, null);
 		imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-		
+
 		isEditModeSelected = false;
 		isDeleteModeSelected = false;
-		
+
 		displayOptions = actionBar.getDisplayOptions();
 
 		return rootView;
@@ -70,7 +70,11 @@ public class UnitsSectionFragment extends Fragment
 	@Override
 	public void onPrepareOptionsMenu(Menu menu)
 	{
+		boolean drawerOpen = ((MainActivity) getActivity()).isDrawerOpen();
 		getActivity().getMenuInflater().inflate(R.menu.menu_add, menu);
+		menuItem = menu.findItem(R.id.action_new);
+		menuItem.setVisible(!drawerOpen);
+
 		super.onPrepareOptionsMenu(menu);
 	}
 
@@ -80,7 +84,6 @@ public class UnitsSectionFragment extends Fragment
 		switch (item.getItemId())
 		{
 		case R.id.action_new:
-			menuItem = item;
 			setEditModeSelected(true);
 			break;
 		}
@@ -123,7 +126,7 @@ public class UnitsSectionFragment extends Fragment
 			resetView();
 		}
 	}
-	
+
 	private void setDeleteModeSelected(boolean selected)
 	{
 		isDeleteModeSelected = selected;
@@ -135,7 +138,7 @@ public class UnitsSectionFragment extends Fragment
 		else
 		{
 			resetView();
-		}	
+		}
 	}
 
 	private void enableSaveButton()
@@ -146,15 +149,18 @@ public class UnitsSectionFragment extends Fragment
 			@Override
 			public void onClick(View v)
 			{
-				if (false != checkUnit(actionBarEditText.getText().toString()))
+				if (0 != actionBarEditText.getText().toString().length())
 				{
 					Unit newUnit = DatabaseDataSources.addUnit(actionBarEditText.getText().toString());
-					adapter.add(newUnit);
-					adapter.notifyDataSetChanged();
-				}
-				else
-				{
+					if (null != newUnit)
+					{
+						adapter.add(newUnit);
+						adapter.notifyDataSetChanged();
+					}
+					else
+					{
 
+					}
 				}
 
 				setEditModeSelected(false);
@@ -171,39 +177,14 @@ public class UnitsSectionFragment extends Fragment
 			@Override
 			public void onClick(View v)
 			{
-				DatabaseDataSources.deleteUnit(unitToDelete);
-				adapter.remove(unitToDelete);
-				adapter.notifyDataSetChanged();
+				if (false != DatabaseDataSources.deleteUnit(unitToDelete))
+				{
+					adapter.remove(unitToDelete);
+					adapter.notifyDataSetChanged();
+				}
 				setDeleteModeSelected(false);
 			}
 		});
-	}
-
-	private boolean checkUnit(String unitName)
-	{
-		boolean fRes = false;
-
-		if (0 != unitName.length() && false == isUnitInDatabase(unitName))
-		{
-			fRes = true;
-		}
-
-		return fRes;
-	}
-
-	private boolean isUnitInDatabase(String unitName)
-	{
-		boolean fRes = false;
-
-		for (int i = 0; i < unitsList.size(); i++)
-		{
-			if (unitsList.get(i).getName().equals(unitName))
-			{
-				fRes = true;
-			}
-		}
-
-		return fRes;
 	}
 
 	private void initEditText()
@@ -230,5 +211,5 @@ public class UnitsSectionFragment extends Fragment
 	{
 		return isEditModeSelected || isDeleteModeSelected;
 	}
-	
+
 }

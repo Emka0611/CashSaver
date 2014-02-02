@@ -1,23 +1,21 @@
-//TODO: nie po longu tylko po klikniecu zaznacza sie i odznacza sie (delete mode i nie delete mode)
-//TODO: ikonka menu drawer ma znikac
-//TODO: pytanie czy usunac
-//TODO: jezeli usuwa z bazy kategorie co so do niej przypisane produkty - zmien na uncategorized - nie da sie tej kategorii usunac
-//TODO: nie da sie usunac unita jezeli jest jakas cena z tym unitem
-
 //TODO: Wpisywanie produktów do bazy z input formów
 //TODO: Dodaj produkt menu
-
+//TODO: Layout nie takie kompi relative layout
 //TODO: Wyswietlanie produktów z bazy + widok szczegó³owy
-//TODO: Search
-
+//TODO: Search  AutoCompleteTextView. 
+//TODO: pytanie czy usunac
 //TODO: General/specyfic - rozró¿nienie
 
 //TODO: Usuwanie, edycja
 //TODO: CashSaver tytu³ znika, pierwszy widok
 //TODO: menu na kazdym poziomie
-
+//TODO: nie po longu tylko po klikniecu zaznacza sie i odznacza sie (delete mode i nie delete mode)
+//TODO: jezeli usuwa z bazy kategorie co so do niej przypisane produkty - zmien na "INNE"
+//TODO: nie da sie usunac unita jezeli jest jakas cena z tym unitem
 //TODO: czy na pewno? - messageboxy
+//TODO: landscape
 //TODO: walidacja
+//TODO: kolory
 
 //TODO: Skanowanie biblioteka
 
@@ -120,12 +118,4 @@ public class EditProductActivity extends Activity
 	{
 
 	}
-
 }
-
-// TODO: search action bar, AutoCompleteTextView. 
-// TODO: actionbar color
-// TODO: ikonki
-// TODO: zgubi³ titla po on resume
-// TODO: osobny layout dla poziomego widoku
-// TODO: kolory

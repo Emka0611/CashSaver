@@ -1,6 +1,6 @@
 package com.example.cashsaver;
 
-import com.example.database.DatabaseHelper;
+import com.example.database.DatabaseDataSources;
 
 import android.os.Bundle;
 import android.app.*;
@@ -21,6 +21,10 @@ public class MainActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		DatabaseDataSources.openUnitsDataSource();
+		DatabaseDataSources.addUnit("INNE");
+		DatabaseDataSources.closeUnitsDataSource();
 
 		mLeftDrawer = new MyDrawer(this);
 		mLeftDrawer.setOnItemClickListener(new DrawerItemClickListener());
@@ -96,7 +100,7 @@ public class MainActivity extends Activity
 	@Override
 	public void onDestroy()
 	{
-		DatabaseHelper.dropDatabase();
+		//DatabaseHelper.dropDatabase();
 		super.onDestroy();
 	}
 

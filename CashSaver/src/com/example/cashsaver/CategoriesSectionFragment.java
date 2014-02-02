@@ -71,7 +71,9 @@ public class CategoriesSectionFragment extends Fragment
 	@Override
 	public void onPrepareOptionsMenu(Menu menu)
 	{
+		boolean drawerOpen = ((MainActivity) getActivity()).isDrawerOpen();
 		getActivity().getMenuInflater().inflate(R.menu.menu_add, menu);
+		menu.findItem(R.id.action_new).setVisible(!drawerOpen);
 		super.onPrepareOptionsMenu(menu);
 	}
 
@@ -147,48 +149,24 @@ public class CategoriesSectionFragment extends Fragment
 			@Override
 			public void onClick(View v)
 			{
-				if (false != checkCategory(actionBarEditText.getText().toString()))
+				if (0 != actionBarEditText.getText().toString().length())
 				{
 					Category newCategory = DatabaseDataSources.addCategory(actionBarEditText.getText().toString());
-					adapter.add(newCategory);
-					adapter.notifyDataSetChanged();
-				}
-				else
-				{
+					if (null != newCategory)
+					{
+						adapter.add(newCategory);
+						adapter.notifyDataSetChanged();
+					}
+					else
+					{
 
+					}
 				}
 				
 				setEditModeSelected(false);
 			}
 
 		});
-	}
-
-	private boolean checkCategory(String categoryName)
-	{
-		boolean fRes = false;
-
-		if (0 != categoryName.length() && false == isCategoryInDatabase(categoryName))
-		{
-			fRes = true;
-		}
-
-		return fRes;
-	}
-
-	private boolean isCategoryInDatabase(String categoryName)
-	{
-		boolean fRes = false;
-
-		for (int i = 0; i < categoriesList.size(); i++)
-		{
-			if (categoriesList.get(i).getName().equals(categoryName))
-			{
-				fRes = true;
-			}
-		}
-
-		return fRes;
 	}
 
 	private void initEditText()
