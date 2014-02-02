@@ -1,17 +1,18 @@
+//TODO: Dodaj kategoriê hint
 //TODO: Wpisywanie produktów do bazy z input formów
 //TODO: Dodaj produkt menu
-//TODO: Layout nie takie kompi relative layout
-//TODO: Wyswietlanie produktów z bazy + widok szczegó³owy
-//TODO: Search  AutoCompleteTextView. 
-//TODO: pytanie czy usunac
-//TODO: General/specyfic - rozró¿nienie
+//TODO: Layout nie takie kompo relative layout
 
-//TODO: Usuwanie, edycja
+//TODO: Wyswietlanie produktów z bazy + widok szczegó³owy
+//TODO: General/specyfic - rozró¿nienie
+//TODO: Usuwanie, edycja produktów
+
 //TODO: CashSaver tytu³ znika, pierwszy widok
 //TODO: menu na kazdym poziomie
 //TODO: nie po longu tylko po klikniecu zaznacza sie i odznacza sie (delete mode i nie delete mode)
 //TODO: jezeli usuwa z bazy kategorie co so do niej przypisane produkty - zmien na "INNE"
 //TODO: nie da sie usunac unita jezeli jest jakas cena z tym unitem
+//TODO: Search  AutoCompleteTextView. 
 //TODO: czy na pewno? - messageboxy
 //TODO: landscape
 //TODO: walidacja

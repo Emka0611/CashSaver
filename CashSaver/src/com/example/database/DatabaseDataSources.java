@@ -47,7 +47,7 @@ public class DatabaseDataSources
 
 	public static Category addCategory(String name)
 	{
-		if (false == isUnitInDatabase(name))
+		if (false == isCategoryInDatabase(name))
 		{
 			return categoriesDataSource.createCategory(name);
 		}
@@ -59,23 +59,18 @@ public class DatabaseDataSources
 
 	public static boolean deleteUnit(Unit unit)
 	{
-		boolean fRes = false;
-
-		if (false == equalsToOtherUnit(unit))
-		{
-			unitsDataSource.deleteUnit(unit);
-			fRes = true;
-		}
+		boolean fRes = true;
+		unitsDataSource.deleteUnit(unit);
 
 		return fRes;
 	}
 
-	private static boolean equalsToOtherUnit(Unit unit)
+	private static boolean equalsToUncategorizedCategory(Category category)
 	{
 		boolean fRes = false;
 		String uncategorized = "INNE";
 		
-		if (uncategorized.equalsIgnoreCase(unit.getName()))
+		if (uncategorized.equalsIgnoreCase(category.getName()))
 		{
 			fRes = true;
 		}
@@ -83,9 +78,17 @@ public class DatabaseDataSources
 		return fRes;
 	}
 
-	public static void deleteCategory(Category category)
+	public static boolean deleteCategory(Category category)
 	{
-		categoriesDataSource.deleteCategory(category);
+		boolean fRes = false;
+
+		if (false == equalsToUncategorizedCategory(category))
+		{
+			categoriesDataSource.deleteCategory(category);
+			fRes = true;
+		}
+
+		return fRes;
 	}
 
 	public static List<Unit> getAllUnits()

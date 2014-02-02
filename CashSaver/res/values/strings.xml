@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">CashSaver</string>
-
+	<string name="app_start_fragment">Produkty</string>
     <string name="title_products">Produkty</string>
     <string name="title_shopping_lists">Listy zakupów</string>
     

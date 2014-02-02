@@ -73,7 +73,9 @@ public class CategoriesSectionFragment extends Fragment
 	{
 		boolean drawerOpen = ((MainActivity) getActivity()).isDrawerOpen();
 		getActivity().getMenuInflater().inflate(R.menu.menu_add, menu);
-		menu.findItem(R.id.action_new).setVisible(!drawerOpen);
+		menuItem = menu.findItem(R.id.action_new);
+		menuItem.setVisible(!drawerOpen);
+		
 		super.onPrepareOptionsMenu(menu);
 	}
 
@@ -202,9 +204,11 @@ public class CategoriesSectionFragment extends Fragment
 			@Override
 			public void onClick(View v)
 			{
-				DatabaseDataSources.deleteCategory(categoryToDelete);
-				adapter.remove(categoryToDelete);
-				adapter.notifyDataSetChanged();
+				if (false != DatabaseDataSources.deleteCategory(categoryToDelete))
+				{
+					adapter.remove(categoryToDelete);
+					adapter.notifyDataSetChanged();
+				}
 				setDeleteModeSelected(false);
 			}
 		});

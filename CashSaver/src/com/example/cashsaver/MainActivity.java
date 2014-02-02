@@ -22,9 +22,9 @@ public class MainActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		DatabaseDataSources.openUnitsDataSource();
-		DatabaseDataSources.addUnit("INNE");
-		DatabaseDataSources.closeUnitsDataSource();
+		DatabaseDataSources.openCategoriesDataSource();
+		DatabaseDataSources.addCategory("INNE");
+		DatabaseDataSources.closeCategoriesDataSource();
 
 		mLeftDrawer = new MyDrawer(this);
 		mLeftDrawer.setOnItemClickListener(new DrawerItemClickListener());
