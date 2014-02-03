@@ -12,8 +12,6 @@ public class PriceHistory
 	
 	public PriceHistory(long product_id)
 	{
-		//m_priceEntriesVector = new ArrayList<Price>();
-
 		DatabaseDataSources.pricesDataSource.open();
 		m_priceEntriesVector = DatabaseDataSources.pricesDataSource.getAllPrices(product_id);
 		DatabaseDataSources.pricesDataSource.close();

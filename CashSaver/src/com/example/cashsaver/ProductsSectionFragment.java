@@ -85,9 +85,4 @@ public class ProductsSectionFragment extends Fragment
 		datasource.close();
 		super.onPause();
 	}
-	
-	public ListView getListView()
-	{
-		return listView;
-	}
 }
