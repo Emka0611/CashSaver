@@ -1,6 +1,9 @@
 //TODO: Dodaj kategoriê hint
-//TODO: Wpisywanie produktów do bazy z input formów
-//TODO: Dodaj produkt menu
+//TODO: isProduct in database dopracowac
+//TODO: waluta wyswietliæ
+//TODO: dodoaj categorie, dodaj jednostke
+//TODO: diable, enable oblicz button
+
 //TODO: Layout nie takie kompo relative layout
 
 //TODO: Wyswietlanie produktów z bazy + widok szczegó³owy
@@ -20,14 +23,11 @@
 
 //TODO: Skanowanie biblioteka
 
-//przniesc wszytkie metody do Databasedatasource jako statyczne, brak memberów, open i close
-
 package com.example.cashsaver;
 
 import java.util.List;
 
 import com.example.database.*;
-import com.example.database.datasource.*;
 import com.example.products.*;
 
 import android.app.Activity;
@@ -37,10 +37,18 @@ import android.widget.*;
 
 public class EditProductActivity extends Activity
 {
-	CategoriesDataSource categoriesDataSource = null;
-	UnitsDataSource unitsDataSource = null;
-	Spinner mCatSpinner = null;
-	Spinner mUnitsSpinner = null;
+	// to create product
+	private EditText mGeneralProductNameField = null;
+	private EditText mDetailedProductNameField = null;
+	private Spinner mCategorySpinner = null;
+
+	// to create price
+	private EditText mPriceValueField = null;
+	private EditText mQuantityField = null;
+	private Spinner mUnitsSpinner = null;
+
+	// unit price
+	private TextView mUnitPrice = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -48,38 +56,16 @@ public class EditProductActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_product);
 
-		initDataSource();
-		
-		List<Category> categoriesList = categoriesDataSource.getAllCategories();
-		ArrayAdapter<Category> categoriesAdapter = new ArrayAdapter<Category>(this, android.R.layout.simple_spinner_item, categoriesList);
-		categoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		mCatSpinner = (Spinner) findViewById(R.id.cat_spinner);
-		mCatSpinner.setAdapter(categoriesAdapter);
-
-		List<Unit> unitsList = unitsDataSource.getAllUnits();
-		ArrayAdapter<Unit> unitsAdapter = new ArrayAdapter<Unit>(this, android.R.layout.simple_spinner_item, unitsList);
-		unitsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		mUnitsSpinner = (Spinner) findViewById(R.id.unit_spinner);
-		mUnitsSpinner.setAdapter(unitsAdapter);
-		
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
-	}
-
-	private void initDataSource()
-	{
-		unitsDataSource = DatabaseDataSources.unitsDataSource;
-		unitsDataSource.open();
-
-		categoriesDataSource = DatabaseDataSources.categoriesDataSource;
-		categoriesDataSource.open();
-
+		openDataSource();
+		initSpinners();
+		initEditTexts();
 	}
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu)
 	{
-		getMenuInflater().inflate(R.menu.menu_products, menu);
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -92,31 +78,90 @@ public class EditProductActivity extends Activity
 	@Override
 	public void onResume()
 	{
-		categoriesDataSource.open();
-		unitsDataSource.open();
+		openDataSource();
 		super.onResume();
 	}
 
 	@Override
 	public void onPause()
 	{
-		categoriesDataSource.close();
-		unitsDataSource.close();
+		closeDataSource();
 		super.onPause();
 	}
 
 	public void onCalculateButtonClick(View view)
 	{
+		double priceValue = Double.parseDouble(mPriceValueField.getText().toString());
+		double quantity = Double.parseDouble(mQuantityField.getText().toString());
+		
+		Double unitPrice = priceValue/quantity;
+		unitPrice *= 100;
+		unitPrice = (double) Math.round(unitPrice);
+	    unitPrice/= 100; 
 
+		mUnitPrice.setText(unitPrice.toString());
 	}
-	
+
 	public void onCancelButtonClick(View view)
 	{
-
+		onBackPressed();
 	}
-	
+
 	public void onSaveButtonClick(View view)
 	{
+		// to create product
+		String generalName = mGeneralProductNameField.getText().toString();
+		String detailedName = mDetailedProductNameField.getText().toString();
+		long categoryId = ((Category) mCategorySpinner.getSelectedItem()).getId();
 
+		// to create price
+		double priceValue = Double.parseDouble(mPriceValueField.getText().toString());
+		double quantity = Double.parseDouble(mQuantityField.getText().toString());
+		long unitId = ((Unit) mUnitsSpinner.getSelectedItem()).getId();
+
+		ProductSpecific newProduct = DatabaseDataSources.addProduct(generalName, detailedName, categoryId);
+
+		if (null != newProduct)
+		{
+			openDataSource();
+			DatabaseDataSources.addPrice(newProduct.getId(), priceValue, quantity, unitId);
+			Toast.makeText(this, "Produkt dodano pomyœlnie", Toast.LENGTH_SHORT).show();
+		}
 	}
+
+	private void openDataSource()
+	{
+		DatabaseDataSources.open();
+	}
+
+	private void closeDataSource()
+	{
+		DatabaseDataSources.close();
+	}
+
+	private void initSpinners()
+	{
+		List<Category> categoriesList = DatabaseDataSources.getAllCategories();
+		ArrayAdapter<Category> categoriesAdapter = new ArrayAdapter<Category>(this, android.R.layout.simple_spinner_item, categoriesList);
+		categoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		mCategorySpinner = (Spinner) findViewById(R.id.cat_spinner);
+		mCategorySpinner.setAdapter(categoriesAdapter);
+
+		List<Unit> unitsList = DatabaseDataSources.getAllUnits();
+		ArrayAdapter<Unit> unitsAdapter = new ArrayAdapter<Unit>(this, android.R.layout.simple_spinner_item, unitsList);
+		unitsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		mUnitsSpinner = (Spinner) findViewById(R.id.unit_spinner);
+		mUnitsSpinner.setAdapter(unitsAdapter);
+	}
+
+	private void initEditTexts()
+	{
+		mGeneralProductNameField = (EditText) findViewById(R.id.general_product_name);
+		mDetailedProductNameField = (EditText) findViewById(R.id.detailed_product_name);
+		mPriceValueField = (EditText) findViewById(R.id.price_input);
+		mQuantityField = (EditText) findViewById(R.id.quantity_input);
+
+		mUnitPrice = (TextView) findViewById(R.id.unit_price_value);
+	}
+
 }
