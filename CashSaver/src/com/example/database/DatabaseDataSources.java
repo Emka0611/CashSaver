@@ -20,7 +20,6 @@ public class DatabaseDataSources
 		unitsDataSource = new UnitsDataSource(context);
 		productsDataSource = new ProductsDataSource(context);
 		pricesDataSource = new PricesDataSource(context);
-
 	}
 
 	public static void addExamples()
@@ -38,12 +37,12 @@ public class DatabaseDataSources
 		return newPrice;
 	}
 
-	public static ProductSpecific addProduct(String name, String detailedName, long categoryId)
+	public static Product addProduct(String name, long categoryId)
 	{
-		ProductSpecific newProduct = null;
-		if (false == isProductInDatabase(detailedName))
+		Product newProduct = null;
+		if (false == isProductInDatabase(name))
 		{
-			newProduct = productsDataSource.createProductSpecific(name, detailedName, categoryId);
+			newProduct = productsDataSource.createProductSpecific(name, categoryId);
 		}
 		return newProduct;
 	}
@@ -183,14 +182,14 @@ public class DatabaseDataSources
 		return fRes;
 	}
 
-	private static boolean isProductInDatabase(String detailedName)
+	private static boolean isProductInDatabase(String name)
 	{
 		boolean fRes = false;
-		List<ProductSpecific> productsList = productsDataSource.getAllProducts();
+		List<Product> productsList = productsDataSource.getAllProducts();
 
 		for (int i = 0; i < productsList.size(); i++)
 		{
-			if (productsList.get(i).getDetailedName().equals(detailedName))
+			if (productsList.get(i).getGeneralName().equals(name))
 			{
 				fRes = true;
 			}

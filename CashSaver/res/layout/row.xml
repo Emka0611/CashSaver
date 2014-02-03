@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/my_list_item"
+    android:orientation="horizontal"
+    android:padding="1dip" >
+
+    <!-- ListRow Left side Thumbnail image -->
+
+    <ImageView
+        android:id="@+id/list_image"
+        android:layout_width="32dip"
+        android:layout_height="32dip"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="5dip"
+        android:contentDescription="@string/app_name"
+        android:padding="3dip"
+        android:src="@drawable/ic_action_share" />
+    <!-- Rightend Arrow -->
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_action_next_item" />
+    <!-- City -->
+
+    <TextView
+        android:id="@+id/tvCity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dip"
+        android:layout_toRightOf="@+id/list_image"
+        android:text="@string/action_accept"
+        android:textColor="#040404"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:typeface="sans" />
+    <!-- Weather Information -->
+
+    <TextView
+        android:id="@+id/tvCondition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvCity"
+        android:layout_below="@+id/tvCity"
+        android:layout_centerHorizontal="true"
+        android:text="@string/action_delete"
+        android:textColor="#343434"
+        android:textSize="14sp" />
+
+</RelativeLayout>

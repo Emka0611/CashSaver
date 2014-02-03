@@ -10,9 +10,7 @@ public class ProductTable
 
 	public static final String COLUMN_ID = "_id";
 	public static final String COLUMN_NAME = "name";
-	public static final String COLUMN_NAME_DETAILED = "name_detailed";
 	public static final String COLUMN_CATEGORY_ID = "category_id";
-	public static final String COLUMN_PRICE_HISTORY_ID = "price_history_id";
 		
 
 	// Database creation SQL statement
@@ -20,9 +18,7 @@ public class ProductTable
 			+"(" 
 			+ COLUMN_ID + " integer primary key autoincrement, "
 			+ COLUMN_NAME + " text,"
-			+ COLUMN_NAME_DETAILED + " text,"
 			+ COLUMN_CATEGORY_ID + " integer,"
-			+ COLUMN_PRICE_HISTORY_ID + " integer"
 			+ ");"
 			;
 

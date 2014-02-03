@@ -10,7 +10,8 @@
     <string name="action_delete">Usuń</string>
     <string name="action_add_examples">Dodaj przykłady</string>
     <string name="action_settings">Settings</string>
-    <string name="action_accept">DONE</string>
+    <string name="action_accept">Dodaj</string>
+    <string name="action_scan">Skanuj</string>
 
     <string name="drawer_open">BUM</string>
     <string name="drawer_close">BUM</string>
@@ -20,9 +21,10 @@
     <string name="general_product_name_hint">Nazwa produktu</string>
     <string name="product_name_hint">Nazwa szczegółowa</string>
     <string name="new_unit_hint">Dodaj jednostkę</string>
+    <string name="new_category_hint">Dodaj kategorię</string>
     <string name="product_price_hint">Cena</string>
     
-    <string name="scan">Skanuj</string>
+
     <string name="cancel">Anuluj</string>
     <string name="save">Zapisz</string>
     <string name="quantity">Ilość</string>
@@ -39,7 +41,6 @@
         <item>Jednostki</item>
         <item>Produkty</item>
         <item>Ceny</item>
-        <item>Dodaj produkt</item>
     </string-array>
     
 </resources>

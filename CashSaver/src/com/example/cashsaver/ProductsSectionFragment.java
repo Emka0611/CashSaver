@@ -5,6 +5,7 @@ import java.util.*;
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.content.Intent;
 import android.view.*;
 import android.widget.*;
 
@@ -18,6 +19,8 @@ public class ProductsSectionFragment extends Fragment
 	private ListView listView;
 	private View rootView;
 	private ActionBar actionBar;
+	List<Product> list;
+	ArrayAdapter<Product> adapter;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -32,8 +35,8 @@ public class ProductsSectionFragment extends Fragment
 		actionBar = getActivity().getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
-		List<ProductSpecific> list = datasource.getAllProducts();
-		ArrayAdapter<ProductSpecific> adapter = new ArrayAdapter<ProductSpecific>(getActivity(), android.R.layout.simple_list_item_multiple_choice, list);
+		list = datasource.getAllProducts();
+		adapter = new ArrayAdapter<Product>(getActivity(), android.R.layout.simple_list_item_multiple_choice, list);
 
 		listView = (ListView) rootView.findViewById(R.id.list);
 		listView.setAdapter(adapter);
@@ -46,11 +49,9 @@ public class ProductsSectionFragment extends Fragment
 	@Override
 	public void onPrepareOptionsMenu(Menu menu)
 	{
-		getActivity().getMenuInflater().inflate(R.menu.menu_products, menu);
+		getActivity().getMenuInflater().inflate(R.menu.menu_add, menu);
 		boolean drawerOpen = ((MainActivity) getActivity()).isDrawerOpen();
-		menu.findItem(R.id.menu_overflow).setVisible(!drawerOpen);
-		menu.findItem(R.id.item1).setVisible(false);
-		menu.findItem(R.id.item2).setVisible(false);
+		menu.findItem(R.id.action_new).setVisible(!drawerOpen);
 		super.onPrepareOptionsMenu(menu);
 	}
 	
@@ -58,20 +59,11 @@ public class ProductsSectionFragment extends Fragment
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
-		@SuppressWarnings("unchecked")
-		ArrayAdapter<ProductSpecific> adapter = (ArrayAdapter<ProductSpecific>) listView.getAdapter();
-
 		switch (item.getItemId())
 		{
-		case R.id.item1:
-			break;
-		case R.id.item2:
-			break;
-		case R.id.item3:
-			DatabaseDataSources.addExamples();
-			datasource.open();
-			adapter.clear();
-			adapter.addAll(datasource.getAllProducts());
+		case R.id.action_new:
+			Intent i = new Intent(getActivity(), EditProductActivity.class);
+			startActivity(i);
 			break;
 		}
 		return super.onOptionsItemSelected(item);
@@ -81,6 +73,9 @@ public class ProductsSectionFragment extends Fragment
 	public void onResume()
 	{
 		datasource.open();
+		list = datasource.getAllProducts();
+		adapter.clear();
+		adapter.addAll(list);
 		super.onResume();
 	}
 

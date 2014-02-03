@@ -40,7 +40,7 @@ public class CategoriesSectionFragment extends Fragment
 		DatabaseDataSources.openCategoriesDataSource();
 
 		categoriesList = DatabaseDataSources.getAllCategories();
-		adapter = new ArrayAdapter<Category>(getActivity(), android.R.layout.simple_list_item_1, categoriesList);
+		adapter = new ArrayAdapter<Category>(getActivity(), R.layout.row, R.id.tvCity, categoriesList);
 
 		listView = (ListView) rootView.findViewById(R.id.list);
 		listView.setAdapter(adapter);
@@ -175,6 +175,7 @@ public class CategoriesSectionFragment extends Fragment
 	{
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM, ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE);
 		actionBar.setCustomView(actionBarEditText);
+		actionBarEditText.setHint(R.string.new_category_hint);
 		actionBarEditText.requestFocus();
 		showKeybord(true);
 	}
