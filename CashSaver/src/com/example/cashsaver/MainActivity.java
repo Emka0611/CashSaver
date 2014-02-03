@@ -1,12 +1,18 @@
 package com.example.cashsaver;
 
-import com.example.database.DatabaseDataSources;
-
-import android.os.Bundle;
-import android.app.*;
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.content.Intent;
 import android.content.res.Configuration;
-import android.view.*;
-import android.widget.*;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+
+import com.example.database.DatabaseDataSources;
 
 public class MainActivity extends Activity
 {
@@ -34,6 +40,12 @@ public class MainActivity extends Activity
 	private void selectItem(int position)
 	{
 		mCurrPosiotion = position;
+		
+		if(4 == position)
+		{
+			Intent i = new Intent(this, DemoScandit.class);
+			startActivity(i);
+		}
 
 		switch (position)
 		{
@@ -49,7 +61,6 @@ public class MainActivity extends Activity
 		case 3:
 			mCurrFragment = new PricesSectionFragment();
 			break;
-
 		}
 
 		mFragmentManager.beginTransaction().replace(R.id.content_frame, mCurrFragment).commit();

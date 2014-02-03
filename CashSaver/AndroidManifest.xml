@@ -34,6 +34,10 @@
             android:label="@string/title_product_add"
             android:screenOrientation="portrait" 
             android:parentActivityName=".MainActivity"/>
+        
+        <activity android:name="com.example.cashsaver.DemoScandit"></activity>
     </application>
 
+    <uses-permission android:name="android.permission.CAMERA"/>
+    
 </manifest>
