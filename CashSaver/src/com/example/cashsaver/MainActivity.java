@@ -1,16 +1,11 @@
 package com.example.cashsaver;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.content.Intent;
 import android.content.res.Configuration;
+
+import android.app.*;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.view.*;
+import android.widget.*;
 
 import com.example.database.DatabaseDataSources;
 
@@ -40,12 +35,6 @@ public class MainActivity extends Activity
 	private void selectItem(int position)
 	{
 		mCurrPosiotion = position;
-		
-		if(4 == position)
-		{
-			Intent i = new Intent(this, DemoScandit.class);
-			startActivity(i);
-		}
 
 		switch (position)
 		{

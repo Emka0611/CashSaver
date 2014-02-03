@@ -2,16 +2,26 @@ package com.example.cashsaver;
 
 import java.util.List;
 
-import com.example.database.*;
-import com.example.products.*;
-
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.*;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.*;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
-public class EditProductActivity extends Activity
+import com.example.database.DatabaseDataSources;
+import com.example.products.Category;
+import com.example.products.Product;
+import com.example.products.Unit;
+import com.mirasense.scanditsdk.ScanditSDKAutoAdjustingBarcodePicker;
+import com.mirasense.scanditsdk.interfaces.ScanditSDKListener;
+
+public class EditProductActivity extends Activity implements ScanditSDKListener
 {
 	// to create product
 	private EditText mGeneralProductNameField = null;
@@ -25,6 +35,10 @@ public class EditProductActivity extends Activity
 	// unit price
 	private TextView mUnitPrice = null;
 	private MenuItem menuItem = null;
+	
+	// to scan
+	private ScanditSDKAutoAdjustingBarcodePicker mPicker;
+	private String mBarcode = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -37,7 +51,16 @@ public class EditProductActivity extends Activity
 		openDataSource();
 		initSpinners();
 		initEditTexts();
-		
+		initScanditSDK();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
+		getMenuInflater().inflate(R.menu.menu_scan, menu);
+		menuItem = menu.findItem(R.id.action_scan);
+		enableScanButton();
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
@@ -50,6 +73,7 @@ public class EditProductActivity extends Activity
 	public void onResume()
 	{
 		openDataSource();
+		mPicker.startScanning();
 		super.onResume();
 	}
 
@@ -57,6 +81,7 @@ public class EditProductActivity extends Activity
 	public void onPause()
 	{
 		closeDataSource();
+		mPicker.stopScanning();
 		super.onPause();
 	}
 
@@ -138,16 +163,7 @@ public class EditProductActivity extends Activity
 		mUnitPrice = (TextView) findViewById(R.id.unit_price_value);
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu)
-	{
-		getMenuInflater().inflate(R.menu.menu_scan, menu);
-		menuItem = menu.findItem(R.id.action_scan);
-		enableSaveButton();
-		return super.onCreateOptionsMenu(menu);
-	}
-
-	private void enableSaveButton()
+	private void enableScanButton()
 	{
 		menuItem.setActionView(R.layout.actionbar_scan_button);
 		menuItem.getActionView().findViewById(R.id.actionbar_scan).setOnClickListener(new OnClickListener()
@@ -155,11 +171,60 @@ public class EditProductActivity extends Activity
 			@Override
 			public void onClick(View v)
 			{
-
+				setContentView(mPicker);
+				mPicker.startScanning();
+				menuItem.setVisible(false);
+				setTitle(R.string.action_scan);
 			}
 
 		});
+	}
 
+	private void initScanditSDK()
+	{
+		mPicker = new ScanditSDKAutoAdjustingBarcodePicker(this, "CM6QaHb3EeORlSefRQ8yzrdeKmWlD0LK2CTbqJ5vvKw", 0);
+		mPicker.getOverlayView().addListener(this);
+	}
+
+	@Override
+	public void didCancel()
+	{
+	}
+	
+	@Override
+	public void didManualSearch(String entry)
+	{
+	}
+	
+	@Override
+	public void didScanBarcode(String barcode, String symbology)
+	{
+		mBarcode = barcode;
+		Toast.makeText(this, mBarcode, Toast.LENGTH_LONG).show();
+		stopScanning();
+	}
+	
+	@Override
+	public void onBackPressed()
+	{
+		if (false != mPicker.isScanning())
+		{
+			stopScanning();
+		}
+		else
+		{
+			super.onBackPressed();
+		}
+	}
+	
+	private void stopScanning()
+	{
+		mPicker.stopScanning();
+		setContentView(R.layout.activity_edit_product);
+		setTitle(R.string.title_product_add);
+		menuItem.setVisible(true);
+		openDataSource();
+		initSpinners();
 	}
 
 }
