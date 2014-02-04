@@ -37,12 +37,12 @@ public class DatabaseDataSources
 		return newPrice;
 	}
 
-	public static Product addProduct(String name, long categoryId)
+	public static Product addProduct(String name, long categoryId, String barcode)
 	{
 		Product newProduct = null;
 		if (false == isProductInDatabase(name))
 		{
-			newProduct = productsDataSource.createProductSpecific(name, categoryId);
+			newProduct = productsDataSource.createProduct(name, categoryId, barcode);
 		}
 		return newProduct;
 	}

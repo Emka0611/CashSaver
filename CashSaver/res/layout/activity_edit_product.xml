@@ -1,129 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@color/white"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
     android:orientation="vertical" >
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_margin="10dp"
-        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <EditText
-            android:id="@+id/general_product_name"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:ems="10"
-            android:hint="@string/general_product_name_hint"
-            android:inputType="textPersonName" />
+            android:layout_marginTop="15dp"
+            android:background="@color/white"
+            android:padding="10dp" >
 
+            <EditText
+                android:id="@+id/general_product_name"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/general_product_name_hint"
+                android:inputType="textPersonName"
+                android:textSize="20sp" />
+        </RelativeLayout>
 
-        <Spinner
-            android:id="@+id/cat_spinner"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:ems="100" />
+            android:layout_marginTop="20dp"
+            android:alignmentMode="alignBounds"
+            android:background="@color/white"
+            android:padding="10dp" >
 
-<!--         <Button
-            android:id="@+id/cat_add_button"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="100dp"
+            <EditText
+                android:id="@+id/quantity_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_gravity="left"
+                android:ems="4"
+                android:hint="@string/quantity"
+                android:inputType="numberDecimal"
+                android:textSize="20sp" />
+
+            <Spinner
+                android:id="@+id/unit_spinner"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/quantity_input"
+                android:layout_toRightOf="@id/quantity_input" />
+
+            <EditText
+                android:id="@+id/price_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/unit_spinner"
+                android:ems="4"
+                android:hint="@string/price"
+                android:inputType="numberDecimal"
+                android:textSize="20sp" />
+
+            <Spinner
+                android:id="@+id/cat_spinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/quantity_input"
+                android:layout_marginTop="18dp"
+                android:gravity="center"
+                android:prompt="@string/category" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/my_button"
-            android:text="@string/action_new"
-            android:textColor="@color/white" /> -->
+            android:layout_marginTop="20dp"
+            android:background="@color/white"
+            android:padding="10dp" >
 
-        <EditText
-            android:id="@+id/quantity_input"
-            android:layout_width="90dp"
+            <TextView
+                android:id="@+id/unit_price_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="@string/unit_price"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/unit_price_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@id/unit_price_title"
+                android:text="@string/price_value"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/unit_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/unit_price_value"
+                android:text="@string/zloty"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:ems="4"
-            android:hint="@string/quantity"
-            android:inputType="numberDecimal" />
+            android:layout_marginTop="20dp"
+            android:background="@color/white"
+            android:padding="10dp" >
 
-        <Spinner
-            android:id="@+id/unit_spinner"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:ems="10" />
+            <EditText
+                android:id="@+id/barcode_input"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/barcode"
+                android:inputType="textPersonName"
+                android:textSize="18sp" />
+        </RelativeLayout>
 
-<!--         <Button
-            android:id="@+id/unit_add_button"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/my_button"
-            android:text="@string/action_new"
-            android:textColor="@color/white" /> -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:background="@color/white"
+            android:gravity="end"
+            android:padding="10dp" >
 
-        <EditText
-            android:id="@+id/price_input"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:ems="10"
-            android:hint="@string/price"
-            android:inputType="numberDecimal" />
+            <Button
+                android:id="@+id/cancel_button"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/my_button"
+                android:onClick="onCancelButtonClick"
+                android:text="@string/cancel"
+                android:textColor="@color/white" />
 
-<!--         <Button
-            android:id="@+id/calculate"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:background="@drawable/my_button"
-            android:onClick="onCalculateButtonClick"
-            android:text="@string/calculate"
-            android:textColor="@color/white" /> -->
-
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/unit_price"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <TextView
-            android:id="@+id/unit_price_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:text="@string/price_value"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-<!--         <TextView
-            android:id="@+id/textView3"
-            android:layout_width="fill_parent"
-            android:layout_height="48dp"
-            android:background="@color/fiord2"
-            android:textColor="@color/white" /> -->
-
-        <Button
-            android:id="@+id/cancel_button"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/my_button"
-            android:onClick="onCancelButtonClick"
-            android:text="@string/cancel"
-            android:textColor="@color/white" />
-
-        <Button
-            android:id="@+id/save_button"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/my_button"
-            android:onClick="onSaveButtonClick"
-            android:text="@string/save"
-            android:textColor="@color/white" />
+            <Button
+                android:id="@+id/save_button"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/my_button"
+                android:onClick="onSaveButtonClick"
+                android:text="@string/save"
+                android:textColor="@color/white" />
+        </RelativeLayout>
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>

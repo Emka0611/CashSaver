@@ -43,26 +43,27 @@ public class ProductsDataSource
 		close();
 	}
 
-	public Product createProductSpecific(String name, long categoryId)
+	public Product createProduct(String name, long categoryId, String barcode)
 	{
 		ContentValues values = new ContentValues();
 		values.put(ProductTable.COLUMN_NAME, name);
 		values.put(ProductTable.COLUMN_CATEGORY_ID, categoryId);
+		values.put(ProductTable.COLUMN_BARCODE, barcode);
 
 		long insertId = database.insert(ProductTable.TABLE_PRODUCT, null, values);
 		Cursor cursor = database.query(ProductTable.TABLE_PRODUCT, allColumns, ProductTable.COLUMN_ID + " = " + insertId, null, null, null, null);
 		cursor.moveToFirst();
 
-		Product newProductSpecific = convertCursorToProductSpecific(cursor);
+		Product newProductSpecific = convertCursorToProduct(cursor);
 		cursor.close();
 
 		return newProductSpecific;
 	}
-
-	public void deleteProductSpecific(Product product)
+	
+	public void deleteProduct(Product product)
 	{
 		long id = product.getId();
-		System.out.println("ProductSpecific deleted with id: " + id);
+		System.out.println("Product deleted with id: " + id);
 		database.delete(ProductTable.TABLE_PRODUCT, ProductTable.COLUMN_ID + " = " + id, null);
 	}
 
@@ -75,7 +76,7 @@ public class ProductsDataSource
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast())
 		{
-			Product produt = convertCursorToProductSpecific(cursor);
+			Product produt = convertCursorToProduct(cursor);
 			products.add(produt);
 			cursor.moveToNext();
 		}
@@ -84,13 +85,12 @@ public class ProductsDataSource
 		return products;
 	}
 
-	private Product convertCursorToProductSpecific(Cursor cursor)
+	private Product convertCursorToProduct(Cursor cursor)
 	{
 		long productId = cursor.getLong(0);
 		String productName = cursor.getString(1);
 		long categoryId = cursor.getLong(2);
-		
-		int barcode = 0;
+		String barcode = cursor.getString(3);
 
 		DatabaseDataSources.categoriesDataSource.open();
 		Category category = DatabaseDataSources.categoriesDataSource.getCategory(categoryId);

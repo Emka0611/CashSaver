@@ -8,6 +8,8 @@
         android:minSdkVersion="14"
         android:targetSdkVersion="20" />
 
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:name="com.example.cashsaver.CashSaverApplication"
         android:allowBackup="true"
@@ -18,7 +20,6 @@
             android:name="com.example.cashsaver.MainActivity"
             android:label="@string/app_start_fragment"
             android:screenOrientation="portrait" >
-            
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
@@ -31,13 +32,13 @@
         </activity>
         <activity
             android:name="com.example.cashsaver.EditProductActivity"
-            android:label="@string/title_product_add"
-            android:screenOrientation="portrait" 
-            android:parentActivityName=".MainActivity"/>
-        
-        <activity android:name="com.example.cashsaver.DemoScandit"></activity>
+            android:label="@string/title_product_new"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name="com.example.cashsaver.ScanditActivity"
+            android:label="@string/action_scan"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
-    <uses-permission android:name="android.permission.CAMERA"/>
-    
 </manifest>

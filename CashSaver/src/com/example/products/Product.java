@@ -9,10 +9,9 @@ public class Product
 	private String m_generalName;
 	private Category m_category;
 	private PriceHistory m_priceHistory;
+	private String m_barcode;
 
-	private int m_barcode;
-
-	public Product(long id, String generalName, Category category, int barcode)
+	public Product(long id, String generalName, Category category, String barcode)
 	{
 		this.m_id = id;
 		this.m_generalName = generalName;
@@ -41,7 +40,7 @@ public class Product
 		return m_priceHistory;
 	}
 
-	public int getBarcode()
+	public String getBarcode()
 	{
 		return m_barcode;
 	}
@@ -52,8 +51,8 @@ public class Product
 		StringBuilder builder = new StringBuilder();
 		builder.append(m_category.getName() + " ");
 		builder.append(m_generalName);
-		builder.append(" History entries: ");
-		builder.append(m_priceHistory.getPriceEntriesVector().size());
+		builder.append("+" + m_barcode);
+
 		return builder.toString();
 	}
 

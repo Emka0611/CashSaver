@@ -40,7 +40,7 @@ public class CategoriesSectionFragment extends Fragment
 		DatabaseDataSources.openCategoriesDataSource();
 
 		categoriesList = DatabaseDataSources.getAllCategories();
-		adapter = new ArrayAdapter<Category>(getActivity(), R.layout.row, R.id.tvCity, categoriesList);
+		adapter = new ArrayAdapter<Category>(getActivity(), android.R.layout.simple_list_item_1, categoriesList);
 
 		listView = (ListView) rootView.findViewById(R.id.list);
 		listView.setAdapter(adapter);

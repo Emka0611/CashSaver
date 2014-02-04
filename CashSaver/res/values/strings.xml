@@ -15,13 +15,13 @@
 
     <string name="drawer_open">BUM</string>
     <string name="drawer_close">BUM</string>
-    <string name="title_product_add">Dodaj produkt </string>
+    <string name="title_product_new">Nowy produkt</string>
     <string name="title_product_edit">Edytuj produkt</string>
     
     <string name="general_product_name_hint">Nazwa produktu</string>
     <string name="product_name_hint">Nazwa szczegółowa</string>
-    <string name="new_unit_hint">Dodaj jednostkę</string>
-    <string name="new_category_hint">Dodaj kategorię</string>
+    <string name="new_unit_hint">Nowa jednostka</string>
+    <string name="new_category_hint">Nowa kategoria</string>
     <string name="product_price_hint">Cena</string>
     
 
@@ -29,19 +29,21 @@
     <string name="save">Zapisz</string>
     <string name="quantity">Ilość</string>
     <string name="price">Cena</string>
-    <string name="unit_price">Cena jednostkowa</string>
+    <string name="unit_price">Cena jednostkowa:</string>
+    <string name="category">Kategoria</string>
     <string name="unit">Jednostka</string>
     <string name="calculate">Oblicz</string>
     <string name="categories">Kategorie</string>
-    <string name="price_value">0.00 zł</string>
+    <string name="price_value">0.00</string>
+    <string name="zloty">zł</string>
     <string name="search_title">Szukaj</string>
+    <string name="barcode">Kod kreskowy:</string>
 
     <string-array name="drawerListArray">
         <item>Kategorie</item>
         <item>Jednostki</item>
         <item>Produkty</item>
         <item>Ceny</item>
-        <item>ScanditDemo</item>
     </string-array>
     
 </resources>

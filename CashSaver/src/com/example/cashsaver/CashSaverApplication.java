@@ -6,7 +6,6 @@ import android.app.Application;
 
 public class CashSaverApplication extends Application
 {
-	
 	@Override
 	public void onCreate()
 	{
