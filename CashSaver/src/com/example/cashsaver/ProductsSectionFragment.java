@@ -1,17 +1,24 @@
 package com.example.cashsaver;
 
-import java.util.*;
+import java.util.List;
 
-import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
-import android.view.*;
-import android.widget.*;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
-import com.example.database.*;
-import com.example.database.datasource.*;
-import com.example.products.*;
+import com.example.database.DatabaseDataSources;
+import com.example.database.datasource.ProductsDataSource;
+import com.example.products.Product;
 
 public class ProductsSectionFragment extends Fragment
 {
@@ -21,6 +28,8 @@ public class ProductsSectionFragment extends Fragment
 	private ActionBar actionBar;
 	List<Product> list;
 	ArrayAdapter<Product> adapter;
+	
+	final static String PRODUCT_SELECTED = "selected_product";
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -40,6 +49,19 @@ public class ProductsSectionFragment extends Fragment
 
 		listView = (ListView) rootView.findViewById(R.id.list);
 		listView.setAdapter(adapter);
+		listView.setOnItemLongClickListener(new OnItemLongClickListener()
+		{
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
+			{
+				long selectedProductId = ((Product) parent.getItemAtPosition(position)).getId();
+				Intent i = new Intent(getActivity(), AddPriceActivity.class);
+				i.putExtra(PRODUCT_SELECTED, selectedProductId);
+				getActivity().startActivity(i);
+				return false;
+			}
+		});
 		
 		return rootView;
 	}

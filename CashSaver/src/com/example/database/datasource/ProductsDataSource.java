@@ -15,12 +15,7 @@ public class ProductsDataSource
 	// Database fields
 	private SQLiteDatabase database;
 	private DatabaseHelper dbHelper;
-	private String[] allColumns = { 
-			ProductTable.COLUMN_ID, 
-			ProductTable.COLUMN_NAME, 
-			ProductTable.COLUMN_CATEGORY_ID,
-			ProductTable.COLUMN_BARCODE
-			};
+	private String[] allColumns = { ProductTable.COLUMN_ID, ProductTable.COLUMN_NAME, ProductTable.COLUMN_CATEGORY_ID, ProductTable.COLUMN_BARCODE };
 
 	public ProductsDataSource(Context context)
 	{
@@ -36,11 +31,11 @@ public class ProductsDataSource
 	{
 		dbHelper.close();
 	}
-	
+
 	public void addExamples()
 	{
 		open();
-		//TODO:
+		// TODO:
 		close();
 	}
 
@@ -60,7 +55,7 @@ public class ProductsDataSource
 
 		return newProductSpecific;
 	}
-	
+
 	public void deleteProduct(Product product)
 	{
 		long id = product.getId();
@@ -100,6 +95,19 @@ public class ProductsDataSource
 		Product product = new Product(productId, productName, category, barcode);
 		return product;
 
+	}
+
+	public Product getProduct(long productId)
+	{
+		Product product = null;
+
+		Cursor cursor = database.query(ProductTable.TABLE_PRODUCT, allColumns, ProductTable.COLUMN_ID + " = " + productId, null, null, null, null);
+
+		cursor.moveToFirst();
+		product = convertCursorToProduct(cursor);
+
+		cursor.close();
+		return product;
 	}
 
 }

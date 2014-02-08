@@ -25,7 +25,7 @@ import com.example.products.Unit;
 public class EditProductActivity extends Activity
 {
 	// to create product
-	private EditText mGeneralProductNameField = null;
+	private EditText mProductNameField = null;
 	private Spinner mCategorySpinner = null;
 
 	// to create price
@@ -112,30 +112,38 @@ public class EditProductActivity extends Activity
 
 	public void onSaveButtonClick(View view)
 	{
-		// to create product
-		String generalName = mGeneralProductNameField.getText().toString();
-		long categoryId = ((Category) mCategorySpinner.getSelectedItem()).getId();
-
-		// to create price
-		double priceValue = Double.parseDouble(mPriceValueField.getText().toString());
-		double quantity = Double.parseDouble(mQuantityField.getText().toString());
-		long unitId = ((Unit) mUnitsSpinner.getSelectedItem()).getId();
-
-		// barcode
-		String barcode = mBarcodeField.getText().toString();
-
-		Product newProduct = DatabaseDataSources.addProduct(generalName, categoryId, barcode);
-
-		if (null != newProduct)
+		if (false != validateForm())
 		{
-			openDataSource();
-			DatabaseDataSources.addPrice(newProduct.getId(), priceValue, quantity, unitId);
-			Toast.makeText(this, "Produkt dodano pomyœlnie", Toast.LENGTH_SHORT).show();
-			onBackPressed();
+			// to create product
+			String generalName = mProductNameField.getText().toString();
+			long categoryId = ((Category) mCategorySpinner.getSelectedItem()).getId();
+
+			// to create price
+			double priceValue = Double.parseDouble(mPriceValueField.getText().toString());
+			double quantity = Double.parseDouble(mQuantityField.getText().toString());
+			long unitId = ((Unit) mUnitsSpinner.getSelectedItem()).getId();
+
+			// barcode
+			String barcode = mBarcodeField.getText().toString();
+
+			Product newProduct = DatabaseDataSources.addProduct(generalName, categoryId, barcode);
+
+			if (null != newProduct)
+			{
+				openDataSource();
+				DatabaseDataSources.addPrice(newProduct.getId(), priceValue, quantity, unitId);
+				Toast.makeText(this, "Produkt dodano pomyœlnie", Toast.LENGTH_SHORT).show();
+				onBackPressed();
+			}
+			else
+			{
+				Toast.makeText(this, "Blad przy zapisywaniu produktu", Toast.LENGTH_SHORT).show();
+			}
 		}
 		else
 		{
-			Toast.makeText(this, "Blad przy zapisywaniu produktu", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "Niepoprawne dane", Toast.LENGTH_SHORT).show();
+			
 		}
 	}
 
@@ -180,17 +188,14 @@ public class EditProductActivity extends Activity
 
 	private void initEditTexts()
 	{
-		String unitCurrency = getResources().getString(R.string.zloty);
-		String unitName = ((Unit) mUnitsSpinner.getSelectedItem()).getName();
-
-		mGeneralProductNameField = (EditText) findViewById(R.id.general_product_name);
+		mProductNameField = (EditText) findViewById(R.id.product_name);
 		mPriceValueField = (EditText) findViewById(R.id.price_input);
 		mQuantityField = (EditText) findViewById(R.id.quantity_input);
 		mUnitPriceValue = (TextView) findViewById(R.id.unit_price_value);
 		mUnitName = (TextView) findViewById(R.id.unit_name);
 		mBarcodeField = (EditText) findViewById(R.id.barcode_input);
 
-		mUnitName.setText(unitCurrency + "/" + unitName);
+		updateUnitPrice();
 	}
 
 	private void enableScanButton()
@@ -232,5 +237,27 @@ public class EditProductActivity extends Activity
 
 			mUnitPriceValue.setText(unitPrice.toString());
 		}
+	}
+
+	private boolean validateForm()
+	{
+		boolean fRes = false;
+
+		if (0 != mProductNameField.getText().toString().length())
+		{
+			fRes = true;
+		}
+		
+		try
+		{
+			Double.parseDouble(mPriceValueField.getText().toString());
+			Double.parseDouble(mQuantityField.getText().toString());			
+		}
+		catch (NumberFormatException e)
+		{
+			fRes = false;
+		}
+		
+		return fRes;
 	}
 }

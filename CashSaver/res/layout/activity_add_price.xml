@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -18,12 +13,10 @@
             android:background="@drawable/my_shadow"
             android:padding="10dp" >
 
-            <EditText
+            <TextView
                 android:id="@+id/product_name"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/general_product_name_hint"
-                android:inputType="textPersonName"
                 android:textSize="20sp" />
         </RelativeLayout>
 
@@ -123,22 +116,7 @@
                 android:onClick="onCalculateButtonClick" />
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/barcode_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/my_shadow"
-            android:padding="10dp" >
 
-            <EditText
-                android:id="@+id/barcode_input"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/barcode"
-                android:inputType="textPersonName"
-                android:textSize="18sp" />
-        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/buttons_layout"
@@ -174,5 +152,3 @@
                 android:textColor="@color/white" />
         </RelativeLayout>
     </LinearLayout>
-
-</ScrollView>

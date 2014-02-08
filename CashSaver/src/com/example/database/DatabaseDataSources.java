@@ -104,6 +104,11 @@ public class DatabaseDataSources
 		return fRes;
 	}
 
+	public static Product getProduct(long productId)
+	{
+		return productsDataSource.getProduct(productId);
+	}
+
 	public static List<Unit> getAllUnits()
 	{
 		return unitsDataSource.getAllUnits();
@@ -189,7 +194,7 @@ public class DatabaseDataSources
 
 		for (int i = 0; i < productsList.size(); i++)
 		{
-			if (productsList.get(i).getGeneralName().equals(name))
+			if (productsList.get(i).getName().equals(name))
 			{
 				fRes = true;
 			}

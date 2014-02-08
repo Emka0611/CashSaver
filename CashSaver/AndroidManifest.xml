@@ -35,6 +35,10 @@
             android:label="@string/title_product_new"
             android:parentActivityName=".MainActivity" />
         <activity
+            android:name="com.example.cashsaver.AddPriceActivity"
+            android:label="@string/title_product_new"
+            android:parentActivityName=".MainActivity" />
+        <activity
             android:name="com.example.cashsaver.ScanditActivity"
             android:label="@string/action_scan"
             android:screenOrientation="portrait" >
