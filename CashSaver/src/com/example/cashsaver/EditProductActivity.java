@@ -18,7 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.database.DatabaseDataSources;
+import com.example.products.Barcode;
 import com.example.products.Category;
+import com.example.products.Price;
 import com.example.products.Product;
 import com.example.products.Unit;
 
@@ -128,18 +130,27 @@ public class EditProductActivity extends Activity
 			// to create barcode
 			String barcode = mBarcodeField.getText().toString();
 
-			Product newProduct = DatabaseDataSources.addProduct(generalName, categoryId, barcode);
+			Product newProduct = DatabaseDataSources.addProduct(generalName, categoryId);
 
 			if (null != newProduct)
 			{
 				openDataSource();
-				DatabaseDataSources.addPrice(newProduct.getId(), priceValue, quantity, unitId);
-				Toast.makeText(this, "Produkt dodano pomyœlnie", Toast.LENGTH_SHORT).show();
-				onBackPressed();
+				Price newPrice = DatabaseDataSources.addPrice(newProduct.getId(), priceValue, quantity, unitId);
+				Barcode newBarcode = DatabaseDataSources.addBarcode(newProduct.getId(), barcode);
+				
+				if(null != newPrice && null != newBarcode)
+				{
+					Toast.makeText(this, "Produkt dodano pomyœlnie", Toast.LENGTH_SHORT).show();
+					onBackPressed();
+				}
+				else
+				{
+					reportError();
+				}
 			}
 			else
 			{
-				Toast.makeText(this, "Blad przy zapisywaniu produktu", Toast.LENGTH_SHORT).show();
+				reportError();
 			}
 		}
 		else
@@ -261,5 +272,10 @@ public class EditProductActivity extends Activity
 		}
 		
 		return fRes;
+	}
+	
+	private void reportError()
+	{
+		Toast.makeText(this, "Blad przy zapisywaniu produktu", Toast.LENGTH_SHORT).show();
 	}
 }

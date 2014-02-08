@@ -132,18 +132,18 @@ public class MainActivity extends Activity
 	
 	private void databaseInit()
 	{
-		DatabaseDataSources.openCategoriesDataSource();
+		DatabaseDataSources.categoriesDataSource.open();
 		DatabaseDataSources.addCategory("Ró¿ne");
 		DatabaseDataSources.addCategory("Spo¿ywcze");
 		DatabaseDataSources.addCategory("Higieniczne");
 		DatabaseDataSources.addCategory("Napoje");
-		DatabaseDataSources.closeCategoriesDataSource();
+		DatabaseDataSources.categoriesDataSource.close();
 		
-		DatabaseDataSources.openUnitsDataSource();
+		DatabaseDataSources.unitsDataSource.open();
 		DatabaseDataSources.addUnit("kg");
 		DatabaseDataSources.addUnit("szt");
 		DatabaseDataSources.addUnit("litr");
-		DatabaseDataSources.closeUnitsDataSource();
+		DatabaseDataSources.unitsDataSource.close();
 	}
 
 }

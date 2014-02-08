@@ -1,23 +1,22 @@
 package com.example.products;
 
-import com.example.cashsaver.PriceHistory;
 
 public class Product
 {
 	private long m_id;
 	
 	private String m_Name;
-	private Category m_category;
+	private long m_categoryId;
 	private PriceHistory m_priceHistory;
-	private String m_barcode;
+	private BarcodeList m_barcodeList;
 
-	public Product(long id, String generalName, Category category, String barcode)
+	public Product(long id, String generalName, long categoryId)
 	{
 		this.m_id = id;
 		this.m_Name = generalName;
-		this.m_category = category;
+		this.m_categoryId = categoryId;
 		this.m_priceHistory = new PriceHistory(m_id);
-		this.m_barcode = barcode;
+		this.m_barcodeList = new BarcodeList(m_id);
 	}
 
 	public long getId()
@@ -30,28 +29,26 @@ public class Product
 		return m_Name;
 	}
 
-	public Category getCategory()
+	public long getCategoryId()
 	{
-		return m_category;
+		return m_categoryId;
 	}
 
 	public PriceHistory getPriceHistory()
 	{
 		return m_priceHistory;
 	}
-
-	public String getBarcode()
+	
+	public BarcodeList getBarcodeList()
 	{
-		return m_barcode;
+		return m_barcodeList;
 	}
 
 	@Override
 	public String toString()
 	{
 		StringBuilder builder = new StringBuilder();
-		builder.append(m_category.getName() + " ");
 		builder.append(m_Name);
-		builder.append(" " + m_barcode);
 
 		return builder.toString();
 	}

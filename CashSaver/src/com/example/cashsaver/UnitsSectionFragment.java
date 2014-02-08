@@ -37,7 +37,7 @@ public class UnitsSectionFragment extends Fragment
 
 		actionBar = getActivity().getActionBar();
 
-		DatabaseDataSources.openUnitsDataSource();
+		DatabaseDataSources.unitsDataSource.open();
 
 		unitsList = DatabaseDataSources.getAllUnits();
 		adapter = new ArrayAdapter<Unit>(getActivity(), android.R.layout.simple_list_item_1, unitsList);
@@ -93,14 +93,14 @@ public class UnitsSectionFragment extends Fragment
 	@Override
 	public void onResume()
 	{
-		DatabaseDataSources.openUnitsDataSource();
+		DatabaseDataSources.unitsDataSource.open();
 		super.onResume();
 	}
 
 	@Override
 	public void onPause()
 	{
-		DatabaseDataSources.closeUnitsDataSource();
+		DatabaseDataSources.unitsDataSource.close();
 		super.onPause();
 	}
 

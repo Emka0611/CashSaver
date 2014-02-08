@@ -1,8 +1,7 @@
-package com.example.cashsaver;
+package com.example.products;
 import java.util.*;
 
 import com.example.database.DatabaseDataSources;
-import com.example.products.Price;
 
 
 public class PriceHistory

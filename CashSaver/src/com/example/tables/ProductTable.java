@@ -11,7 +11,6 @@ public class ProductTable
 	public static final String COLUMN_ID = "_id";
 	public static final String COLUMN_NAME = "name";
 	public static final String COLUMN_CATEGORY_ID = "category_id";
-	public static final String COLUMN_BARCODE = "barcode";
 		
 
 	// Database creation SQL statement
@@ -20,7 +19,6 @@ public class ProductTable
 			+ COLUMN_ID + " integer primary key autoincrement, "
 			+ COLUMN_NAME + " text,"
 			+ COLUMN_CATEGORY_ID + " integer,"
-			+ COLUMN_BARCODE + " text"
 			+ ");"
 			;
 

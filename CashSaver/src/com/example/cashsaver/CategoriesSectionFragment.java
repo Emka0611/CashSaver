@@ -37,7 +37,7 @@ public class CategoriesSectionFragment extends Fragment
 
 		actionBar = getActivity().getActionBar();
 
-		DatabaseDataSources.openCategoriesDataSource();
+		DatabaseDataSources.categoriesDataSource.open();
 
 		categoriesList = DatabaseDataSources.getAllCategories();
 		adapter = new ArrayAdapter<Category>(getActivity(), android.R.layout.simple_list_item_1, categoriesList);
@@ -95,14 +95,14 @@ public class CategoriesSectionFragment extends Fragment
 	@Override
 	public void onResume()
 	{
-		DatabaseDataSources.openCategoriesDataSource();
+		DatabaseDataSources.categoriesDataSource.open();
 		super.onResume();
 	}
 
 	@Override
 	public void onPause()
 	{
-		DatabaseDataSources.closeCategoriesDataSource();
+		DatabaseDataSources.categoriesDataSource.close();
 		super.onPause();
 	}
 

@@ -30,6 +30,7 @@ public class DatabaseDataSources
 		unitsDataSource.addExamples();
 		productsDataSource.addExamples();
 		pricesDataSource.addExamples();
+		barcodesDataSource.addExamples();
 	}
 
 	public static Price addPrice(long product_id, double price_value, double quantity, long unitId)
@@ -39,12 +40,12 @@ public class DatabaseDataSources
 		return newPrice;
 	}
 
-	public static Product addProduct(String name, long categoryId, String barcode)
+	public static Product addProduct(String name, long categoryId)
 	{
 		Product newProduct = null;
 		if (false == isProductInDatabase(name))
 		{
-			newProduct = productsDataSource.createProduct(name, categoryId, barcode);
+			newProduct = productsDataSource.createProduct(name, categoryId);
 		}
 		return newProduct;
 	}
@@ -126,6 +127,7 @@ public class DatabaseDataSources
 		unitsDataSource.open();
 		productsDataSource.open();
 		pricesDataSource.open();
+		barcodesDataSource.open();
 	}
 
 	public static void close()
@@ -134,26 +136,7 @@ public class DatabaseDataSources
 		unitsDataSource.close();
 		productsDataSource.close();
 		pricesDataSource.close();
-	}
-
-	public static void openUnitsDataSource()
-	{
-		unitsDataSource.open();
-	}
-
-	public static void openCategoriesDataSource()
-	{
-		categoriesDataSource.open();
-	}
-
-	public static void closeUnitsDataSource()
-	{
-		unitsDataSource.close();
-	}
-
-	public static void closeCategoriesDataSource()
-	{
-		categoriesDataSource.close();
+		barcodesDataSource.close();
 	}
 
 	private static boolean equalsToUncategorizedCategory(Category category)
@@ -218,8 +201,18 @@ public class DatabaseDataSources
 
 	private static boolean isBarcodeInDatabase(long productId, String barcode)
 	{
-		// TODO Auto-generated method stub
-		return false;
+		boolean fRes = false;
+		List<Barcode> barcodesList = barcodesDataSource.getAllBarcodes();
+
+		for (int i = 0; i < barcodesList.size(); i++)
+		{
+			if (barcodesList.get(i).getBarcode().equals(barcode) && productId == barcodesList.get(i).getProductId())
+			{
+				fRes = true;
+			}
+		}
+
+		return fRes;
 	}
 
 }

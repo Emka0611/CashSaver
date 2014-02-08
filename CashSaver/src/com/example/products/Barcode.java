@@ -13,7 +13,7 @@ public class Barcode
 		mBarcode = barcode;
 	}
 
-	public String getName()
+	public String getBarcode()
 	{
 		return mBarcode;
 	}
