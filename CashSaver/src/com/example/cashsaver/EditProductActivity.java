@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -33,6 +35,7 @@ public class EditProductActivity extends Activity
 
 	// unit price
 	private TextView mUnitPriceValue = null;
+	private TextView mUnitName = null;
 	private MenuItem menuItem = null;
 
 	// barcode
@@ -65,11 +68,6 @@ public class EditProductActivity extends Activity
 				mBarcode = data.getExtras().getString(BARCODE);
 				mBarcodeField.setText(mBarcode);
 			}
-			else
-			{
-				
-			}
-				
 		}
 	}
 
@@ -104,15 +102,7 @@ public class EditProductActivity extends Activity
 
 	public void onCalculateButtonClick(View view)
 	{
-		double priceValue = Double.parseDouble(mPriceValueField.getText().toString());
-		double quantity = Double.parseDouble(mQuantityField.getText().toString());
-
-		Double unitPrice = priceValue / quantity;
-		unitPrice *= 100;
-		unitPrice = (double) Math.round(unitPrice);
-		unitPrice /= 100;
-
-		mUnitPriceValue.setText(unitPrice.toString());
+		updateUnitPrice();
 	}
 
 	public void onCancelButtonClick(View view)
@@ -172,17 +162,35 @@ public class EditProductActivity extends Activity
 		unitsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		mUnitsSpinner = (Spinner) findViewById(R.id.unit_spinner);
 		mUnitsSpinner.setAdapter(unitsAdapter);
+		mUnitsSpinner.setOnItemSelectedListener(new OnItemSelectedListener()
+		{
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3)
+			{
+				updateUnitPrice();
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0)
+			{
+			}
+		});
 	}
 
 	private void initEditTexts()
 	{
+		String unitCurrency = getResources().getString(R.string.zloty);
+		String unitName = ((Unit) mUnitsSpinner.getSelectedItem()).getName();
+
 		mGeneralProductNameField = (EditText) findViewById(R.id.general_product_name);
 		mPriceValueField = (EditText) findViewById(R.id.price_input);
 		mQuantityField = (EditText) findViewById(R.id.quantity_input);
-
 		mUnitPriceValue = (TextView) findViewById(R.id.unit_price_value);
-
+		mUnitName = (TextView) findViewById(R.id.unit_name);
 		mBarcodeField = (EditText) findViewById(R.id.barcode_input);
+
+		mUnitName.setText(unitCurrency + "/" + unitName);
 	}
 
 	private void enableScanButton()
@@ -199,15 +207,30 @@ public class EditProductActivity extends Activity
 		});
 	}
 
-	@Override
-	public void onBackPressed()
-	{
-		super.onBackPressed();
-	}
-
 	private void startScanningActivity()
 	{
 		Intent i = new Intent(this, ScanditActivity.class);
 		startActivityForResult(i, GET_BARCODE_REQUEST);
+	}
+
+	private void updateUnitPrice()
+	{
+		String unitCurrency = getResources().getString(R.string.zloty);
+		String unitName = ((Unit) mUnitsSpinner.getSelectedItem()).getName();
+
+		mUnitName.setText(unitCurrency + "/" + unitName);
+
+		if (0 != mPriceValueField.getText().toString().length() && 0 != mQuantityField.getText().toString().length())
+		{
+			double priceValue = Double.parseDouble(mPriceValueField.getText().toString());
+			double quantity = Double.parseDouble(mQuantityField.getText().toString());
+
+			Double unitPrice = priceValue / quantity;
+			unitPrice *= 100;
+			unitPrice = (double) Math.round(unitPrice);
+			unitPrice /= 100;
+
+			mUnitPriceValue.setText(unitPrice.toString());
+		}
 	}
 }

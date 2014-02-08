@@ -51,7 +51,7 @@ public class Product
 		StringBuilder builder = new StringBuilder();
 		builder.append(m_category.getName() + " ");
 		builder.append(m_generalName);
-		builder.append("+" + m_barcode);
+		builder.append(" " + m_barcode);
 
 		return builder.toString();
 	}

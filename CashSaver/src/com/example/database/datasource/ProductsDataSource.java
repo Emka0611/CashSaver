@@ -18,7 +18,8 @@ public class ProductsDataSource
 	private String[] allColumns = { 
 			ProductTable.COLUMN_ID, 
 			ProductTable.COLUMN_NAME, 
-			ProductTable.COLUMN_CATEGORY_ID 
+			ProductTable.COLUMN_CATEGORY_ID,
+			ProductTable.COLUMN_BARCODE
 			};
 
 	public ProductsDataSource(Context context)

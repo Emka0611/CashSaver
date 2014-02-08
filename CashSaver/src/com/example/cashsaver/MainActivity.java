@@ -133,7 +133,10 @@ public class MainActivity extends Activity
 	private void databaseInit()
 	{
 		DatabaseDataSources.openCategoriesDataSource();
-		DatabaseDataSources.addCategory("INNE");
+		DatabaseDataSources.addCategory("Ró¿ne");
+		DatabaseDataSources.addCategory("Spo¿ywcze");
+		DatabaseDataSources.addCategory("Higieniczne");
+		DatabaseDataSources.addCategory("Napoje");
 		DatabaseDataSources.closeCategoriesDataSource();
 		
 		DatabaseDataSources.openUnitsDataSource();

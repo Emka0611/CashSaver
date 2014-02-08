@@ -36,12 +36,11 @@ public class ProductsSectionFragment extends Fragment
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
 		list = datasource.getAllProducts();
-		adapter = new ArrayAdapter<Product>(getActivity(), android.R.layout.simple_list_item_multiple_choice, list);
+		adapter = new ArrayAdapter<Product>(getActivity(), android.R.layout.simple_list_item_1, list);
 
 		listView = (ListView) rootView.findViewById(R.id.list);
 		listView.setAdapter(adapter);
-		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-
+		
 		return rootView;
 	}
 	

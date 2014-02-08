@@ -59,8 +59,8 @@ public class Price
 	{
 		StringBuilder builder = new StringBuilder();
 		builder.append(m_price);
-		builder.append("z³");
-		builder.append(" Cena jednostkowa =  " + getUnitPrice() + "z³/");
+		builder.append("z³ ");
+		builder.append(getUnitPrice() + "z³/");
 		builder.append(m_unit.getName());
 		return builder.toString();
 	}

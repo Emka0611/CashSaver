@@ -2,19 +2,20 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
     android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:orientation="vertical" >
 
         <RelativeLayout
+            android:id="@+id/name_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:background="@color/white"
+            android:background="@drawable/my_shadow"
             android:padding="10dp" >
 
             <EditText
@@ -27,11 +28,12 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/parametres_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:alignmentMode="alignBounds"
-            android:background="@color/white"
+            android:background="@drawable/my_shadow"
             android:padding="10dp" >
 
             <EditText
@@ -73,10 +75,11 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/unit_price_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@color/white"
+            android:background="@drawable/my_shadow"
             android:padding="10dp" >
 
             <TextView
@@ -84,33 +87,48 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
                 android:text="@string/unit_price"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
                 android:id="@+id/unit_price_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="9dp"
                 android:layout_toRightOf="@id/unit_price_title"
                 android:text="@string/price_value"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
                 android:id="@+id/unit_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="7dp"
                 android:layout_toRightOf="@id/unit_price_value"
                 android:text="@string/zloty"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <ImageButton
+                android:id="@+id/refreshButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight = "true"
+                android:src="@drawable/ic_action_refresh"
+                android:background="@drawable/my_button"
+                android:contentDescription="@string/calculate"
+                android:onClick="onCalculateButtonClick" />
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/barcode_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@color/white"
+            android:background="@drawable/my_shadow"
             android:padding="10dp" >
 
             <EditText
@@ -123,10 +141,11 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/buttons_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="20dp"
-            android:background="@color/white"
+            android:background="@drawable/my_shadow"
             android:gravity="end"
             android:padding="10dp" >
 
