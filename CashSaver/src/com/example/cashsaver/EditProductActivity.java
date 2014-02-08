@@ -36,7 +36,6 @@ public class EditProductActivity extends Activity
 	// unit price
 	private TextView mUnitPriceValue = null;
 	private TextView mUnitName = null;
-	private MenuItem menuItem = null;
 
 	// barcode
 	private EditText mBarcodeField = null;
@@ -44,6 +43,9 @@ public class EditProductActivity extends Activity
 
 	private static final int GET_BARCODE_REQUEST = 1;
 	public static final String BARCODE = "barcode";
+	
+	// scan
+	private MenuItem menuItem = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -123,7 +125,7 @@ public class EditProductActivity extends Activity
 			double quantity = Double.parseDouble(mQuantityField.getText().toString());
 			long unitId = ((Unit) mUnitsSpinner.getSelectedItem()).getId();
 
-			// barcode
+			// to create barcode
 			String barcode = mBarcodeField.getText().toString();
 
 			Product newProduct = DatabaseDataSources.addProduct(generalName, categoryId, barcode);

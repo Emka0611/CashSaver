@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@+id/name_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/my_shadow"
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/product_name"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/barcode_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/my_shadow"
+            android:padding="10dp" >
+
+            <EditText
+                android:id="@+id/barcode_input"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/barcode"
+                android:inputType="textPersonName"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/buttons_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/my_shadow"
+            android:gravity="end"
+            android:padding="10dp" >
+
+            <Button
+                android:id="@+id/cancel_button"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/my_button"
+                android:onClick="onCancelButtonClick"
+                android:text="@string/cancel"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/save_button"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/my_button"
+                android:onClick="onSaveButtonClick"
+                android:text="@string/save"
+                android:textColor="@color/white" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</ScrollView>

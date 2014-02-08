@@ -13,6 +13,7 @@ public class DatabaseDataSources
 	public static ProductsDataSource productsDataSource;
 	public static UnitsDataSource unitsDataSource;
 	public static PricesDataSource pricesDataSource;
+	public static BarcodesDataSource barcodesDataSource;
 
 	public DatabaseDataSources(Context context)
 	{
@@ -20,6 +21,7 @@ public class DatabaseDataSources
 		unitsDataSource = new UnitsDataSource(context);
 		productsDataSource = new ProductsDataSource(context);
 		pricesDataSource = new PricesDataSource(context);
+		barcodesDataSource = new BarcodesDataSource(context);
 	}
 
 	public static void addExamples()
@@ -70,24 +72,23 @@ public class DatabaseDataSources
 		return newCat;
 	}
 
+	public static Barcode addBarcode(long productId, String barcode)
+	{
+		Barcode newBarcode = null;
+
+		if (false == isBarcodeInDatabase(productId, barcode))
+		{
+			newBarcode = barcodesDataSource.createBarcode(productId, barcode);
+		}
+		return newBarcode;
+	}
+
 	public static boolean deleteUnit(Unit unit)
 	{
 		boolean fRes = true;
 
 		unitsDataSource.deleteUnit(unit);
 
-		return fRes;
-	}
-
-	private static boolean equalsToUncategorizedCategory(Category category)
-	{
-		boolean fRes = false;
-		String uncategorized = "INNE";
-
-		if (uncategorized.equalsIgnoreCase(category.getName()))
-		{
-			fRes = true;
-		}
 		return fRes;
 	}
 
@@ -155,6 +156,18 @@ public class DatabaseDataSources
 		categoriesDataSource.close();
 	}
 
+	private static boolean equalsToUncategorizedCategory(Category category)
+	{
+		boolean fRes = false;
+		String uncategorized = "INNE";
+	
+		if (uncategorized.equalsIgnoreCase(category.getName()))
+		{
+			fRes = true;
+		}
+		return fRes;
+	}
+
 	private static boolean isUnitInDatabase(String unitName)
 	{
 		boolean fRes = false;
@@ -201,6 +214,12 @@ public class DatabaseDataSources
 		}
 
 		return fRes;
+	}
+
+	private static boolean isBarcodeInDatabase(long productId, String barcode)
+	{
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

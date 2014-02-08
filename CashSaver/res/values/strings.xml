@@ -17,6 +17,8 @@
     <string name="drawer_close">BUM</string>
     <string name="title_product_new">Nowy produkt</string>
     <string name="title_product_edit">Edytuj produkt</string>
+    <string name="title_price_new">Nowa cena</string>
+    <string name="title_barcode_new">Kod kreskowy</string>
     
     <string name="general_product_name_hint">Nazwa produktu</string>
     <string name="product_name_hint">Nazwa szczegółowa</string>

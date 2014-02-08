@@ -56,7 +56,8 @@ public class ProductsSectionFragment extends Fragment
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
 			{
 				long selectedProductId = ((Product) parent.getItemAtPosition(position)).getId();
-				Intent i = new Intent(getActivity(), AddPriceActivity.class);
+				//Intent i = new Intent(getActivity(), AddPriceActivity.class);
+				Intent i = new Intent(getActivity(), AddBarcodeActivity.class);
 				i.putExtra(PRODUCT_SELECTED, selectedProductId);
 				getActivity().startActivity(i);
 				return false;
