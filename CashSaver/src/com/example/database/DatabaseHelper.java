@@ -28,6 +28,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 		CategoryTable.onCreate(database);
 		UnitTable.onCreate(database);
 		PriceTable.onCreate(database);
+		BarcodeTable.onCreate(database);
 	}
 
 	@Override
@@ -37,6 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 		CategoryTable.onUpgrade(database, oldVersion, newVersion);
 		UnitTable.onUpgrade(database, oldVersion, newVersion);
 		PriceTable.onUpgrade(database, oldVersion, newVersion);
+		BarcodeTable.onUpgrade(database, oldVersion, newVersion);
 	}
 
 	public static String getDateTime()

@@ -1,16 +1,17 @@
 package com.example.database.datasource;
 
-import java.util.*;
-
-import com.example.database.DatabaseDataSources;
-import com.example.database.DatabaseHelper;
-import com.example.products.*;
-import com.example.tables.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.*;
-import android.database.sqlite.*;
+import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
+
+import com.example.database.DatabaseHelper;
+import com.example.products.Price;
+import com.example.tables.PriceTable;
 
 public class PricesDataSource
 {
@@ -113,12 +114,8 @@ public class PricesDataSource
 		double quantity = cursor.getDouble(3);
 		long unitId = cursor.getLong(4);
 		String created_at = cursor.getString(5);
-		
-		DatabaseDataSources.unitsDataSource.open();
-		Unit unit = DatabaseDataSources.unitsDataSource.getUnit(unitId);
-		DatabaseDataSources.unitsDataSource.close();
 
-		Price price = new Price(priceId, productId, priceValue, quantity, unit, created_at);
+		Price price = new Price(priceId, productId, priceValue, quantity, unitId, created_at);
 		return price;
 	}
 
