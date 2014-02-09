@@ -31,14 +31,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.cashsaver.EditProductActivity"
+            android:name="com.example.cashsaver.NewProductActivity"
             android:label="@string/title_product_new"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name="com.example.cashsaver.EditProductActivity"
+            android:label="@string/title_product_edit"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name="com.example.cashsaver.AddPriceActivity"
             android:label="@string/title_price_new"
             android:parentActivityName=".MainActivity" />
-                <activity
+        <activity
             android:name="com.example.cashsaver.AddBarcodeActivity"
             android:label="@string/title_barcode_new"
             android:parentActivityName=".MainActivity" />

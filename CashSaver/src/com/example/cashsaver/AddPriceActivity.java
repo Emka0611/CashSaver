@@ -59,7 +59,7 @@ public class AddPriceActivity extends Activity
 		{
 
 			@Override
-			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3)
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
 			{
 				updateUnitPrice();
 			}
@@ -105,7 +105,6 @@ public class AddPriceActivity extends Activity
 		
 		initProductName();
 		updateUnitPrice();
-		
 	}
 	
 	private void updateUnitPrice()

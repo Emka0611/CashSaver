@@ -57,7 +57,8 @@ public class ProductsSectionFragment extends Fragment
 			{
 				long selectedProductId = ((Product) parent.getItemAtPosition(position)).getId();
 				//Intent i = new Intent(getActivity(), AddPriceActivity.class);
-				Intent i = new Intent(getActivity(), AddBarcodeActivity.class);
+				//Intent i = new Intent(getActivity(), AddBarcodeActivity.class);
+				Intent i = new Intent(getActivity(), EditProductActivity.class);
 				i.putExtra(PRODUCT_SELECTED, selectedProductId);
 				getActivity().startActivity(i);
 				return false;
@@ -84,7 +85,7 @@ public class ProductsSectionFragment extends Fragment
 		switch (item.getItemId())
 		{
 		case R.id.action_new:
-			Intent i = new Intent(getActivity(), EditProductActivity.class);
+			Intent i = new Intent(getActivity(), NewProductActivity.class);
 			startActivity(i);
 			break;
 		}

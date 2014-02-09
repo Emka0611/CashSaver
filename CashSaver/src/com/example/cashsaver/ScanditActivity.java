@@ -36,7 +36,7 @@ public class ScanditActivity extends Activity implements ScanditSDKListener
 	public void didScanBarcode(String barcode, String symbology)
 	{
 		Intent returnIntent = new Intent();
-		returnIntent.putExtra(EditProductActivity.BARCODE, barcode);
+		returnIntent.putExtra(NewProductActivity.BARCODE, barcode);
 		setResult(RESULT_OK, returnIntent);
 		finish();
 	}

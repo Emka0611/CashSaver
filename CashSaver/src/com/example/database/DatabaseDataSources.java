@@ -103,6 +103,11 @@ public class DatabaseDataSources
 		return productsDataSource.getProduct(productId);
 	}
 
+	public static Category getCategory(long categoryId)
+	{
+		return categoriesDataSource.getCategory(categoryId);
+	}
+
 	public static List<Unit> getAllUnits()
 	{
 		return unitsDataSource.getAllUnits();
@@ -111,6 +116,11 @@ public class DatabaseDataSources
 	public static List<Category> getAllCategories()
 	{
 		return categoriesDataSource.getAllCategories();
+	}
+
+	public static int updateProduct(long productId, String newName, long newCategoryId)
+	{
+		return productsDataSource.updateProduct(productId, newName, newCategoryId);
 	}
 
 	public static void open()
@@ -129,18 +139,6 @@ public class DatabaseDataSources
 		productsDataSource.close();
 		pricesDataSource.close();
 		barcodesDataSource.close();
-	}
-
-	private static boolean equalsToUncategorizedCategory(Category category)
-	{
-		boolean fRes = false;
-		String uncategorized = "Ró¿ne";
-
-		if (uncategorized.equalsIgnoreCase(category.getName()))
-		{
-			fRes = true;
-		}
-		return fRes;
 	}
 
 	private static boolean isUnitInDatabase(String unitName)
@@ -204,6 +202,18 @@ public class DatabaseDataSources
 			}
 		}
 
+		return fRes;
+	}
+
+	private static boolean equalsToUncategorizedCategory(Category category)
+	{
+		boolean fRes = false;
+		String uncategorized = "Ró¿ne";
+	
+		if (uncategorized.equalsIgnoreCase(category.getName()))
+		{
+			fRes = true;
+		}
 		return fRes;
 	}
 

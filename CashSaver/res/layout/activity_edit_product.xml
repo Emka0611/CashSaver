@@ -36,108 +36,13 @@
             android:background="@drawable/my_shadow"
             android:padding="10dp" >
 
-            <EditText
-                android:id="@+id/quantity_input"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_gravity="left"
-                android:ems="4"
-                android:hint="@string/quantity"
-                android:inputType="numberDecimal"
-                android:textSize="20sp" />
-
-            <Spinner
-                android:id="@+id/unit_spinner"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/quantity_input"
-                android:layout_toRightOf="@id/quantity_input" />
-
-            <EditText
-                android:id="@+id/price_input"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/unit_spinner"
-                android:ems="4"
-                android:hint="@string/price"
-                android:inputType="numberDecimal"
-                android:textSize="20sp" />
-
             <Spinner
                 android:id="@+id/cat_spinner"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/quantity_input"
-                android:layout_marginTop="18dp"
                 android:gravity="center"
                 android:prompt="@string/category" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/unit_price_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/my_shadow"
-            android:padding="10dp" >
-
-            <TextView
-                android:id="@+id/unit_price_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:text="@string/unit_price"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <TextView
-                android:id="@+id/unit_price_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="9dp"
-                android:layout_toRightOf="@id/unit_price_title"
-                android:text="@string/price_value"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <TextView
-                android:id="@+id/unit_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="7dp"
-                android:layout_toRightOf="@id/unit_price_value"
-                android:text="@string/zloty"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <ImageButton
-                android:id="@+id/refreshButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight = "true"
-                android:src="@drawable/ic_action_refresh"
-                android:background="@drawable/my_button"
-                android:contentDescription="@string/calculate"
-                android:onClick="onCalculateButtonClick" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/barcode_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/my_shadow"
-            android:padding="10dp" >
-
-            <EditText
-                android:id="@+id/barcode_input"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/barcode"
-                android:inputType="textPersonName"
-                android:textSize="18sp" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -174,5 +79,4 @@
                 android:textColor="@color/white" />
         </RelativeLayout>
     </LinearLayout>
-
-</ScrollView>
+    </ScrollView>

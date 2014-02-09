@@ -76,18 +76,8 @@ public class ProductsDataSource
 			cursor.moveToNext();
 		}
 
-		//cursor.close();
+		cursor.close();
 		return products;
-	}
-
-	private Product convertCursorToProduct(Cursor cursor)
-	{
-		long productId = cursor.getLong(0);
-		String productName = cursor.getString(1);
-		long categoryId = cursor.getLong(2);
-
-		Product product = new Product(productId, productName, categoryId);
-		return product;
 	}
 
 	public Product getProduct(long productId)
@@ -100,6 +90,26 @@ public class ProductsDataSource
 		product = convertCursorToProduct(cursor);
 
 		cursor.close();
+		return product;
+	}
+
+	public int updateProduct(long productId, String newName, long newCategoryId)
+	{
+		ContentValues values = new ContentValues();
+		values.put(ProductTable.COLUMN_NAME, newName);
+		values.put(ProductTable.COLUMN_CATEGORY_ID, newCategoryId);
+		
+		int rowsAffected = database.update(ProductTable.TABLE_PRODUCT, values, ProductTable.COLUMN_ID + " = " + productId, null);
+		return rowsAffected;
+	}
+
+	private Product convertCursorToProduct(Cursor cursor)
+	{
+		long productId = cursor.getLong(0);
+		String productName = cursor.getString(1);
+		long categoryId = cursor.getLong(2);
+	
+		Product product = new Product(productId, productName, categoryId);
 		return product;
 	}
 
