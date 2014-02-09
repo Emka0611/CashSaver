@@ -37,14 +37,14 @@ public class CategoriesSectionFragment extends Fragment
 
 		actionBar = getActivity().getActionBar();
 
-		DatabaseDataSources.categoriesDataSource.open();
+		DatabaseDataSources.open();
 
 		categoriesList = DatabaseDataSources.getAllCategories();
 		adapter = new ArrayAdapter<Category>(getActivity(), android.R.layout.simple_list_item_1, categoriesList);
 
 		listView = (ListView) rootView.findViewById(R.id.list);
 		listView.setAdapter(adapter);
-		
+
 		listView.setOnItemLongClickListener(new OnItemLongClickListener()
 		{
 			@Override
@@ -59,7 +59,7 @@ public class CategoriesSectionFragment extends Fragment
 
 		actionBarEditText = (EditText) inflater.inflate(R.layout.actionbar_edittext, null);
 		imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-		
+
 		isEditModeSelected = false;
 		isDeleteModeSelected = false;
 
@@ -75,7 +75,7 @@ public class CategoriesSectionFragment extends Fragment
 		getActivity().getMenuInflater().inflate(R.menu.menu_add, menu);
 		menuItem = menu.findItem(R.id.action_new);
 		menuItem.setVisible(!drawerOpen);
-		
+
 		super.onPrepareOptionsMenu(menu);
 	}
 
@@ -95,14 +95,14 @@ public class CategoriesSectionFragment extends Fragment
 	@Override
 	public void onResume()
 	{
-		DatabaseDataSources.categoriesDataSource.open();
+		DatabaseDataSources.open();
 		super.onResume();
 	}
 
 	@Override
 	public void onPause()
 	{
-		DatabaseDataSources.categoriesDataSource.close();
+		DatabaseDataSources.close();
 		super.onPause();
 	}
 
@@ -128,7 +128,7 @@ public class CategoriesSectionFragment extends Fragment
 			resetView();
 		}
 	}
-	
+
 	private void setDeleteModeSelected(boolean selected)
 	{
 		isDeleteModeSelected = selected;
@@ -140,7 +140,7 @@ public class CategoriesSectionFragment extends Fragment
 		else
 		{
 			resetView();
-		}	
+		}
 	}
 
 	private void enableSaveButton()
@@ -164,7 +164,7 @@ public class CategoriesSectionFragment extends Fragment
 
 					}
 				}
-				
+
 				setEditModeSelected(false);
 			}
 
@@ -191,12 +191,12 @@ public class CategoriesSectionFragment extends Fragment
 			imm.hideSoftInputFromWindow(actionBarEditText.getWindowToken(), 0);
 		}
 	}
-	
+
 	public boolean isEditModeSelected()
 	{
 		return isEditModeSelected || isDeleteModeSelected;
 	}
-	
+
 	private void enableDeleteButton()
 	{
 		menuItem.setActionView(R.layout.actionbar_delete_button);
@@ -205,10 +205,15 @@ public class CategoriesSectionFragment extends Fragment
 			@Override
 			public void onClick(View v)
 			{
-				if (false != DatabaseDataSources.deleteCategory(categoryToDelete))
+				if (false != DatabaseDataSources.categoryAvailableToDelete(categoryToDelete))
 				{
+					DatabaseDataSources.deleteCategory(categoryToDelete);
 					adapter.remove(categoryToDelete);
 					adapter.notifyDataSetChanged();
+				}
+				else
+				{
+					Toast.makeText(getActivity(), "Nie mo¿na usunac kategorii. Jest uzywana przez produkt.", Toast.LENGTH_LONG).show();
 				}
 				setDeleteModeSelected(false);
 			}

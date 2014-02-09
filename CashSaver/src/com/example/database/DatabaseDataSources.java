@@ -93,17 +93,9 @@ public class DatabaseDataSources
 		return fRes;
 	}
 
-	public static boolean deleteCategory(Category category)
+	public static void deleteCategory(Category category)
 	{
-		boolean fRes = false;
-
-		if (false == equalsToUncategorizedCategory(category))
-		{
-			categoriesDataSource.deleteCategory(category);
-			fRes = true;
-		}
-
-		return fRes;
+		categoriesDataSource.deleteCategory(category);
 	}
 
 	public static Product getProduct(long productId)
@@ -142,8 +134,8 @@ public class DatabaseDataSources
 	private static boolean equalsToUncategorizedCategory(Category category)
 	{
 		boolean fRes = false;
-		String uncategorized = "INNE";
-	
+		String uncategorized = "Ró¿ne";
+
 		if (uncategorized.equalsIgnoreCase(category.getName()))
 		{
 			fRes = true;
@@ -209,6 +201,43 @@ public class DatabaseDataSources
 			if (barcodesList.get(i).getBarcode().equals(barcode) && productId == barcodesList.get(i).getProductId())
 			{
 				fRes = true;
+			}
+		}
+
+		return fRes;
+	}
+
+	public static boolean categoryAvailableToDelete(Category categoryToDelete)
+	{
+		boolean fRes = true;
+		List<Product> productsList = productsDataSource.getAllProducts();
+
+		for (int i = 0; i < productsList.size(); i++)
+		{
+			if (productsList.get(i).getCategoryId() == categoryToDelete.getId())
+			{
+				fRes = false;
+			}
+		}
+		
+		if(false != equalsToUncategorizedCategory(categoryToDelete))
+		{
+			fRes = false;
+		}
+
+		return fRes;
+	}
+
+	public static boolean unitAvailableToDelete(Unit unitToDelete)
+	{
+		boolean fRes = true;
+		List<Price> pricesList = pricesDataSource.getAllPrices();
+
+		for (int i = 0; i < pricesList.size(); i++)
+		{
+			if (pricesList.get(i).getUnitId() == unitToDelete.getId())
+			{
+				fRes = false;
 			}
 		}
 

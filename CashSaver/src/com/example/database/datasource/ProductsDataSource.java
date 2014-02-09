@@ -76,7 +76,7 @@ public class ProductsDataSource
 			cursor.moveToNext();
 		}
 
-		cursor.close();
+		//cursor.close();
 		return products;
 	}
 

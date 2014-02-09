@@ -37,7 +37,7 @@ public class UnitsSectionFragment extends Fragment
 
 		actionBar = getActivity().getActionBar();
 
-		DatabaseDataSources.unitsDataSource.open();
+		DatabaseDataSources.open();
 
 		unitsList = DatabaseDataSources.getAllUnits();
 		adapter = new ArrayAdapter<Unit>(getActivity(), android.R.layout.simple_list_item_1, unitsList);
@@ -93,14 +93,14 @@ public class UnitsSectionFragment extends Fragment
 	@Override
 	public void onResume()
 	{
-		DatabaseDataSources.unitsDataSource.open();
+		DatabaseDataSources.open();
 		super.onResume();
 	}
 
 	@Override
 	public void onPause()
 	{
-		DatabaseDataSources.unitsDataSource.close();
+		DatabaseDataSources.close();
 		super.onPause();
 	}
 
@@ -177,11 +177,17 @@ public class UnitsSectionFragment extends Fragment
 			@Override
 			public void onClick(View v)
 			{
-				if (false != DatabaseDataSources.deleteUnit(unitToDelete))
+				if (false != DatabaseDataSources.unitAvailableToDelete(unitToDelete))
 				{
+					DatabaseDataSources.deleteUnit(unitToDelete);
 					adapter.remove(unitToDelete);
 					adapter.notifyDataSetChanged();
 				}
+				else
+				{
+					Toast.makeText(getActivity(), "Nie mo¿na usunac jednostki. Jest uzywana przez produkt.", Toast.LENGTH_LONG).show();
+				}
+
 				setDeleteModeSelected(false);
 			}
 		});

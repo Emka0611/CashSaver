@@ -37,7 +37,7 @@ public class Price
 		return m_price;
 	}
 	
-	public long getUnit()
+	public long getUnitId()
 	{
 		return m_unit_id;
 	}
