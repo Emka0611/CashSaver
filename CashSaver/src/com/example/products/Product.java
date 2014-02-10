@@ -1,10 +1,9 @@
 package com.example.products;
 
-
 public class Product
 {
 	private long m_id;
-	
+
 	private String m_Name;
 	private long m_categoryId;
 	private PriceHistory m_priceHistory;
@@ -38,7 +37,7 @@ public class Product
 	{
 		return m_priceHistory;
 	}
-	
+
 	public BarcodeList getBarcodeList()
 	{
 		return m_barcodeList;
@@ -48,9 +47,30 @@ public class Product
 	public String toString()
 	{
 		StringBuilder builder = new StringBuilder();
-		builder.append(m_Name);
+		builder.append(m_categoryId);
+		builder.append("::" + m_Name);
 
 		return builder.toString();
+	}
+
+	public int compareTo(Product rhs)
+	{
+		int retVal = 0;
+
+		if (getCategoryId() > rhs.getCategoryId())
+		{
+			retVal = 1;
+		}
+		else if (getCategoryId() < rhs.getCategoryId())
+		{
+			retVal = -1;
+		}
+		return retVal;
+	}
+
+	public int compareTo2(Product rhs)
+	{
+		return getName().compareTo(rhs.getName());
 	}
 
 }

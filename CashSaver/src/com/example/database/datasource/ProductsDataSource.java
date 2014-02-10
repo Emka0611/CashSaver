@@ -80,6 +80,24 @@ public class ProductsDataSource
 		return products;
 	}
 
+	public List<Product> getProductsOfCategory(long catId)
+	{
+		List<Product> products = new ArrayList<Product>();
+
+		Cursor cursor = database.query(ProductTable.TABLE_PRODUCT, allColumns, ProductTable.COLUMN_CATEGORY_ID + " = " + catId, null, null, null, null);
+
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast())
+		{
+			Product produt = convertCursorToProduct(cursor);
+			products.add(produt);
+			cursor.moveToNext();
+		}
+
+		cursor.close();
+		return products;
+	}
+
 	public Product getProduct(long productId)
 	{
 		Product product = null;

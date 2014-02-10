@@ -1,5 +1,6 @@
 package com.example.cashsaver;
 
+import java.util.Comparator;
 import java.util.List;
 
 import android.app.ActionBar;
@@ -19,24 +20,21 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.database.DatabaseDataSources;
-import com.example.database.datasource.ProductsDataSource;
+import com.example.products.Category;
 import com.example.products.Product;
 
-public class ProductsSectionFragment extends Fragment implements OnItemClickListener 
+public class ProductsSectionFragment extends Fragment implements OnItemClickListener
 {
-	private AutoCompleteTextView actionBarEditText;
-	private ProductsDataSource datasource;
+	private AutoCompleteTextView mActionBarEditText;
 	private ListView listView;
-	private View rootView;
-	private InputMethodManager imm;
-	private ActionBar actionBar;
-	List<Product> list;
-	ArrayAdapter<Product> adapter;
-	private int displayOptions;
-	private boolean isSearchModeEnabled = false;
+	private View mRootView;
+	private InputMethodManager mImm;
+	private ActionBar mActionBar;
+	private SeparatedListAdapter mAdapter;
+	private int mDisplayOptions;
+	private boolean mIsSearchModeEnabled = false;
 
 	final static String PRODUCT_SELECTED = "selected_product";
 
@@ -45,45 +43,22 @@ public class ProductsSectionFragment extends Fragment implements OnItemClickList
 	{
 		setHasOptionsMenu(true);
 
-		rootView = inflater.inflate(R.layout.fragment_list, container, false);
+		mRootView = inflater.inflate(R.layout.fragment_list, container, false);
 
-		datasource = DatabaseDataSources.productsDataSource;
-		datasource.open();
+		DatabaseDataSources.open();
 
-		actionBarEditText = (AutoCompleteTextView) inflater.inflate(R.layout.actionbar_search_product_edittext, null);
-		actionBarEditText.setAdapter(new ProductsAutoCompleteAdapter(getActivity(), android.R.layout.simple_list_item_1));
-		actionBarEditText.setOnItemClickListener(this);
+		mActionBarEditText = (AutoCompleteTextView) inflater.inflate(R.layout.actionbar_search_product_edittext, null);
+		setUpActionBarEditText();
 
-		imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+		mImm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 
-		actionBar = getActivity().getActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
+		mActionBar = getActivity().getActionBar();
+		mActionBar.setDisplayHomeAsUpEnabled(true);
 
-		list = datasource.getAllProducts();
-		adapter = new ArrayAdapter<Product>(getActivity(), android.R.layout.simple_list_item_1, list);
+		setUpListView();
+		mDisplayOptions = mActionBar.getDisplayOptions();
 
-		listView = (ListView) rootView.findViewById(R.id.list);
-		listView.setAdapter(adapter);
-		listView.setOnItemLongClickListener(new OnItemLongClickListener()
-		{
-
-			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
-			{
-				long selectedProductId = ((Product) parent.getItemAtPosition(position)).getId();
-				// Intent i = new Intent(getActivity(), AddPriceActivity.class);
-				// Intent i = new Intent(getActivity(),
-				// AddBarcodeActivity.class);
-				Intent i = new Intent(getActivity(), EditProductActivity.class);
-				i.putExtra(PRODUCT_SELECTED, selectedProductId);
-				getActivity().startActivity(i);
-				return false;
-			}
-		});
-
-		displayOptions = actionBar.getDisplayOptions();
-
-		return rootView;
+		return mRootView;
 	}
 
 	@Override
@@ -101,31 +76,48 @@ public class ProductsSectionFragment extends Fragment implements OnItemClickList
 	{
 		switch (item.getItemId())
 		{
-		case R.id.action_new:
-			Intent i = new Intent(getActivity(), NewProductActivity.class);
-			startActivity(i);
-			break;
-		case R.id.action_search:
-			enableSearchMode(true);
-			break;
+			case R.id.action_new:
+				Intent i = new Intent(getActivity(), NewProductActivity.class);
+				startActivity(i);
+				break;
+			case R.id.action_search:
+				if (false != mIsSearchModeEnabled)
+				{
+					performSearch();
+				}
+				else
+				{
+					enableSearchMode(true);
+				}
+				break;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	private void performSearch()
+	{
+		String substring = mActionBarEditText.getText().toString();
+		List<Product> list = DatabaseDataSources.getProducts(substring);
+		mAdapter.clear();
+		mAdapter.addAll(list);
+		mAdapter.notifyDataSetChanged();
 	}
 
 	@Override
 	public void onResume()
 	{
-		datasource.open();
-		list = datasource.getAllProducts();
-		adapter.clear();
-		adapter.addAll(list);
+		DatabaseDataSources.open();
+		mAdapter.clear();
+		mAdapter.addAll(DatabaseDataSources.getAllProducts());
+		sortList();
+		mAdapter.notifyDataSetChanged();
 		super.onResume();
 	}
 
 	@Override
 	public void onPause()
 	{
-		datasource.close();
+		DatabaseDataSources.close();
 		super.onPause();
 	}
 
@@ -133,40 +125,122 @@ public class ProductsSectionFragment extends Fragment implements OnItemClickList
 	{
 		if (false != enable)
 		{
-			actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM, ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE);
-			actionBar.setCustomView(actionBarEditText);
-			actionBarEditText.requestFocus();
+			mActionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM, ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE);
+			mActionBar.setCustomView(mActionBarEditText);
+			mActionBarEditText.requestFocus();
 			showKeybord(true);
-			isSearchModeEnabled = true;
+			mIsSearchModeEnabled = true;
 		}
 		else
 		{
-			actionBar.setDisplayOptions(displayOptions);
-			isSearchModeEnabled = false;
+			mActionBar.setDisplayOptions(mDisplayOptions);
+			mAdapter.clear();
+			mAdapter.addAll(DatabaseDataSources.getAllProducts());
+			sortList();
+			mAdapter.notifyDataSetChanged();
+			mIsSearchModeEnabled = false;
 		}
 	}
-	
+
 	public boolean isSearchModeEnabled()
 	{
-		return isSearchModeEnabled;
+		return mIsSearchModeEnabled;
 	}
-	
+
 	private void showKeybord(boolean state)
 	{
 		if (false != state)
 		{
-			imm.showSoftInput(actionBarEditText, InputMethodManager.SHOW_IMPLICIT);
+			mImm.showSoftInput(mActionBarEditText, InputMethodManager.SHOW_IMPLICIT);
 		}
 		else
 		{
-			imm.hideSoftInputFromWindow(actionBarEditText.getWindowToken(), 0);
+			mImm.hideSoftInputFromWindow(mActionBarEditText.getWindowToken(), 0);
 		}
 	}
-	
+
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View arg1, int position, long arg3)
 	{
-        String str = ((Product) adapterView.getItemAtPosition(position)).getName();
-        Toast.makeText(getActivity(), str, Toast.LENGTH_SHORT).show();		
+		mAdapter.clear();
+		mAdapter.add((Product) adapterView.getItemAtPosition(position));
+	}
+
+	public void updateListAdapter(List<Product> resultList)
+	{
+		if (null != resultList)
+		{
+			mAdapter.clear();
+			mAdapter.addAll(resultList);
+			sortList();
+			mAdapter.notifyDataSetChanged();
+		}
+		else
+		{
+			mAdapter.clear();
+		}
+	}
+
+	public void sortList()
+	{
+		mAdapter.sort(new Comparator<Product>()
+		{
+
+			@Override
+			public int compare(Product lhs, Product rhs)
+			{
+				return lhs.compareTo2(rhs);
+			}
+		});
+	}
+
+	public void setUpActionBarEditText()
+	{
+		mActionBarEditText.setAdapter(new ProductsAutoCompleteAdapter(getActivity(), android.R.layout.simple_list_item_1));
+		mActionBarEditText.setOnItemClickListener(this);
+	}
+
+	public void setUpListView()
+	{
+		setUpAdapter();
+		listView = (ListView) mRootView.findViewById(R.id.list);
+		listView.setAdapter(mAdapter);
+		listView.setOnItemLongClickListener(new OnItemLongClickListener()
+		{
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
+			{
+				long selectedProductId = ((Product) parent.getItemAtPosition(position)).getId();
+				// Intent i = new Intent(getActivity(), AddPriceActivity.class);
+				// Intent i = new Intent(getActivity(),
+				// AddBarcodeActivity.class);
+				Intent i = new Intent(getActivity(), EditProductActivity.class);
+				i.putExtra(PRODUCT_SELECTED, selectedProductId);
+				getActivity().startActivity(i);
+				return false;
+			}
+		});
+	}
+
+	public void setUpAdapter()
+	{
+		mAdapter = new SeparatedListAdapter(getActivity());
+		List<Category> catList = DatabaseDataSources.getAllCategories();
+
+		List<Product> list = null;
+		ArrayAdapter<Product> adapter = null;
+
+		for (int i = 0; i < catList.size(); i++)
+		{
+			list = DatabaseDataSources.getProductsOfCategory(catList.get(i).getId());
+			adapter = new ArrayAdapter<Product>(getActivity(), android.R.layout.simple_list_item_1, list);
+			if (0 < list.size())
+			{
+				mAdapter.addSection(catList.get(i).getName(), adapter);
+			}
+		}
+
+		sortList();
 	}
 }

@@ -255,7 +255,7 @@ public class DatabaseDataSources
 		return fRes;
 	}
 
-	public static ArrayList<Product> getProducts(String substring)
+	public static List<Product> getProducts(String substring)
 	{
 		ArrayList<Product> list = (ArrayList<Product>) productsDataSource.getAllProducts();
 		ArrayList<Product> newList = new ArrayList<Product>(); 
@@ -269,5 +269,15 @@ public class DatabaseDataSources
 
 		}
 		return newList;
+	}
+
+	public static List<Product> getAllProducts()
+	{
+		return productsDataSource.getAllProducts();
+	}
+
+	public static List<Product> getProductsOfCategory(long catId)
+	{
+		return productsDataSource.getProductsOfCategory(catId);
 	}
 }

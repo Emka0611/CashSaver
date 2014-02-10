@@ -1,5 +1,6 @@
 package com.example.cashsaver;
-import java.util.ArrayList;
+
+import java.util.List;
 
 import android.content.Context;
 import android.widget.ArrayAdapter;
@@ -11,12 +12,15 @@ import com.example.products.Product;
 
 class ProductsAutoCompleteAdapter extends ArrayAdapter<Product> implements Filterable
 {
-	private ArrayList<Product> resultList;
+	private List<Product> resultList;
+	ProductsSectionFragment fragment;
 
 	public ProductsAutoCompleteAdapter(Context context, int textViewResourceId)
 	{
 		super(context, textViewResourceId);
 		DatabaseDataSources.open();
+		resultList = DatabaseDataSources.getAllProducts();
+		fragment = (ProductsSectionFragment) ((MainActivity) context).getCurrentFragment();
 	}
 
 	@Override
@@ -42,17 +46,15 @@ class ProductsAutoCompleteAdapter extends ArrayAdapter<Product> implements Filte
 				FilterResults filterResults = new FilterResults();
 				if (constraint != null)
 				{
-					// Retrieve the autocomplete results.
 					resultList = autocomplete(constraint.toString());
 
-					// Assign the data to the FilterResults
 					filterResults.values = resultList;
 					filterResults.count = resultList.size();
 				}
 				return filterResults;
 			}
 
-			private ArrayList<Product> autocomplete(String substring)
+			private List<Product> autocomplete(String substring)
 			{
 				return DatabaseDataSources.getProducts(substring);
 			}
@@ -63,10 +65,19 @@ class ProductsAutoCompleteAdapter extends ArrayAdapter<Product> implements Filte
 				if (results != null && results.count > 0)
 				{
 					notifyDataSetChanged();
+					fragment.updateListAdapter(resultList);
 				}
 				else
 				{
 					notifyDataSetInvalidated();
+					if (null == constraint)
+					{
+						fragment.updateListAdapter(DatabaseDataSources.getAllProducts());
+					}
+					else
+					{
+						fragment.updateListAdapter(null);
+					}
 				}
 			}
 		};
