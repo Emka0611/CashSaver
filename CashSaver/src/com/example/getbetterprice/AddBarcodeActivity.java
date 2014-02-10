@@ -1,4 +1,4 @@
-package com.example.cashsaver;
+package com.example.getbetterprice;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cashsaver.R;
 import com.example.database.DatabaseDataSources;
 import com.example.products.Barcode;
 

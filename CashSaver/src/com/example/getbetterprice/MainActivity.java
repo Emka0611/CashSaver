@@ -1,25 +1,26 @@
-package com.example.cashsaver;
+package com.example.getbetterprice;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.ArrayAdapter;
 
+import com.example.cashsaver.R;
 import com.example.database.DatabaseDataSources;
 
-public class MainActivity extends Activity
+public class MainActivity extends Activity implements ActionBar.OnNavigationListener
 {
-	private MyDrawer mLeftDrawer = null;
 	private Fragment mCurrFragment = null;
 	private FragmentManager mFragmentManager = null;
 	private int mCurrPosiotion;
+
+	private String[] mDrawerTitles;
+	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -28,13 +29,15 @@ public class MainActivity extends Activity
 		setContentView(R.layout.activity_main);
 
 		databaseInit();
+		mDrawerTitles = getResources().getStringArray(R.array.drawerListArray);
 
-		mLeftDrawer = new MyDrawer(this);
-		mLeftDrawer.setOnItemClickListener(new DrawerItemClickListener());
+		ActionBar actionBar = getActionBar();
+		actionBar.setDisplayShowTitleEnabled(false);
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+
+		actionBar.setListNavigationCallbacks(new ArrayAdapter<String>(this, R.layout.simple_list_item, mDrawerTitles), this);
+
 		mFragmentManager = getFragmentManager();
-		selectItem(2);
-
-		getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	private void selectItem(int position)
@@ -44,49 +47,22 @@ public class MainActivity extends Activity
 		switch (position)
 		{
 			case 0:
-				mCurrFragment = new CategoriesSectionFragment();
-				break;
-			case 1:
-				mCurrFragment = new UnitsSectionFragment();
-				break;
-			case 2:
 				mCurrFragment = new ProductsSectionFragment();
 				break;
-			case 3:
-				mCurrFragment = new PricesSectionFragment();
+			case 1:
+				mCurrFragment = new CategoriesSectionFragment();
+				break;
+			case 2:
+				mCurrFragment = new UnitsSectionFragment();
 				break;
 		}
 
 		mFragmentManager.beginTransaction().replace(R.id.content_frame, mCurrFragment).commit();
-
-		mLeftDrawer.setItemChecked(position);
-		mLeftDrawer.setTitle(position);
-		mLeftDrawer.closeDrawer();
-
-	}
-
-	@SuppressWarnings("rawtypes")
-	private class DrawerItemClickListener implements ListView.OnItemClickListener
-	{
-		@Override
-		public void onItemClick(AdapterView parent, View view, int position, long id)
-		{
-			selectItem(position);
-		}
-	}
-
-	public boolean isDrawerOpen()
-	{
-		return mLeftDrawer.isDrawerOpen();
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
-		if (mLeftDrawer.onOptionsItemSelected(item))
-		{
-			return true;
-		}
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -98,47 +74,11 @@ public class MainActivity extends Activity
 	}
 
 	@Override
-	protected void onPostCreate(Bundle savedInstanceState)
-	{
-		super.onPostCreate(savedInstanceState);
-		mLeftDrawer.syncState();
-	}
-
-	@Override
-	public void onConfigurationChanged(Configuration newConfig)
-	{
-		super.onConfigurationChanged(newConfig);
-		mLeftDrawer.onConfigurationChanged(newConfig);
-	}
-
-	@Override
 	public void onBackPressed()
 	{
 		switch (mCurrPosiotion)
 		{
 			case 0:
-				CategoriesSectionFragment catFragment = (CategoriesSectionFragment) mCurrFragment;
-				if (catFragment.isEditModeSelected())
-				{
-					catFragment.setEditModeSelected(false);
-				}
-				else
-				{
-					super.onBackPressed();
-				}
-				break;
-			case 1:
-				UnitsSectionFragment unitsFragment = (UnitsSectionFragment) mCurrFragment;
-				if (unitsFragment.isEditModeSelected())
-				{
-					unitsFragment.setEditModeSelected(false);
-				}
-				else
-				{
-					super.onBackPressed();
-				}
-				break;
-			case 2:
 				ProductsSectionFragment prodFragment = (ProductsSectionFragment) mCurrFragment;
 				if (prodFragment.isSearchModeEnabled())
 				{
@@ -149,6 +89,31 @@ public class MainActivity extends Activity
 					super.onBackPressed();
 				}
 				break;
+			case 1:
+				CategoriesSectionFragment catFragment = (CategoriesSectionFragment) mCurrFragment;
+				if (catFragment.isEditModeSelected())
+				{
+					catFragment.setEditModeSelected(false);
+					catFragment.setDeleteModeSelected(false);
+				}
+				else
+				{
+					super.onBackPressed();
+				}
+				break;
+			case 2:
+				UnitsSectionFragment unitsFragment = (UnitsSectionFragment) mCurrFragment;
+				if (unitsFragment.isEditModeSelected())
+				{
+					unitsFragment.setEditModeSelected(false);
+					unitsFragment.setDeleteModeSelected(false);
+				}
+				else
+				{
+					super.onBackPressed();
+				}
+				break;
+
 			default:
 				super.onBackPressed();
 		}
@@ -157,7 +122,6 @@ public class MainActivity extends Activity
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
-
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -181,12 +145,33 @@ public class MainActivity extends Activity
 	{
 		return mCurrFragment;
 	}
-	
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
 		mCurrFragment.onActivityResult(requestCode, resultCode, data);
+	}
+
+	@Override
+	public void onRestoreInstanceState(Bundle savedInstanceState)
+	{
+		if (savedInstanceState.containsKey(STATE_SELECTED_NAVIGATION_ITEM))
+		{
+			getActionBar().setSelectedNavigationItem(savedInstanceState.getInt(STATE_SELECTED_NAVIGATION_ITEM));
+		}
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState)
+	{
+		outState.putInt(STATE_SELECTED_NAVIGATION_ITEM, getActionBar().getSelectedNavigationIndex());
+	}
+
+	@Override
+	public boolean onNavigationItemSelected(int position, long id)
+	{
+		selectItem(position);
+		return true;
 	}
 
 }

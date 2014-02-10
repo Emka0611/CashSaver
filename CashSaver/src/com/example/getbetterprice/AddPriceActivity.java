@@ -1,4 +1,4 @@
-package com.example.cashsaver;
+package com.example.getbetterprice;
 
 import java.util.List;
 
@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cashsaver.R;
 import com.example.database.DatabaseDataSources;
 import com.example.products.Price;
 import com.example.products.Unit;

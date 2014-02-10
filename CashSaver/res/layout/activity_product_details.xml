@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@+id/name_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/my_shadow"
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/product_name"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/general_product_name_hint"
+                android:textSize="20sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/parametres_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:alignmentMode="alignBounds"
+            android:background="@drawable/my_shadow"
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/category_textView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/best_unit_prices_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/my_shadow"
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/unit_price_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:text="@string/unit_price"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/unit_price_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="9dp"
+                android:layout_toRightOf="@id/unit_price_title"
+                android:text="@string/price_value"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/unit_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="7dp"
+                android:layout_toRightOf="@id/unit_price_value"
+                android:text="@string/zloty"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</ScrollView>

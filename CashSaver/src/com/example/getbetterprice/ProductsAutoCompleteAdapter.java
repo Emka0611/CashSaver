@@ -1,4 +1,4 @@
-package com.example.cashsaver;
+package com.example.getbetterprice;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">CashSaver</string>
+    <string name="app_name">Get Better Price</string>
 	<string name="app_start_fragment">Produkty</string>
     <string name="title_products">Produkty</string>
     <string name="title_shopping_lists">Listy zakupów</string>
@@ -44,9 +44,10 @@
     <string name="barcode">Kod kreskowy:</string>
 
     <string-array name="drawerListArray">
+		<item>Produkty</item>
         <item>Kategorie</item>
         <item>Jednostki</item>
-        <item>Produkty</item>
+
     </string-array>
     
 </resources>

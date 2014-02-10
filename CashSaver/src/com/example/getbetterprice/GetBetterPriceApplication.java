@@ -1,10 +1,10 @@
-package com.example.cashsaver;
+package com.example.getbetterprice;
 
 import com.example.database.DatabaseDataSources;
 
 import android.app.Application;
 
-public class CashSaverApplication extends Application
+public class GetBetterPriceApplication extends Application
 {
 	@Override
 	public void onCreate()

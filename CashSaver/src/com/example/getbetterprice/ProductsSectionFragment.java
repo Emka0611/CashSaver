@@ -1,4 +1,4 @@
-package com.example.cashsaver;
+package com.example.getbetterprice;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -24,12 +24,13 @@ import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.cashsaver.R;
 import com.example.database.DatabaseDataSources;
 import com.example.products.Barcode;
 import com.example.products.Category;
 import com.example.products.Product;
 
-public class ProductsSectionFragment extends Fragment implements OnItemClickListener
+public class ProductsSectionFragment extends Fragment
 {
 	private AutoCompleteTextView mActionBarEditText;
 	private ListView listView;
@@ -48,19 +49,6 @@ public class ProductsSectionFragment extends Fragment implements OnItemClickList
 	private String mBarcode = "";
 	private boolean mReturnedFromScanning = false;
 
-	private List<Product> list = null;
-
-	public void onActivityResult(int requestCode, int resultCode, Intent data)
-	{
-		if (requestCode == GET_BARCODE_REQUEST)
-		{
-			if (resultCode == Activity.RESULT_OK)
-			{
-				mBarcode = data.getExtras().getString(BARCODE);
-				performSearchByBarcode();
-			}
-		}
-	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -75,10 +63,7 @@ public class ProductsSectionFragment extends Fragment implements OnItemClickList
 		setUpActionBarEditText();
 
 		mImm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-
 		mActionBar = getActivity().getActionBar();
-		mActionBar.setDisplayHomeAsUpEnabled(true);
-
 		setUpListView();
 		mDisplayOptions = mActionBar.getDisplayOptions();
 
@@ -90,9 +75,6 @@ public class ProductsSectionFragment extends Fragment implements OnItemClickList
 	{
 		mMenu = menu;
 		getActivity().getMenuInflater().inflate(R.menu.menu_products, menu);
-		boolean drawerOpen = ((MainActivity) getActivity()).isDrawerOpen();
-		menu.findItem(R.id.action_new).setVisible(!drawerOpen);
-		menu.findItem(R.id.action_search).setVisible(!drawerOpen);
 		super.onPrepareOptionsMenu(menu);
 	}
 
@@ -121,22 +103,10 @@ public class ProductsSectionFragment extends Fragment implements OnItemClickList
 		DatabaseDataSources.open();
 		if (false == isSearchModeEnabled() && false == mReturnedFromScanning)
 		{
-			addAll(getDefaultProducts());
+			addAll(DatabaseDataSources.getAllProducts());
 		}
 		mReturnedFromScanning = false;
 		super.onResume();
-	}
-
-	private List<Product> getDefaultProducts()
-	{
-		if (null != list)
-		{
-			return list;
-		}
-		else
-		{
-			return DatabaseDataSources.getAllProducts();
-		}
 	}
 
 	@Override
@@ -144,6 +114,18 @@ public class ProductsSectionFragment extends Fragment implements OnItemClickList
 	{
 		DatabaseDataSources.close();
 		super.onPause();
+	}
+	
+	public void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		if (requestCode == GET_BARCODE_REQUEST)
+		{
+			if (resultCode == Activity.RESULT_OK)
+			{
+				mBarcode = data.getExtras().getString(BARCODE);
+				performSearchByBarcode();
+			}
+		}
 	}
 
 	public void enableSearchMode(boolean enable)
@@ -156,30 +138,24 @@ public class ProductsSectionFragment extends Fragment implements OnItemClickList
 			mActionBar.setCustomView(mActionBarEditText);
 			mActionBarEditText.requestFocus();
 			showKeybord(true);
-			mMenu.findItem(R.id.action_search).setVisible(false);
 			mMenu.findItem(R.id.action_scan).setVisible(true);
+			mMenu.findItem(R.id.action_search).setVisible(false);
+			mMenu.findItem(R.id.action_new).setVisible(false);
 		}
 		else
 		{
 			mActionBarEditText.setText("");
 			mActionBar.setDisplayOptions(mDisplayOptions);
 			mMenu.findItem(R.id.action_search).setVisible(true);
+			mMenu.findItem(R.id.action_new).setVisible(true);
 			mMenu.findItem(R.id.action_scan).setVisible(false);
-			addAll(getDefaultProducts());
+			addAll(DatabaseDataSources.getAllProducts());
 		}
 	}
 
 	public boolean isSearchModeEnabled()
 	{
 		return mIsSearchModeEnabled;
-	}
-
-	@Override
-	public void onItemClick(AdapterView<?> adapterView, View arg1, int position, long arg3)
-	{
-		List<Product> list = new ArrayList<Product>();
-		list.add((Product) adapterView.getItemAtPosition(position));
-		addAll(list);
 	}
 
 	public void updateListAdapter(List<Product> resultList)
@@ -210,7 +186,16 @@ public class ProductsSectionFragment extends Fragment implements OnItemClickList
 	private void setUpActionBarEditText()
 	{
 		mActionBarEditText.setAdapter(new ProductsAutoCompleteAdapter(getActivity(), android.R.layout.simple_list_item_1));
-		mActionBarEditText.setOnItemClickListener(this);
+		mActionBarEditText.setOnItemClickListener(new OnItemClickListener()
+		{
+			@Override
+			public void onItemClick(AdapterView<?> adapterView, View arg1, int position, long arg3)
+			{
+				List<Product> list = new ArrayList<Product>();
+				list.add((Product) adapterView.getItemAtPosition(position));
+				addAll(list);
+			}
+		});
 	}
 
 	private void setUpListView()
@@ -225,13 +210,22 @@ public class ProductsSectionFragment extends Fragment implements OnItemClickList
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
 			{
 				long selectedProductId = ((Product) parent.getItemAtPosition(position)).getId();
-				// Intent i = new Intent(getActivity(), AddPriceActivity.class);
-				// Intent i = new Intent(getActivity(),
-				// AddBarcodeActivity.class);
+				//Intent i = new Intent(getActivity(), AddPriceActivity.class);
+				//Intent i = new Intent(getActivity(), AddBarcodeActivity.class);
 				Intent i = new Intent(getActivity(), EditProductActivity.class);
 				i.putExtra(PRODUCT_SELECTED, selectedProductId);
 				getActivity().startActivity(i);
 				return false;
+			}
+		});
+		
+		listView.setOnItemClickListener(new OnItemClickListener()
+		{
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+			{
+				//long selectedProductId = ((Product) parent.getItemAtPosition(position)).getId();
+				
 			}
 		});
 	}

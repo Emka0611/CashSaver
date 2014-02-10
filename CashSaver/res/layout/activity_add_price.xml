@@ -20,7 +20,7 @@
                 android:textSize="20sp" />
         </RelativeLayout>
 
-        <RelativeLayout
+       <RelativeLayout
             android:id="@+id/parametres_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
                 android:ems="4"
                 android:hint="@string/quantity"
                 android:inputType="numberDecimal"
-                android:textSize="20sp" />
+                 android:textAppearance="?android:attr/textAppearanceMedium"/>
 
             <Spinner
                 android:id="@+id/unit_spinner"
@@ -55,16 +55,9 @@
                 android:ems="4"
                 android:hint="@string/price"
                 android:inputType="numberDecimal"
-                android:textSize="20sp" />
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-            <Spinner
-                android:id="@+id/cat_spinner"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/quantity_input"
-                android:layout_marginTop="18dp"
-                android:gravity="center"
-                android:prompt="@string/category" />
+
         </RelativeLayout>
 
         <RelativeLayout

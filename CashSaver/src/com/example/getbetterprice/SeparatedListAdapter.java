@@ -1,4 +1,4 @@
-package com.example.cashsaver;
+package com.example.getbetterprice;
 
 import java.util.Comparator;
 import java.util.LinkedHashMap;
@@ -12,6 +12,7 @@ import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 
+import com.example.cashsaver.R;
 import com.example.products.Product;
 
 public class SeparatedListAdapter extends BaseAdapter

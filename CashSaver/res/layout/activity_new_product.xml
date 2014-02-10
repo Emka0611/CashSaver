@@ -45,7 +45,9 @@
                 android:ems="4"
                 android:hint="@string/quantity"
                 android:inputType="numberDecimal"
-                android:textSize="20sp" />
+                android:textAppearance="?android:attr/textAppearanceMedium">
+                
+            </EditText>
 
             <Spinner
                 android:id="@+id/unit_spinner"
@@ -62,7 +64,7 @@
                 android:ems="4"
                 android:hint="@string/price"
                 android:inputType="numberDecimal"
-                android:textSize="20sp" />
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
             <Spinner
                 android:id="@+id/cat_spinner"
