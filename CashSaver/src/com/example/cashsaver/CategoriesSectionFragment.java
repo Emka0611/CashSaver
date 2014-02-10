@@ -114,7 +114,7 @@ public class CategoriesSectionFragment extends Fragment
 		actionBar.setDisplayOptions(displayOptions);
 	}
 
-	private void setEditModeSelected(boolean selected)
+	void setEditModeSelected(boolean selected)
 	{
 		isEditModeSelected = selected;
 

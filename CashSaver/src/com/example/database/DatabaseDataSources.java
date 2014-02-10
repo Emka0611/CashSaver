@@ -1,5 +1,6 @@
 package com.example.database;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -209,7 +210,7 @@ public class DatabaseDataSources
 	{
 		boolean fRes = false;
 		String uncategorized = "Ró¿ne";
-	
+
 		if (uncategorized.equalsIgnoreCase(category.getName()))
 		{
 			fRes = true;
@@ -229,8 +230,8 @@ public class DatabaseDataSources
 				fRes = false;
 			}
 		}
-		
-		if(false != equalsToUncategorizedCategory(categoryToDelete))
+
+		if (false != equalsToUncategorizedCategory(categoryToDelete))
 		{
 			fRes = false;
 		}
@@ -254,4 +255,19 @@ public class DatabaseDataSources
 		return fRes;
 	}
 
+	public static ArrayList<Product> getProducts(String substring)
+	{
+		ArrayList<Product> list = (ArrayList<Product>) productsDataSource.getAllProducts();
+		ArrayList<Product> newList = new ArrayList<Product>(); 
+
+		for (int i = 0; i < list.size(); i++)
+		{
+			if(false != list.get(i).getName().contains(substring))
+			{
+				newList.add(list.get(i));
+			}
+
+		}
+		return newList;
+	}
 }

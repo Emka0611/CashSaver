@@ -24,8 +24,8 @@ public class UnitsSectionFragment extends Fragment
 	private ListView listView;
 	private List<Unit> unitsList;
 	private ArrayAdapter<Unit> adapter;
-	private boolean isEditModeSelected;
-	private boolean isDeleteModeSelected;
+	private boolean isEditModeSelected = false;
+	private boolean isDeleteModeSelected = false;
 	private Unit unitToDelete;
 
 	@Override
@@ -112,7 +112,7 @@ public class UnitsSectionFragment extends Fragment
 		actionBar.setDisplayOptions(displayOptions);
 	}
 
-	private void setEditModeSelected(boolean selected)
+	void setEditModeSelected(boolean selected)
 	{
 		isEditModeSelected = selected;
 
@@ -127,7 +127,7 @@ public class UnitsSectionFragment extends Fragment
 		}
 	}
 
-	private void setDeleteModeSelected(boolean selected)
+	void setDeleteModeSelected(boolean selected)
 	{
 		isDeleteModeSelected = selected;
 

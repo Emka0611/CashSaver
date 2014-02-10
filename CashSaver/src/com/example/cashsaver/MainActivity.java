@@ -1,11 +1,17 @@
 package com.example.cashsaver;
 
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.res.Configuration;
-
-import android.app.*;
 import android.os.Bundle;
-import android.view.*;
-import android.widget.*;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.database.DatabaseDataSources;
 
@@ -38,18 +44,18 @@ public class MainActivity extends Activity
 
 		switch (position)
 		{
-		case 0:
-			mCurrFragment = new CategoriesSectionFragment();
-			break;
-		case 1:
-			mCurrFragment = new UnitsSectionFragment();
-			break;
-		case 2:
-			mCurrFragment = new ProductsSectionFragment();
-			break;
-		case 3:
-			mCurrFragment = new PricesSectionFragment();
-			break;
+			case 0:
+				mCurrFragment = new CategoriesSectionFragment();
+				break;
+			case 1:
+				mCurrFragment = new UnitsSectionFragment();
+				break;
+			case 2:
+				mCurrFragment = new ProductsSectionFragment();
+				break;
+			case 3:
+				mCurrFragment = new PricesSectionFragment();
+				break;
 		}
 
 		mFragmentManager.beginTransaction().replace(R.id.content_frame, mCurrFragment).commit();
@@ -109,17 +115,43 @@ public class MainActivity extends Activity
 	@Override
 	public void onBackPressed()
 	{
-		if (1 == mCurrPosiotion && false != ((UnitsSectionFragment) mCurrFragment).isEditModeSelected())
+		switch (mCurrPosiotion)
 		{
-			((UnitsSectionFragment) mCurrFragment).resetView();
-		}
-		else if (0 == mCurrPosiotion && false != ((CategoriesSectionFragment) mCurrFragment).isEditModeSelected())
-		{
-			((CategoriesSectionFragment) mCurrFragment).resetView();
-		}
-		else
-		{
-			super.onBackPressed();
+			case 0:
+				CategoriesSectionFragment catFragment = (CategoriesSectionFragment) mCurrFragment;
+				if (catFragment.isEditModeSelected())
+				{
+					catFragment.setEditModeSelected(false);
+				}
+				else
+				{
+					super.onBackPressed();
+				}
+				break;
+			case 1:
+				UnitsSectionFragment unitsFragment = (UnitsSectionFragment) mCurrFragment;
+				if (unitsFragment.isEditModeSelected())
+				{
+					unitsFragment.setEditModeSelected(false);
+				}
+				else
+				{
+					super.onBackPressed();
+				}
+				break;
+			case 2:
+				ProductsSectionFragment prodFragment = (ProductsSectionFragment) mCurrFragment;
+				if (prodFragment.isSearchModeEnabled())
+				{
+					prodFragment.enableSearchMode(false);
+				}
+				else
+				{
+					super.onBackPressed();
+				}
+				break;
+			default:
+				super.onBackPressed();
 		}
 	}
 
@@ -129,7 +161,7 @@ public class MainActivity extends Activity
 
 		return super.onCreateOptionsMenu(menu);
 	}
-	
+
 	private void databaseInit()
 	{
 		DatabaseDataSources.categoriesDataSource.open();
@@ -138,7 +170,7 @@ public class MainActivity extends Activity
 		DatabaseDataSources.addCategory("Higieniczne");
 		DatabaseDataSources.addCategory("Napoje");
 		DatabaseDataSources.categoriesDataSource.close();
-		
+
 		DatabaseDataSources.unitsDataSource.open();
 		DatabaseDataSources.addUnit("kg");
 		DatabaseDataSources.addUnit("szt");

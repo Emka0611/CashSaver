@@ -12,6 +12,7 @@
     <string name="action_settings">Settings</string>
     <string name="action_accept">Dodaj</string>
     <string name="action_scan">Skanuj</string>
+    <string name="action_search">Szukaj</string>
 
     <string name="drawer_open">BUM</string>
     <string name="drawer_close">BUM</string>
@@ -25,6 +26,7 @@
     <string name="new_unit_hint">Nowa jednostka</string>
     <string name="new_category_hint">Nowa kategoria</string>
     <string name="product_price_hint">Cena</string>
+    <string name="search_product_hint">Szukaj</string>
     
 
     <string name="cancel">Anuluj</string>
