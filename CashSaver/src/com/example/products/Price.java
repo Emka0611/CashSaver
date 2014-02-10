@@ -78,4 +78,14 @@ public class Price
 		return unit;
 	}
 
+	public String unitPriceToString()
+	{
+		Unit unit = loadUnit();
+		
+		StringBuilder builder = new StringBuilder();
+		builder.append(getUnitPrice() + "z³/");
+		builder.append(unit.getName());
+		return builder.toString();
+	}
+
 }

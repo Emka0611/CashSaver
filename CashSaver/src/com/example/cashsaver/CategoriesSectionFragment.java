@@ -1,18 +1,28 @@
 package com.example.cashsaver;
 
-import java.util.*;
+import java.util.List;
 
-import android.os.Bundle;
-import android.app.*;
+import android.app.ActionBar;
+import android.app.Fragment;
 import android.content.Context;
-import android.view.*;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.*;
-import android.widget.*;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
 
-import com.example.database.*;
-import com.example.products.*;
+import com.example.database.DatabaseDataSources;
+import com.example.products.Category;
 
 public class CategoriesSectionFragment extends Fragment
 {
@@ -44,6 +54,15 @@ public class CategoriesSectionFragment extends Fragment
 
 		listView = (ListView) rootView.findViewById(R.id.list);
 		listView.setAdapter(adapter);
+		listView.setOnItemClickListener(new OnItemClickListener()
+		{
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+			{
+				// TODO Auto-generated method stub
+				
+			}
+		});
 
 		listView.setOnItemLongClickListener(new OnItemLongClickListener()
 		{

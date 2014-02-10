@@ -106,6 +106,10 @@ public class ProductsSectionFragment extends Fragment implements OnItemClickList
 	public void onResume()
 	{
 		DatabaseDataSources.open();
+		if (false == isSearchModeEnabled())
+		{
+			addAll(DatabaseDataSources.getAllProducts());
+		}
 		super.onResume();
 	}
 
@@ -234,7 +238,7 @@ public class ProductsSectionFragment extends Fragment implements OnItemClickList
 
 		sortList();
 	}
-	
+
 	public void addAll(List<Product> resultList)
 	{
 		mAdapter.clear();
@@ -252,7 +256,7 @@ public class ProductsSectionFragment extends Fragment implements OnItemClickList
 				mAdapter.addSection(catList.get(i).getName(), adapter);
 			}
 		}
-		
+
 		sortList();
 		mAdapter.notifyDataSetChanged();
 	}
@@ -260,9 +264,9 @@ public class ProductsSectionFragment extends Fragment implements OnItemClickList
 	private List<Product> getProductsOfCategory(List<Product> resultList, long catId)
 	{
 		List<Product> products = new ArrayList<Product>();
-		for(int i=0; i<resultList.size(); i++)
+		for (int i = 0; i < resultList.size(); i++)
 		{
-			if(resultList.get(i).getCategoryId() == catId)
+			if (resultList.get(i).getCategoryId() == catId)
 			{
 				products.add(resultList.get(i));
 			}

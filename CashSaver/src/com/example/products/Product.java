@@ -47,8 +47,10 @@ public class Product
 	public String toString()
 	{
 		StringBuilder builder = new StringBuilder();
-		builder.append(m_categoryId);
-		builder.append("::" + m_Name);
+		//builder.append(m_categoryId);
+		//builder.append(" " + m_Name);
+		builder.append(m_Name);
+		builder.append(" " + m_priceHistory.getBestPrice().unitPriceToString());
 
 		return builder.toString();
 	}
