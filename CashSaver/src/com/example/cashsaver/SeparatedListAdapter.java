@@ -2,7 +2,6 @@ package com.example.cashsaver;
 
 import java.util.Comparator;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -141,20 +140,6 @@ public class SeparatedListAdapter extends BaseAdapter
 
 	public void clear()
 	{
-		// TODO Auto-generated method stub
-
+		sections.clear();
 	}
-
-	public void addAll(List<Product> resultList)
-	{
-		// TODO Auto-generated method stub
-
-	}
-
-	public void add(Product itemAtPosition)
-	{
-		// TODO Auto-generated method stub
-
-	}
-
 }

@@ -1,5 +1,6 @@
 package com.example.cashsaver;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -98,19 +99,13 @@ public class ProductsSectionFragment extends Fragment implements OnItemClickList
 	{
 		String substring = mActionBarEditText.getText().toString();
 		List<Product> list = DatabaseDataSources.getProducts(substring);
-		mAdapter.clear();
-		mAdapter.addAll(list);
-		mAdapter.notifyDataSetChanged();
+		addAll(list);
 	}
 
 	@Override
 	public void onResume()
 	{
 		DatabaseDataSources.open();
-		mAdapter.clear();
-		mAdapter.addAll(DatabaseDataSources.getAllProducts());
-		sortList();
-		mAdapter.notifyDataSetChanged();
 		super.onResume();
 	}
 
@@ -134,10 +129,7 @@ public class ProductsSectionFragment extends Fragment implements OnItemClickList
 		else
 		{
 			mActionBar.setDisplayOptions(mDisplayOptions);
-			mAdapter.clear();
-			mAdapter.addAll(DatabaseDataSources.getAllProducts());
-			sortList();
-			mAdapter.notifyDataSetChanged();
+			addAll(DatabaseDataSources.getAllProducts());
 			mIsSearchModeEnabled = false;
 		}
 	}
@@ -162,22 +154,21 @@ public class ProductsSectionFragment extends Fragment implements OnItemClickList
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View arg1, int position, long arg3)
 	{
-		mAdapter.clear();
-		mAdapter.add((Product) adapterView.getItemAtPosition(position));
+		List<Product> list = new ArrayList<Product>();
+		list.add((Product) adapterView.getItemAtPosition(position));
+		addAll(list);
 	}
 
 	public void updateListAdapter(List<Product> resultList)
 	{
 		if (null != resultList)
 		{
-			mAdapter.clear();
-			mAdapter.addAll(resultList);
-			sortList();
-			mAdapter.notifyDataSetChanged();
+			addAll(resultList);
 		}
 		else
 		{
 			mAdapter.clear();
+			mAdapter.notifyDataSetChanged();
 		}
 	}
 
@@ -242,5 +233,40 @@ public class ProductsSectionFragment extends Fragment implements OnItemClickList
 		}
 
 		sortList();
+	}
+	
+	public void addAll(List<Product> resultList)
+	{
+		mAdapter.clear();
+		List<Category> catList = DatabaseDataSources.getAllCategories();
+
+		List<Product> list = null;
+		ArrayAdapter<Product> adapter = null;
+
+		for (int i = 0; i < catList.size(); i++)
+		{
+			list = getProductsOfCategory(resultList, catList.get(i).getId());
+			adapter = new ArrayAdapter<Product>(getActivity(), android.R.layout.simple_list_item_1, list);
+			if (0 < list.size())
+			{
+				mAdapter.addSection(catList.get(i).getName(), adapter);
+			}
+		}
+		
+		sortList();
+		mAdapter.notifyDataSetChanged();
+	}
+
+	private List<Product> getProductsOfCategory(List<Product> resultList, long catId)
+	{
+		List<Product> products = new ArrayList<Product>();
+		for(int i=0; i<resultList.size(); i++)
+		{
+			if(resultList.get(i).getCategoryId() == catId)
+			{
+				products.add(resultList.get(i));
+			}
+		}
+		return products;
 	}
 }
