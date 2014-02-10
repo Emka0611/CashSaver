@@ -6,8 +6,8 @@
     android:ems="10"
     android:gravity="center_vertical"
     android:hint="@string/action_search"
+    android:inputType="textCapSentences"
     android:paddingRight="20dp"
-    android:textColor="@color/white"
-    android:inputType="textCapSentences">
+    android:textColor="@color/white" >
 
 </AutoCompleteTextView>

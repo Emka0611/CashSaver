@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -21,8 +22,10 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.database.DatabaseDataSources;
+import com.example.products.Barcode;
 import com.example.products.Category;
 import com.example.products.Product;
 
@@ -36,8 +39,28 @@ public class ProductsSectionFragment extends Fragment implements OnItemClickList
 	private SeparatedListAdapter mAdapter;
 	private int mDisplayOptions;
 	private boolean mIsSearchModeEnabled = false;
+	private Menu mMenu;
 
 	final static String PRODUCT_SELECTED = "selected_product";
+
+	public static final int GET_BARCODE_REQUEST = 1;
+	public static final String BARCODE = "barcode";
+	private String mBarcode = "";
+	private boolean mReturnedFromScanning = false;
+
+	private List<Product> list = null;
+
+	public void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		if (requestCode == GET_BARCODE_REQUEST)
+		{
+			if (resultCode == Activity.RESULT_OK)
+			{
+				mBarcode = data.getExtras().getString(BARCODE);
+				performSearchByBarcode();
+			}
+		}
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -65,6 +88,7 @@ public class ProductsSectionFragment extends Fragment implements OnItemClickList
 	@Override
 	public void onPrepareOptionsMenu(Menu menu)
 	{
+		mMenu = menu;
 		getActivity().getMenuInflater().inflate(R.menu.menu_products, menu);
 		boolean drawerOpen = ((MainActivity) getActivity()).isDrawerOpen();
 		menu.findItem(R.id.action_new).setVisible(!drawerOpen);
@@ -82,35 +106,37 @@ public class ProductsSectionFragment extends Fragment implements OnItemClickList
 				startActivity(i);
 				break;
 			case R.id.action_search:
-				if (false != mIsSearchModeEnabled)
-				{
-					performSearch();
-				}
-				else
-				{
-					enableSearchMode(true);
-				}
+				enableSearchMode(true);
+				break;
+			case R.id.action_scan:
+				startScanningActivity();
 				break;
 		}
 		return super.onOptionsItemSelected(item);
-	}
-
-	private void performSearch()
-	{
-		String substring = mActionBarEditText.getText().toString();
-		List<Product> list = DatabaseDataSources.getProducts(substring);
-		addAll(list);
 	}
 
 	@Override
 	public void onResume()
 	{
 		DatabaseDataSources.open();
-		if (false == isSearchModeEnabled())
+		if (false == isSearchModeEnabled() && false == mReturnedFromScanning)
 		{
-			addAll(DatabaseDataSources.getAllProducts());
+			addAll(getDefaultProducts());
 		}
+		mReturnedFromScanning = false;
 		super.onResume();
+	}
+
+	private List<Product> getDefaultProducts()
+	{
+		if (null != list)
+		{
+			return list;
+		}
+		else
+		{
+			return DatabaseDataSources.getAllProducts();
+		}
 	}
 
 	@Override
@@ -120,39 +146,32 @@ public class ProductsSectionFragment extends Fragment implements OnItemClickList
 		super.onPause();
 	}
 
-	void enableSearchMode(boolean enable)
+	public void enableSearchMode(boolean enable)
 	{
+		mIsSearchModeEnabled = enable;
+
 		if (false != enable)
 		{
 			mActionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM, ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE);
 			mActionBar.setCustomView(mActionBarEditText);
 			mActionBarEditText.requestFocus();
 			showKeybord(true);
-			mIsSearchModeEnabled = true;
+			mMenu.findItem(R.id.action_search).setVisible(false);
+			mMenu.findItem(R.id.action_scan).setVisible(true);
 		}
 		else
 		{
+			mActionBarEditText.setText("");
 			mActionBar.setDisplayOptions(mDisplayOptions);
-			addAll(DatabaseDataSources.getAllProducts());
-			mIsSearchModeEnabled = false;
+			mMenu.findItem(R.id.action_search).setVisible(true);
+			mMenu.findItem(R.id.action_scan).setVisible(false);
+			addAll(getDefaultProducts());
 		}
 	}
 
 	public boolean isSearchModeEnabled()
 	{
 		return mIsSearchModeEnabled;
-	}
-
-	private void showKeybord(boolean state)
-	{
-		if (false != state)
-		{
-			mImm.showSoftInput(mActionBarEditText, InputMethodManager.SHOW_IMPLICIT);
-		}
-		else
-		{
-			mImm.hideSoftInputFromWindow(mActionBarEditText.getWindowToken(), 0);
-		}
 	}
 
 	@Override
@@ -176,11 +195,10 @@ public class ProductsSectionFragment extends Fragment implements OnItemClickList
 		}
 	}
 
-	public void sortList()
+	private void sortList()
 	{
 		mAdapter.sort(new Comparator<Product>()
 		{
-
 			@Override
 			public int compare(Product lhs, Product rhs)
 			{
@@ -189,13 +207,13 @@ public class ProductsSectionFragment extends Fragment implements OnItemClickList
 		});
 	}
 
-	public void setUpActionBarEditText()
+	private void setUpActionBarEditText()
 	{
 		mActionBarEditText.setAdapter(new ProductsAutoCompleteAdapter(getActivity(), android.R.layout.simple_list_item_1));
 		mActionBarEditText.setOnItemClickListener(this);
 	}
 
-	public void setUpListView()
+	private void setUpListView()
 	{
 		setUpAdapter();
 		listView = (ListView) mRootView.findViewById(R.id.list);
@@ -218,7 +236,7 @@ public class ProductsSectionFragment extends Fragment implements OnItemClickList
 		});
 	}
 
-	public void setUpAdapter()
+	private void setUpAdapter()
 	{
 		mAdapter = new SeparatedListAdapter(getActivity());
 		List<Category> catList = DatabaseDataSources.getAllCategories();
@@ -239,7 +257,7 @@ public class ProductsSectionFragment extends Fragment implements OnItemClickList
 		sortList();
 	}
 
-	public void addAll(List<Product> resultList)
+	private void addAll(List<Product> resultList)
 	{
 		mAdapter.clear();
 		List<Category> catList = DatabaseDataSources.getAllCategories();
@@ -261,6 +279,18 @@ public class ProductsSectionFragment extends Fragment implements OnItemClickList
 		mAdapter.notifyDataSetChanged();
 	}
 
+	private void showKeybord(boolean state)
+	{
+		if (false != state)
+		{
+			mImm.showSoftInput(mActionBarEditText, InputMethodManager.SHOW_IMPLICIT);
+		}
+		else
+		{
+			mImm.hideSoftInputFromWindow(mActionBarEditText.getWindowToken(), 0);
+		}
+	}
+
 	private List<Product> getProductsOfCategory(List<Product> resultList, long catId)
 	{
 		List<Product> products = new ArrayList<Product>();
@@ -272,5 +302,33 @@ public class ProductsSectionFragment extends Fragment implements OnItemClickList
 			}
 		}
 		return products;
+	}
+
+	private void startScanningActivity()
+	{
+		Intent i = new Intent(getActivity(), ScanditActivity.class);
+		startActivityForResult(i, GET_BARCODE_REQUEST);
+	}
+
+	private void performSearchByBarcode()
+	{
+		DatabaseDataSources.open();
+		List<Barcode> barcodesList = DatabaseDataSources.getBarcodesFromDatabase(mBarcode);
+		List<Product> resultList = new ArrayList<Product>();
+
+		for (int i = 0; i < barcodesList.size(); i++)
+		{
+			resultList.add(DatabaseDataSources.getProduct(barcodesList.get(i).getProductId()));
+		}
+
+		if (resultList.size() > 0)
+		{
+			mReturnedFromScanning = true;
+			addAll(resultList);
+		}
+		else
+		{
+			Toast.makeText(getActivity(), "Nie znaleziono produktu", Toast.LENGTH_LONG).show();
+		}
 	}
 }

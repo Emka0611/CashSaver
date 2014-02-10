@@ -116,4 +116,22 @@ public class BarcodesDataSource
 		Barcode price = new Barcode(barcodeId, productId, barcode);
 		return price;
 	}
+
+	public List<Barcode> getAllBarcodes(String barcodeString)
+	{
+		List<Barcode> barcodes = new ArrayList<Barcode>();
+
+		Cursor cursor = database.query(BarcodeTable.TABLE_BARCODE, BarcodeTable.ALL_COLUMNS, BarcodeTable.COLUMN_BARCODE + " = " + barcodeString, null, null, null, null);
+
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast())
+		{
+			Barcode barcode = convertCursorToBarcode(cursor);
+			barcodes.add(barcode);
+			cursor.moveToNext();
+		}
+
+		cursor.close();
+		return barcodes;
+	}
 }

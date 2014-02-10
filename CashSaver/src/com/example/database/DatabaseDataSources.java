@@ -280,4 +280,14 @@ public class DatabaseDataSources
 	{
 		return productsDataSource.getProductsOfCategory(catId);
 	}
+
+	public static List<Barcode> getBarcodesFromDatabase(String barcode)
+	{
+		return barcodesDataSource.getAllBarcodes(barcode);
+	}
+
+	public static List<Barcode> getAllBarcodes()
+	{
+		return barcodesDataSource.getAllBarcodes();
+	}
 }

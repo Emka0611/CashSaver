@@ -3,6 +3,7 @@ package com.example.cashsaver;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
@@ -179,6 +180,13 @@ public class MainActivity extends Activity
 	public Fragment getCurrentFragment()
 	{
 		return mCurrFragment;
+	}
+	
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		mCurrFragment.onActivityResult(requestCode, resultCode, data);
 	}
 
 }
