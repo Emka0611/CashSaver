@@ -12,7 +12,8 @@ public class ProductTable
 	public static final String COLUMN_NAME = "name";
 	public static final String COLUMN_CATEGORY_ID = "category_id";
 		
-
+	public static String[] ALL_COLUMNS = { COLUMN_ID, COLUMN_NAME, COLUMN_CATEGORY_ID};
+	
 	// Database creation SQL statement
 	private static final String DATABASE_CREATE ="create table " + TABLE_PRODUCT
 			+"(" 

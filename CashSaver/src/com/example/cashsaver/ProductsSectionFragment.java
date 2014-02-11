@@ -24,6 +24,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
@@ -45,11 +46,15 @@ public class ProductsSectionFragment extends Fragment
 	private Menu mMenu;
 
 	final static String PRODUCT_SELECTED = "selected_product";
+	public final static String ITEM_NAME = "name";
+	public final static String ITEM_PRICE = "price";
 
 	public static final int GET_BARCODE_REQUEST = 1;
 	public static final String BARCODE = "barcode";
 	private String mBarcode = "";
 	private boolean mReturnedFromScanning = false;
+	
+	long selectedProductId = 0;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -181,10 +186,10 @@ public class ProductsSectionFragment extends Fragment
 	{
 		mAdapter = new SeparatedListAdapter(getActivity());
 		List<Category> catList = DatabaseDataSources.getAllCategories();
-	
+
 		List<Product> list = null;
 		SimpleAdapter adapter = null;
-	
+
 		for (int i = 0; i < catList.size(); i++)
 		{
 			List<Map<String, ?>> listMap = new LinkedList<Map<String, ?>>();
@@ -194,8 +199,8 @@ public class ProductsSectionFragment extends Fragment
 			{
 				listMap.add(createItem(list.get(j)));
 			}
-	
-			adapter = new SimpleAdapter(getActivity(), listMap, R.layout.rowlayout, new String[] { ITEM_NAME, ITEM_PRICE }, new int[] { R.id.text1, R.id.secondLine });
+
+			adapter = new CarListAdapter(getActivity(), listMap, R.layout.rowlayout, new String[] { ITEM_NAME, ITEM_PRICE }, new int[] { R.id.text1, R.id.secondLine });
 			if (0 < list.size())
 			{
 				mAdapter.addSection(catList.get(i).getName(), adapter);
@@ -207,10 +212,10 @@ public class ProductsSectionFragment extends Fragment
 	{
 		mAdapter.clear();
 		List<Category> catList = DatabaseDataSources.getAllCategories();
-	
+
 		List<Product> list = null;
 		SimpleAdapter adapter = null;
-	
+
 		for (int i = 0; i < catList.size(); i++)
 		{
 			List<Map<String, ?>> listMap = new LinkedList<Map<String, ?>>();
@@ -220,8 +225,8 @@ public class ProductsSectionFragment extends Fragment
 			{
 				listMap.add(createItem(list.get(j)));
 			}
-	
-			adapter = new SimpleAdapter(getActivity(), listMap, R.layout.rowlayout, new String[] { ITEM_NAME, ITEM_PRICE }, new int[] { R.id.text1, R.id.secondLine });
+
+			adapter = new CarListAdapter(getActivity(), listMap, R.layout.rowlayout, new String[] { ITEM_NAME, ITEM_PRICE }, new int[] { R.id.text1, R.id.secondLine });
 			if (0 < list.size())
 			{
 				mAdapter.addSection(catList.get(i).getName(), adapter);
@@ -250,37 +255,42 @@ public class ProductsSectionFragment extends Fragment
 		setUpAdapter();
 		listView = (ListView) mRootView.findViewById(R.id.list);
 		listView.setAdapter(mAdapter);
+		listView.setOnItemClickListener(new OnItemClickListener()
+		{
+			@Override
+			public void onItemClick(AdapterView<?> parent, View arg1, int position, long arg3)
+			{
+	/*			selectedProductId = ((Product) parent.getItemAtPosition(position)).getId();
+				
+				PopupMenu popup = new PopupMenu(getActivity(), arg1);
+				getActivity().getMenuInflater().inflate(R.menu.menu_product_more, popup.getMenu());
+				popup.show();*/
+			}
+			
+		});
+		
 		listView.setOnItemLongClickListener(new OnItemLongClickListener()
 		{
 
 			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
 			{
-				long selectedProductId = ((Product) parent.getItemAtPosition(position)).getId();
-				// Intent i = new Intent(getActivity(), AddPriceActivity.class);
-				// Intent i = new Intent(getActivity(),
-				// AddBarcodeActivity.class);
-				Intent i = new Intent(getActivity(), EditProductActivity.class);
-				i.putExtra(PRODUCT_SELECTED, selectedProductId);
-				getActivity().startActivity(i);
+				Toast.makeText(getActivity(), "HEJ", Toast.LENGTH_LONG).show();
 				return false;
 			}
 		});
 
-		listView.setOnItemClickListener(new OnItemClickListener()
-		{
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-			{
-				// long selectedProductId = ((Product)
-				// parent.getItemAtPosition(position)).getId();
 
-			}
-		});
+		// 
+		/*
+ 		// Intent i = new
+		 * Intent(getActivity(), AddPriceActivity.class); // Intent i = new
+		 * Intent(getActivity(), // AddBarcodeActivity.class); Intent i = new
+		 * Intent(getActivity(), EditProductActivity.class);
+		 * i.putExtra(PRODUCT_SELECTED, selectedProductId);
+		 * getActivity().startActivity(i);
+		 */
 	}
-
-	public final static String ITEM_NAME = "name";
-	public final static String ITEM_PRICE = "price";
 
 	private Map<String, ?> createItem(Product product)
 	{
@@ -341,5 +351,17 @@ public class ProductsSectionFragment extends Fragment
 		{
 			Toast.makeText(getActivity(), "Nie znaleziono produktu", Toast.LENGTH_LONG).show();
 		}
+	}
+	
+	public void showPopupMenu(View v)
+	{
+		PopupMenu popup = new PopupMenu(getActivity(), v);
+		getActivity().getMenuInflater().inflate(R.menu.menu_product_more, popup.getMenu());
+		popup.show();
+	}
+
+	public void setSelectedProductId(long id)
+	{
+		selectedProductId = id;		
 	}
 }

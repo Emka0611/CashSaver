@@ -13,6 +13,9 @@
     <string name="action_accept">Dodaj</string>
     <string name="action_scan">Skanuj</string>
     <string name="action_search">Szukaj</string>
+    <string name="action_edit">Edytuj</string>
+    <string name="action_list_prices">Ceny</string>
+    <string name="action_list_barcodes">Kody kreskowe</string>
 
     <string name="drawer_open">BUM</string>
     <string name="drawer_close">BUM</string>

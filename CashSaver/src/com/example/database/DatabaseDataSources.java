@@ -290,4 +290,9 @@ public class DatabaseDataSources
 	{
 		return barcodesDataSource.getAllBarcodes();
 	}
+
+	public static Product getProduct(String name)
+	{
+		return productsDataSource.getProduct(name);
+	}
 }

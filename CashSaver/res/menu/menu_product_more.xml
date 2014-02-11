@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_edit_item"
+        android:icon="@drawable/ic_action_edit"
+        android:title="@string/action_edit"/>
+    <item
+        android:id="@+id/action_delete_item"
+        android:icon="@drawable/ic_action_discard"
+        android:title="@string/action_delete"/>
+    <item
+        android:id="@+id/action_list_prices"
+        android:icon="@drawable/ic_action_expand"
+        android:title="@string/action_list_prices"/>
+    <item
+        android:id="@+id/action_list_barcodes"
+        android:icon="@drawable/ic_action_collapse"
+        android:title="@string/action_list_barcodes"/>
+
+</menu>

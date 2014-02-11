@@ -12,14 +12,16 @@
         android:contentDescription="@string/app_name"
         android:src="@drawable/ic_launcher_3" />
 
-    <ImageView
-        android:id="@+id/imageView1"
+    <ImageButton
+        android:id="@+id/action_more"
         android:layout_width="24dip"
         android:layout_height="24dip"
         android:layout_alignParentRight="true"
+        android:layout_marginRight="8dp"
         android:layout_centerVertical="true"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/icon_services1" />
+        android:src="@drawable/icon_services1"
+        style="?android:attr/borderlessButtonStyle"/>
 
     <TextView
         android:id="@+id/secondLine"

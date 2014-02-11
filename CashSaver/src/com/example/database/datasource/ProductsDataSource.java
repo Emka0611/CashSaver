@@ -15,7 +15,6 @@ public class ProductsDataSource
 	// Database fields
 	private SQLiteDatabase database;
 	private DatabaseHelper dbHelper;
-	private String[] allColumns = { ProductTable.COLUMN_ID, ProductTable.COLUMN_NAME, ProductTable.COLUMN_CATEGORY_ID};
 
 	public ProductsDataSource(Context context)
 	{
@@ -46,7 +45,7 @@ public class ProductsDataSource
 		values.put(ProductTable.COLUMN_CATEGORY_ID, categoryId);
 
 		long insertId = database.insert(ProductTable.TABLE_PRODUCT, null, values);
-		Cursor cursor = database.query(ProductTable.TABLE_PRODUCT, allColumns, ProductTable.COLUMN_ID + " = " + insertId, null, null, null, null);
+		Cursor cursor = database.query(ProductTable.TABLE_PRODUCT, ProductTable.ALL_COLUMNS, ProductTable.COLUMN_ID + " = " + insertId, null, null, null, null);
 		cursor.moveToFirst();
 
 		Product newProductSpecific = convertCursorToProduct(cursor);
@@ -66,7 +65,7 @@ public class ProductsDataSource
 	{
 		List<Product> products = new ArrayList<Product>();
 
-		Cursor cursor = database.query(ProductTable.TABLE_PRODUCT, allColumns, null, null, null, null, null);
+		Cursor cursor = database.query(ProductTable.TABLE_PRODUCT, ProductTable.ALL_COLUMNS, null, null, null, null, null);
 
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast())
@@ -84,7 +83,7 @@ public class ProductsDataSource
 	{
 		List<Product> products = new ArrayList<Product>();
 
-		Cursor cursor = database.query(ProductTable.TABLE_PRODUCT, allColumns, ProductTable.COLUMN_CATEGORY_ID + " = " + catId, null, null, null, null);
+		Cursor cursor = database.query(ProductTable.TABLE_PRODUCT, ProductTable.ALL_COLUMNS, ProductTable.COLUMN_CATEGORY_ID + " = " + catId, null, null, null, null);
 
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast())
@@ -102,7 +101,7 @@ public class ProductsDataSource
 	{
 		Product product = null;
 
-		Cursor cursor = database.query(ProductTable.TABLE_PRODUCT, allColumns, ProductTable.COLUMN_ID + " = " + productId, null, null, null, null);
+		Cursor cursor = database.query(ProductTable.TABLE_PRODUCT, ProductTable.ALL_COLUMNS, ProductTable.COLUMN_ID + " = " + productId, null, null, null, null);
 
 		cursor.moveToFirst();
 		product = convertCursorToProduct(cursor);
@@ -116,7 +115,7 @@ public class ProductsDataSource
 		ContentValues values = new ContentValues();
 		values.put(ProductTable.COLUMN_NAME, newName);
 		values.put(ProductTable.COLUMN_CATEGORY_ID, newCategoryId);
-		
+
 		int rowsAffected = database.update(ProductTable.TABLE_PRODUCT, values, ProductTable.COLUMN_ID + " = " + productId, null);
 		return rowsAffected;
 	}
@@ -126,8 +125,24 @@ public class ProductsDataSource
 		long productId = cursor.getLong(0);
 		String productName = cursor.getString(1);
 		long categoryId = cursor.getLong(2);
-	
+
 		Product product = new Product(productId, productName, categoryId);
+		return product;
+	}
+
+	public Product getProduct(String name)
+	{
+		Product product = null;
+
+		Cursor cursor = database.query(ProductTable.TABLE_PRODUCT, ProductTable.ALL_COLUMNS, ProductTable.COLUMN_NAME + " = '" + name + "'", null, null, null, null);
+
+		if (null != cursor)
+		{
+			cursor.moveToFirst();
+			product = convertCursorToProduct(cursor);
+
+			cursor.close();
+		}
 		return product;
 	}
 

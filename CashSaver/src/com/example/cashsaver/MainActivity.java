@@ -10,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 
-import com.example.cashsaver.R;
 import com.example.database.DatabaseDataSources;
 
 public class MainActivity extends Activity implements ActionBar.OnNavigationListener
@@ -173,5 +172,4 @@ public class MainActivity extends Activity implements ActionBar.OnNavigationList
 		selectItem(position);
 		return true;
 	}
-
 }
