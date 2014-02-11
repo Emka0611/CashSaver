@@ -1,4 +1,4 @@
-package com.example.getbetterprice;
+package com.example.cashsaver;
 
 import com.example.database.DatabaseDataSources;
 

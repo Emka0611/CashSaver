@@ -1,6 +1,6 @@
 package com.example.products;
 
-public class Product
+public class Product implements Comparable<Product>
 {
 	private long m_id;
 
@@ -47,32 +47,13 @@ public class Product
 	public String toString()
 	{
 		StringBuilder builder = new StringBuilder();
-		//builder.append(m_categoryId);
-		//builder.append(" " + m_Name);
 		builder.append(m_Name);
-		builder.append(" " + m_priceHistory.getBestPrice().unitPriceToString());
-
 		return builder.toString();
 	}
 
-	public int compareTo(Product rhs)
+	@Override
+	public int compareTo(Product arg)
 	{
-		int retVal = 0;
-
-		if (getCategoryId() > rhs.getCategoryId())
-		{
-			retVal = 1;
-		}
-		else if (getCategoryId() < rhs.getCategoryId())
-		{
-			retVal = -1;
-		}
-		return retVal;
+		return getName().compareTo(arg.getName());
 	}
-
-	public int compareTo2(Product rhs)
-	{
-		return getName().compareTo(rhs.getName());
-	}
-
 }

@@ -11,13 +11,13 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
-        android:name="com.example.getbetterprice.GetBetterPriceApplication"
+        android:name="com.example.cashsaver.GetBetterPriceApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher_3"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.getbetterprice.MainActivity"
+            android:name="com.example.cashsaver.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
 
@@ -28,27 +28,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.getbetterprice.NewProductActivity"
+            android:name="com.example.cashsaver.NewProductActivity"
             android:label="@string/title_product_new"
-            android:parentActivityName="com.example.getbetterprice.MainActivity" />
+            android:parentActivityName="com.example.cashsaver.MainActivity" />
         <activity
-            android:name="com.example.getbetterprice.EditProductActivity"
+            android:name="com.example.cashsaver.EditProductActivity"
             android:label="@string/title_product_edit"
-            android:parentActivityName="com.example.getbetterprice.MainActivity" />
+            android:parentActivityName="com.example.cashsaver.MainActivity" />
         <activity
-            android:name="com.example.getbetterprice.ProductDetailsActivity"
+            android:name="com.example.cashsaver.ProductDetailsActivity"
             android:label="@string/title_products"
-            android:parentActivityName="com.example.getbetterprice.MainActivity" />
+            android:parentActivityName="com.example.cashsaver.MainActivity" />
         <activity
-            android:name="com.example.getbetterprice.AddPriceActivity"
+            android:name="com.example.cashsaver.AddPriceActivity"
             android:label="@string/title_price_new"
-            android:parentActivityName="com.example.getbetterprice.MainActivity" />
+            android:parentActivityName="com.example.cashsaver.MainActivity" />
         <activity
-            android:name="com.example.getbetterprice.AddBarcodeActivity"
+            android:name="com.example.cashsaver.AddBarcodeActivity"
             android:label="@string/title_barcode_new"
-            android:parentActivityName="com.example.getbetterprice.MainActivity" />
+            android:parentActivityName="com.example.cashsaver.MainActivity" />
         <activity
-            android:name="com.example.getbetterprice.ScanditActivity"
+            android:name="com.example.cashsaver.ScanditActivity"
             android:label="@string/action_scan"
             android:screenOrientation="portrait" >
         </activity>

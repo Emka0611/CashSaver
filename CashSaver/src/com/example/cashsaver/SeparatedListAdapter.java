@@ -1,9 +1,7 @@
-package com.example.getbetterprice;
+package com.example.cashsaver;
 
-import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import android.content.Context;
 import android.view.View;
@@ -11,13 +9,11 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-
-import com.example.cashsaver.R;
-import com.example.products.Product;
+import android.widget.SimpleAdapter;
 
 public class SeparatedListAdapter extends BaseAdapter
 {
-	public final Map<String, ArrayAdapter<Product>> sections = new LinkedHashMap<String, ArrayAdapter<Product>>();
+	public final Map<String, Adapter> sections = new LinkedHashMap<String, Adapter>();
 	public final ArrayAdapter<String> headers;
 	public final static int TYPE_SECTION_HEADER = 0;
 
@@ -26,22 +22,23 @@ public class SeparatedListAdapter extends BaseAdapter
 		headers = new ArrayAdapter<String>(context, R.layout.list_header);
 	}
 
-	public void addSection(String section, ArrayAdapter<Product> adapter)
+	public void addSection(String section, SimpleAdapter adapter)
 	{
 		this.headers.add(section);
 		this.sections.put(section, adapter);
 	}
 
+	@Override
 	public Object getItem(int position)
 	{
-		for (Object section : this.sections.keySet())
+		for (Object header : this.sections.keySet())
 		{
-			Adapter adapter = sections.get(section);
+			Adapter adapter = sections.get(header);
 			int size = adapter.getCount() + 1;
 
 			// check if position inside this section
 			if (position == 0)
-				return section;
+				return header;
 			if (position < size)
 				return adapter.getItem(position - 1);
 
@@ -81,9 +78,13 @@ public class SeparatedListAdapter extends BaseAdapter
 
 			// check if position inside this section
 			if (position == 0)
+			{
 				return TYPE_SECTION_HEADER;
+			}
 			if (position < size)
+			{
 				return type + adapter.getItemViewType(position - 1);
+			}
 
 			// otherwise jump into next section
 			position -= size;
@@ -91,12 +92,7 @@ public class SeparatedListAdapter extends BaseAdapter
 		}
 		return -1;
 	}
-
-	public boolean areAllItemsSelectable()
-	{
-		return false;
-	}
-
+	
 	@Override
 	public boolean isEnabled(int position)
 	{
@@ -131,16 +127,9 @@ public class SeparatedListAdapter extends BaseAdapter
 		return position;
 	}
 
-	public void sort(Comparator<Product> comparator)
-	{
-		for (Entry<String, ArrayAdapter<Product>> entry : sections.entrySet())
-		{
-			entry.getValue().sort(comparator);
-		}
-	}
-
 	public void clear()
 	{
 		sections.clear();
 	}
+
 }

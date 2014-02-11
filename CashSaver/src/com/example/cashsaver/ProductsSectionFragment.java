@@ -1,8 +1,11 @@
-package com.example.getbetterprice;
+package com.example.cashsaver;
 
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -19,12 +22,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
-import com.example.cashsaver.R;
 import com.example.database.DatabaseDataSources;
 import com.example.products.Barcode;
 import com.example.products.Category;
@@ -48,7 +50,6 @@ public class ProductsSectionFragment extends Fragment
 	public static final String BARCODE = "barcode";
 	private String mBarcode = "";
 	private boolean mReturnedFromScanning = false;
-
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -115,7 +116,7 @@ public class ProductsSectionFragment extends Fragment
 		DatabaseDataSources.close();
 		super.onPause();
 	}
-	
+
 	public void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
 		if (requestCode == GET_BARCODE_REQUEST)
@@ -171,16 +172,62 @@ public class ProductsSectionFragment extends Fragment
 		}
 	}
 
-	private void sortList()
+	private void sortList(List<Product> list)
 	{
-		mAdapter.sort(new Comparator<Product>()
+		Collections.sort(list);
+	}
+
+	private void setUpAdapter()
+	{
+		mAdapter = new SeparatedListAdapter(getActivity());
+		List<Category> catList = DatabaseDataSources.getAllCategories();
+	
+		List<Product> list = null;
+		SimpleAdapter adapter = null;
+	
+		for (int i = 0; i < catList.size(); i++)
 		{
-			@Override
-			public int compare(Product lhs, Product rhs)
+			List<Map<String, ?>> listMap = new LinkedList<Map<String, ?>>();
+			list = DatabaseDataSources.getProductsOfCategory(catList.get(i).getId());
+			sortList(list);
+			for (int j = 0; j < list.size(); j++)
 			{
-				return lhs.compareTo2(rhs);
+				listMap.add(createItem(list.get(j)));
 			}
-		});
+	
+			adapter = new SimpleAdapter(getActivity(), listMap, R.layout.rowlayout, new String[] { ITEM_NAME, ITEM_PRICE }, new int[] { R.id.text1, R.id.secondLine });
+			if (0 < list.size())
+			{
+				mAdapter.addSection(catList.get(i).getName(), adapter);
+			}
+		}
+	}
+
+	private void addAll(List<Product> resultList)
+	{
+		mAdapter.clear();
+		List<Category> catList = DatabaseDataSources.getAllCategories();
+	
+		List<Product> list = null;
+		SimpleAdapter adapter = null;
+	
+		for (int i = 0; i < catList.size(); i++)
+		{
+			List<Map<String, ?>> listMap = new LinkedList<Map<String, ?>>();
+			list = getProductsOfCategory(resultList, catList.get(i).getId());
+			sortList(list);
+			for (int j = 0; j < list.size(); j++)
+			{
+				listMap.add(createItem(list.get(j)));
+			}
+	
+			adapter = new SimpleAdapter(getActivity(), listMap, R.layout.rowlayout, new String[] { ITEM_NAME, ITEM_PRICE }, new int[] { R.id.text1, R.id.secondLine });
+			if (0 < list.size())
+			{
+				mAdapter.addSection(catList.get(i).getName(), adapter);
+			}
+		}
+		mAdapter.notifyDataSetChanged();
 	}
 
 	private void setUpActionBarEditText()
@@ -210,67 +257,37 @@ public class ProductsSectionFragment extends Fragment
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
 			{
 				long selectedProductId = ((Product) parent.getItemAtPosition(position)).getId();
-				//Intent i = new Intent(getActivity(), AddPriceActivity.class);
-				//Intent i = new Intent(getActivity(), AddBarcodeActivity.class);
+				// Intent i = new Intent(getActivity(), AddPriceActivity.class);
+				// Intent i = new Intent(getActivity(),
+				// AddBarcodeActivity.class);
 				Intent i = new Intent(getActivity(), EditProductActivity.class);
 				i.putExtra(PRODUCT_SELECTED, selectedProductId);
 				getActivity().startActivity(i);
 				return false;
 			}
 		});
-		
+
 		listView.setOnItemClickListener(new OnItemClickListener()
 		{
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 			{
-				//long selectedProductId = ((Product) parent.getItemAtPosition(position)).getId();
-				
+				// long selectedProductId = ((Product)
+				// parent.getItemAtPosition(position)).getId();
+
 			}
 		});
 	}
 
-	private void setUpAdapter()
+	public final static String ITEM_NAME = "name";
+	public final static String ITEM_PRICE = "price";
+
+	private Map<String, ?> createItem(Product product)
 	{
-		mAdapter = new SeparatedListAdapter(getActivity());
-		List<Category> catList = DatabaseDataSources.getAllCategories();
-
-		List<Product> list = null;
-		ArrayAdapter<Product> adapter = null;
-
-		for (int i = 0; i < catList.size(); i++)
-		{
-			list = DatabaseDataSources.getProductsOfCategory(catList.get(i).getId());
-			adapter = new ArrayAdapter<Product>(getActivity(), android.R.layout.simple_list_item_1, list);
-			if (0 < list.size())
-			{
-				mAdapter.addSection(catList.get(i).getName(), adapter);
-			}
-		}
-
-		sortList();
-	}
-
-	private void addAll(List<Product> resultList)
-	{
-		mAdapter.clear();
-		List<Category> catList = DatabaseDataSources.getAllCategories();
-
-		List<Product> list = null;
-		ArrayAdapter<Product> adapter = null;
-
-		for (int i = 0; i < catList.size(); i++)
-		{
-			list = getProductsOfCategory(resultList, catList.get(i).getId());
-			adapter = new ArrayAdapter<Product>(getActivity(), android.R.layout.simple_list_item_1, list);
-			if (0 < list.size())
-			{
-				mAdapter.addSection(catList.get(i).getName(), adapter);
-			}
-		}
-
-		sortList();
-		mAdapter.notifyDataSetChanged();
+		Map<String, String> item = new HashMap<String, String>();
+		item.put(ITEM_NAME, product.getName());
+		item.put(ITEM_PRICE, product.getPriceHistory().getBestPrice().unitPriceToString());
+		return item;
 	}
 
 	private void showKeybord(boolean state)
