@@ -27,8 +27,6 @@ public class AddBarcodeActivity extends Activity
 	private static final int GET_BARCODE_REQUEST = 1;
 	public static final String BARCODE = "barcode";
 	
-	
-	
 	// product
 	private long mProductId;
 	
